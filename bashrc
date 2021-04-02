@@ -40,5 +40,3 @@ alias ei="cd $nh && nvim init.vim"
 alias eb="cd && nvim .bashrc"
 alias et="cd $th && nvim terms.md"
 alias ec="nvim CMakeLists.txt"
-
-
