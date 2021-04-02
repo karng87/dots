@@ -12,10 +12,11 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-source /usr/share/nvm/init-nvm.sh
+#source /usr/share/nvm/init-nvm.sh
 
 export nh=~/.config/nvim
-export ah=~/git
+export ah=~/AUR
+#export ah=~/git
 
 export ph=~/Project
 
