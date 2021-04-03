@@ -21,6 +21,20 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   }
 }
+---- Chain completion list
+--vim.g.completion_chain_complete_list = {
+--	default = {
+--		default = {
+--			{ complete_items = { 'lsp', 'snippet' }},
+--         { mode = '<c-p>'},
+--         { mode = '<c-n>'}
+--		},
+--      comment = {},
+--      string = {
+--			{complete_items = { 'path' }}
+--		}
+--	}
+--}
 
 -- define an chain complete list
 local chain_complete_list = {

@@ -1,4 +1,12 @@
 #!/bin/bash
-read word
-clear &&
-curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$word | html2text -utf8 -nobs -style compact -width 500 | awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/) print $0}'
+#read word
+#clear &&
+#curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$word | html2text -utf8 -nobs -style compact -width 500 | awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/) print $0}'
+
+clear && \
+echo "## $1 ##" && \
+curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$1 | \
+html2text -utf8 -nobs -style compact -width 500 | \
+awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
+awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
+awk '{if(!/^o\s+/ && !/공지사항$/) print $0}' 
