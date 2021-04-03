@@ -1,0 +1,15 @@
+[submodule "nvim/pack/theme/opt/gruvbox"]
+	path = nvim/pack/theme/opt/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
+[submodule "nvim/pack/theme/opt/vim-airline"]
+	path = nvim/pack/theme/opt/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "nvim/pack/lsp/opt/nvim-lspconfig"]
+	path = nvim/pack/lsp/opt/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
+[submodule "nvim/pack/lsp/opt/completion-nvim"]
+	path = nvim/pack/lsp/opt/completion-nvim
+	url = https://github.com/nvim-lua/completion-nvim.git
+[submodule "nvim/pack/lsp/opt/nvim-treesitter"]
+	path = nvim/pack/lsp/opt/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
