@@ -68,9 +68,9 @@ vim.api.nvim_set_keymap('n', '<leader>a', ':winc _<cr>:winc |<cr>', {noremap=tru
 vim.api.nvim_set_keymap('i', '<leader>a', '<ESC><c-u>:winc _<cr>:winc |<cr>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('t', '<leader>a', '<c-\\><c-n>:winc _<cr>:winc |<cr>', {noremap=true, silent=true})
 
-vim.api.nvim_set_keymap('n', '<leader>n', ':botright new<cr>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('i', '<leader>n', '<ESC>:botright new<cr>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('t', '<leader>n', '<c-\\><c-n>:botright<cr>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<leader>n', ':botright new<space>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('i', '<leader>n', '<ESC>:botright new<space>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('t', '<leader>n', '<c-\\><c-n>:botright<space>', {noremap=true, silent=true})
 
 vim.api.nvim_set_keymap('n', '<leader>v', '<c-v>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<leader>v', '<esc><c-v>', {noremap=true, silent=true})
@@ -78,18 +78,22 @@ vim.api.nvim_set_keymap('t', '<leader>v', '<c-\\><c-n><c-v>', {noremap=true, sil
 
 vim.api.nvim_set_keymap('n', '<leader>y', '"jy', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<leader>y', '<ESC>byw', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('i', '<leader>d', '<ESC>byw:botright term://bash<cr>idic <c-r>"<cr>', {noremap=true, silent=true})
-
 vim.api.nvim_set_keymap('t', '<leader>y', '"jy', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('v', '<leader>y', '"jy', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('s', '<leader>y', '"jy', {noremap=true, silent=true})
+
+vim.api.nvim_set_keymap('n', '<leader>d', 'byw:botright new term://bash<cr>:winc _<cr>idic <c-\\><c-n>pi<cr>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('i', '<leader>d', '<ESC>byw:botright new term://bash<cr>:winc _<cr>idic <c-\\><c-n>pi<cr>', {noremap=true, silent=true})
+
 
 vim.api.nvim_set_keymap('n', '<leader>p', '"jp', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<leader>p', '<c-o>"jp', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('c', '<leader>p', '<c-r>jp', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('t', '<leader>p', '<c-e><c-u>dic <c-r>"<cr>', {noremap=true, silent=true})
 
-vim.api.nvim_set_keymap('n', '<leader>b', ':botright term://bash<cr>icd build && make -j4<cr>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('i', '<leader>b', '<ESC>:w<cr>:botright term://bash<cr>icd build && make -j4<cr>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('c', '<leader>b', '<c-u>:botright term:://bash<cr>icd build && make -j4<cr>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<leader>b', ':botright new term://bash<cr>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('i', '<leader>b', '<ESC>:w<cr>:botright new term://bash<cr>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('c', '<leader>b', '<c-u>:botright new term:://bash<cr>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('t', '<leader>b', '<c-e><c-u>make -j4<cr>', {noremap=true, silent=true})
 
 vim.api.nvim_set_keymap('n', '<leader>1', ':botright new $nh/init.lua<cr>', {noremap=true, silent=true})
@@ -127,5 +131,24 @@ vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme gruvbox]])
 
 vim.cmd('packadd! vim-airline')
+vim.cmd('packadd! popup')
+vim.cmd('packadd! plenary')
 
+vim.cmd('packadd! nvim-web-devicons')
+require'nvim-web-devicons'.setup {
+ -- your personnal icons can go here (to override)
+ -- DevIcon will be appended to `name`
+ override = {
+  zsh = {
+    icon = "",
+    color = "#428850",
+    name = "Zsh"
+  }
+ };
+ -- globally enable default icons (default to false)
+ -- will get overriden by `get_icons` option
+ default = true;
+}
 require'lsp.lsp-config'
+
+vim.cmd('packadd! telescope')

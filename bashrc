@@ -37,7 +37,7 @@ alias cdf="cd $fh && clear && tree -d -L 1"
 alias cdd="cd $dh && clear && tree -d -L 1"
 alias cdb="cd build && clear"
 
-alias ei="cd $nh && nvim init.vim"
+alias ei="cd $nh && nvim init.lua"
 alias eb="cd && nvim .bashrc"
 alias et="cd $th && nvim terms.md"
 alias ec="nvim CMakeLists.txt"
