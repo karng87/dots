@@ -111,4 +111,6 @@ git clone https://aur.archlinux.org/lua-language-server.git
     -c clear
     -d delete and more request app to delete selected contents
 
+### lua
 
+	https://github.com/RishabhRD/archrice/blob/master/.config/nvim/init.lua
