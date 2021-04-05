@@ -8,11 +8,10 @@ vim.cmd('packadd! gruvbox')
 vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme gruvbox]])
 
-vim.cmd('packadd! vim-airline')
-vim.cmd('packadd! popup')
-vim.cmd('packadd! plenary')
+vim.cmd('packadd vim-airline')
+--vim.cmd('packadd popup')
 
-vim.cmd('packadd! nvim-web-devicons')
+vim.cmd('packadd nvim-web-devicons')
 require'nvim-web-devicons'.setup {
  -- your personnal icons can go here (to override)
  -- DevIcon will be appended to `name`
@@ -28,5 +27,9 @@ require'nvim-web-devicons'.setup {
  default = true;
 }
 require'lsp.lsp-config'
+require'lsp.lsp-treesitter'
 
-vim.cmd('packadd! telescope')
+--require'lsp.lsp-config'
+--require'lsp.lsp-treesitter'
+--require'lsp.lsp-utils'
+--require'lsp.lsp-compe'
