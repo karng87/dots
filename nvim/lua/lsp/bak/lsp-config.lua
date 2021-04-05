@@ -108,14 +108,6 @@ end
 -- https://sarcasm.github.io/notes/dev/compilation-database.html#clang
 lsp.clangd.setup{
   on_attach = on_attach_clangd,
-  handlers = {
-    ["textDocument/publishDiagnostics"] = 
-      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-                                virtual_text = true,
-                                signs = true,
-                                underline = true,
-                                update_in_insert = true })
-  },
   init_options = { clangdFileStatus = true },
   cmd = {"clangd",
     "--background-index",

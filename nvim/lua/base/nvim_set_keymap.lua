@@ -2,6 +2,10 @@ local function nmap(mod, lhs, rhs, expr)
   vim.api.nvim_set_keymap(mod, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 
+-- Use <Tab> and <S-Tab> to navigate through popup menu
+nmap('i', '<c-j>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], true)
+nmap('i', '<c-k>', [[pumvisible() ? "\<C-p>" : "\<Tab>"]], true)
+
 nmap('n', '<leader>,', '<ESC>')
 nmap('i', '<leader>,', '<ESC>')
 nmap('c', '<leader>,', '<c-u><cr>')
@@ -66,9 +70,12 @@ nmap('n', '<leader>H', ':w<cr>:winc H<cr>')
 nmap('i', '<leader>H', '<ESC>:w<cr>:winc H<cr>')
 nmap('t', '<leader>H', [[<c-\><c-n>:winc H<cr>]])
 
-nmap('n', '<leader>a', ':winc _<cr>:winc |<CR>')
-nmap('i', '<leader>a', '<ESC><c-u>:winc _<cr>:winc |<CR>')
-nmap('t', '<leader>a', [[<c-\><c-n>:winc _<cr>:winc |<CR>]])
+nmap('n', '<leader>sf', ':winc _<cr>:winc |<CR>')
+nmap('i', '<leader>sf', '<ESC><c-u>:winc _<cr>:winc |<CR>')
+nmap('t', '<leader>sf', [[<c-\><c-n>:winc _<cr>:winc |<CR>]])
+nmap('n', '<leader>se', ':winc =')
+nmap('i', '<leader>se', '<ESC><c-u>:winc =')
+nmap('t', '<leader>se', [[<c-\><c-n>:winc =]])
 
 nmap('n', '<leader>n', ':botright new')
 nmap('i', '<leader>n', '<ESC>:botright new')
@@ -114,29 +121,9 @@ nmap('n', '<leader>cw', ':winc<space>')
 nmap('i', '<leader>cw', '<esc>:winc<space>')
 nmap('t', '<leader>cw', [[<c-\><c-n>:winc<space>]])
 
--- Use <Tab> and <S-Tab> to navigate through popup menu
-nmap('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], true)
-nmap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<Tab>"]], true)
 --
 nmap('i', '<leader>nh', '<ESC>:set hlsearch!<CR>')
-nmap('n', '<leader>nh', '<ESC>:set hlsearch!<CR>')
+nmap('n', '<leader>nh', ':set hlsearch!<CR>')
 nmap('t', '<leader>nh', [[<c-\><c-n>:set hlsearch!<CR>]])
-
-nmap('n', '<leader>un', ':UndotreeToggle<cr>')
-nmap('n', '<leader>:', ':<up>')
---vmap('<leader>p', '"_dP')
-nmap('n', '<leader>sC', [[:CheatWithoutComments<CR>]])
-nmap('n', '<leader>sc', [[:Cheat<CR>]])
-nmap('n', '<leader>ll', [[:<C-p>]])
-
-nmap('i', '<C-Space>', [[compe#complete()]], true)
-nmap('i', '<CR>', [[compe#confirm('<CR>')]], true)
-nmap('i', '<C-e>',[[compe#close('<C-e>')]], true)
-nmap('i', '<C-c>', [[:cclose<CR>]])
-nmap('i', '<C-l>', [[:lclose<CR>]])
-nmap('i', '<C-n>', [[:cnext<CR>]])
-nmap('i', '<C-p>', [[:cprev<CR>]])
-nmap('i', '<leader>n', [[:lnext<CR>]])
-nmap('i', '<leader>p', [[:lprev<CR>]])
 --
 return nmap
