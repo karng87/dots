@@ -1,4 +1,5 @@
 vim.cmd('packadd completion-nvim')
+
 U.let_g('completion_enable_snippet', 'vim-vsnip')
 U.let_g('completion_matching_strategy_list', {'exact', 'substring', 'fuzzy', 'all'})
 vim.cmd([[autocmd BufEnter * lua require'completion'.on_attach()]])

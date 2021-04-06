@@ -1,13 +1,14 @@
 -- ~/Project/dots/nvim/lua/base/utils.lua
 U = require'base.utils'
+
 -- ~/Project/dots/nvim/lua/base/vim_cmd_set.lua
 require'base.vim_cmd_set'
+
 -- ~/Project/dots/nvim/lua/base/nvim_set_keymap.lua
 require'base.nvim_set_keymap'
 
-vim.cmd('packadd! gruvbox')
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+-- ~/Project/dots/nvim/lua/base/gruvbox.lua
+require'base.gruvbox'
 
 vim.cmd('packadd vim-airline')
 --vim.cmd('packadd popup')
@@ -33,6 +34,9 @@ require'lsp.lsp-config'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-completion-nvim.lua
 require'lsp.lsp-completion-nvim'
+
+-- ~/Project/dots/nvim/lua/lsp/lsp-vsnip.lua
+require'lsp.lsp-vsnip'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-treesitter.lua
 require'lsp.lsp-treesitter'

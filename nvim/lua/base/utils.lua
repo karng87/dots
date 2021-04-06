@@ -9,6 +9,7 @@ U.set = function(key, value)
     vim.cmd(string.format('set %s=%s', key, value))
   end
 end
+
 --U.let = function(key, value, mod)
 --  if mod == 'g' or mod == nil then
 --    vim.cmd(string.format('let g:%s=%s', key, value))
@@ -34,33 +35,33 @@ end
 --end
 
 U.let_g = function(key, value)
-  if val=='del' then
+  if value=='del' then
     vim.api.nvim_del_var(key, value)
-  else 
+  else
     vim.api.nvim_set_var(key, value)
   end
   -- vim.api.nvim_get_var()
 end
 U.let_b = function(key, value)
-  if(val=='del') then
+  if(value=='del') then
     vim.api.nvim_buf_del_var(key, value)
-  else 
+  else
     vim.api.nvim_buf_set_var(key, value)
   end
   -- vim.api.nvim_buf_get_var()
 end
 U.let_w = function(key, value)
-  if(val=='del') then
+  if(value=='del') then
     vim.api.nvim_win_del_var(key, value)
-  else 
+  else
     vim.api.nvim_win_set_var(key, value)
   end
   -- vim.api.nvim_get_var()
 end
 U.let_t = function(key, value)
-  if(val=='del') then
+  if(value=='del') then
     vim.api.nvim_tabpage_del_var(key, value)
-  else 
+  else
     vim.api.nvim_tabpage_set_var(key, value)
   end
   -- vim.api.nvim_tabpage_get_var()
@@ -75,11 +76,11 @@ U.map = function(mod, lhs, rhs, expr)
   vim.api.nvim_set_keymap(mod, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 U.map_lua = function(mod, lhs, action, expr)
-  map(mod, lhs, '<cmd>lua '..action..'<cr>', expr)
+  U.map(mod, lhs, '<cmd>lua '..action..'<cr>', expr)
 end
 
-U.buf_map = function(mod, lhs, rhs, expr)
-  vim.api.nvim_buf_set_keymap('0', mod, lhs, rhs, {noremap=true, silent=true, expr=expr})
+U.buf_map = function(bufnr, mod, lhs, rhs, expr)
+  vim.api.nvim_buf_set_keymap(bufnr, mod, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 
 -- aucmd {event-Buf,File,Win,Tab,Focus,Cursor,..} {pat-filename} {cmd}
@@ -87,7 +88,7 @@ U.augroup = function(aucmds, name)
   vim.cmd('augroup ' .. name)
   vim.cmd('autocmd!') -- removes all existing autocommands in the group, and allows one to start afresh.
   for _, aucmd in ipairs(aucmds) do
-    vim.cmd('autocmd ' .. table.concat(cmd, ' '))
+    vim.cmd('autocmd ' .. table.concat(aucmd, ' '))
   end
   vim.cmd('augroup END')
 end

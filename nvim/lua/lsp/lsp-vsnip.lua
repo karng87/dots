@@ -1,32 +1,46 @@
 vim.cmd('packadd vim-vsnip')
 vim.cmd('packadd vim-vsnip-integ')
 
-local map = function(mod, lhs, rhs, expr)
-  vim.api.nvim_set_keymap(mod, lhs, rhs, {noremap = true, silent = true, expr = expr})
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
--- NOTE: You can use other key to expand snippet.
--- Expand
-map('i', '<C-j>', [[vsnip#expandable()  ? "\<Plug>(vsnip-expand)" : "\<C-j>"]], true)
-map('s', '<C-j>', [[vsnip#expandable()  ? "\<Plug>(vsnip-expand)" : "\<C-j>"]], true)
 
--- Expand or jump
-map('i', '<C-l>', [[vsnip#available(1)  ? "\<Plug>(vsnip-expand-or-jump)" : "\<C-l>"]], true)
-map('s', '<C-l>', [[vsnip#available(1)  ? "\<Plug>(vsnip-expand-or-jump)" : "\<C-l>"]], true)
+--local check_back_space = function()
+--    local col = vim.fn.col('.') - 1
+--    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+--        return true
+--    else
+--        return false
+--    end
+--end
 
--- Jump forward or backward
-map('i', '<Tab>', [[vsnip#jumpable(1)  ? "\<Plug>(vsnip-jump-next)"  : "\<Tab>"]], true)
-map('s', '<Tab>', [[vsnip#jumpable(1)   ? "\<Plug>(vsnip-jump-next)"  : "\<Tab>"]], true)
-map('i', '<S-Tab>', [[vsnip#jumpable(-1)  ? "\<Plug>(vsnip-jump-prev)"  : "\<S-Tab>"]], true)
-map('s', '<S-Tab>', [[vsnip#jumpable(-1)  ? "\<Plug>(vsnip-jump-prev)"  : "\<STab>"]], true)
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+        return t "<C-n>"
+    elseif vim.fn.call("vsnip#available", {1}) == 1 then
+        return t "<Plug>(vsnip-expand-or-jump)"
+    else
+        return t "<Tab>"
+    --elseif check_back_space() then
+    --    return t "<Tab>"
+    --else
+    --    return vim.fn['compe#complete']()
+    end
+end
+_G.s_tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+        return t "<C-p>"
+    elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+        return t "<Plug>(vsnip-jump-prev)"
+    else
+        return t "<S-Tab>"
+    end
+end
 
--- Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
--- See https://github.com/hrsh7th/vim-vsnip/pull/50
-map('n', 's',  [[<Plug>(vsnip-select-text)]])
-map('x', 's',  [[<Plug>(vsnip-select-text)]])
-map('n', 'S',  [[<Plug>(vsnip-cut-text)]])
-map('x', 'S',  [[<Plug>(vsnip-cut-text)]])
-
--- If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
-vim.g.vsnip_filetypes = {}
-vim.g.vsnip_filetypes.javascriptreact = {'javascript'}
-vim.g.vsnip_filetypes.typescriptreact = {'typescript'}
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
