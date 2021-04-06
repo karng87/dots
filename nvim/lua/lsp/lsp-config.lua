@@ -1,6 +1,7 @@
 vim.cmd("packadd! nvim-lspconfig")
 
 local lsp = require'lspconfig'
+local opts = {noremap = true, silent = true }
 
 -- For snippet support
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -31,46 +32,45 @@ local on_attach_config = function(client, bufnr)
   --vim.fn.sign_define("LspDiagnosticsSignInformation", {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"})
   --vim.fn.sign_define("LspDiagnosticsErrorSign", {text = "whatever", texthl = "LspDiagnosticsError"})
 
-  vim.lsp.diagnostic.set_signs(vim.lsp.diagnostic.get(bufnr, client), bufnr, client)
+  --vim.lsp.diagnostic.set_signs(vim.lsp.diagnostic.get(bufnr, client), bufnr, client)
 
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   -- GOTO mappings
- U.buf_map(bufnr, 'n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
- U.buf_map(bufnr, 'n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>')
- U.buf_map(bufnr, 'n','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>')
- U.buf_map(bufnr, 'n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>')
- U.buf_map(bufnr, 'n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
- U.buf_map(bufnr, 'n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>')
- U.buf_map(bufnr, 'n','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>')
- U.buf_map(bufnr, 'n','<leader>gds','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
- U.buf_map(bufnr, 'n','<leader>gws','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gds','<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gws','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
 
- U.buf_map(bufnr, 'i','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
- U.buf_map(bufnr, 'i','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>')
- U.buf_map(bufnr, 'i','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>')
- U.buf_map(bufnr, 'i','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>')
- U.buf_map(bufnr, 'i','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
- U.buf_map(bufnr, 'i','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>')
- U.buf_map(bufnr, 'i','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>')
- U.buf_map(bufnr, 'i','<leader>gds','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
- U.buf_map(bufnr, 'i','<leader>gws','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gds','<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gws','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   -- ACTION mappings
- U.buf_map(bufnr, 'n','<leader>ac','<cmd>lua vim.lsp.buf.code_action()<CR>')
- U.buf_map(bufnr, 'n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>')
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>ac','<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   -- Few language severs support these three
- U.buf_map(bufnr, 'n','<leader>gf','<cmd>lua vim.lsp.buf.formatting()<CR>')
- U.buf_map(bufnr, 'n','<leader>gi','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
- U.buf_map(bufnr, 'n','<leader>go','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gf','<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gi','<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>go','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
   -- Diagnostics mapping
- U.buf_map(bufnr, 'n','<leader>ge','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
- U.buf_map(bufnr, 'n','<leader>gn','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
- U.buf_map(bufnr, 'n','<leader>gp','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>ge','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gn','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gp','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-   U.buf_map("n", "<leader>gf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gf', "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   elseif client.resolved_capabilities.document_range_formatting then
-   U.buf_map("n", "<leader>gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
+   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gf', "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -120,7 +120,7 @@ local on_attach = function(client, bufnr)
 end
 
 local on_attach_clangd = function(client, bufnr)
- U.buf_map('n', '<leader>sh', '<cmd>ClangdSwitchSourceHeader<CR>')
+ vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>sh', '<cmd>ClangdSwitchSourceHeader<CR>', opts)
   on_attach(client, bufnr)
 end
 
