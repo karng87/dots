@@ -1,6 +1,7 @@
+-- ~/Project/dots/nvim/lua/base/utils.lua
+U = require'base.utils'
 -- ~/Project/dots/nvim/lua/base/vim_cmd_set.lua
 require'base.vim_cmd_set'
-
 -- ~/Project/dots/nvim/lua/base/nvim_set_keymap.lua
 require'base.nvim_set_keymap'
 
@@ -26,8 +27,16 @@ require'nvim-web-devicons'.setup {
  -- will get overriden by `get_icons` option
  default = true;
 }
+
+-- ~/Project/dots/nvim/lua/lsp/lsp-config.lua
 require'lsp.lsp-config'
+
+-- ~/Project/dots/nvim/lua/lsp/lsp-completion-nvim.lua
+require'lsp.lsp-completion-nvim'
+
+-- ~/Project/dots/nvim/lua/lsp/lsp-treesitter.lua
 require'lsp.lsp-treesitter'
+
 --require'lsp.lsp-vsnip'
 --require'lsp.lsp-config'
 --require'lsp.lsp-treesitter'
