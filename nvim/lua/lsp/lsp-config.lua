@@ -116,63 +116,7 @@ lsp.clangd.setup{
                                 underline = true,
                                 update_in_insert = true })
   },
-  init_options = { clangdFileStatus = true },
-  cmd = {"clangd",
-    "--background-index",
-    "--suggest-missing-includes",
-    "--clang-tidy",
-    "--header-insertion=iwyu"
-    },
-  filetypes = {"c", "cpp", "objc", "objcpp"},
-    root_dir = lsp.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git", "LICENSE")
 }
-
-lsp.cmake.setup{
-  on_attach = on_attach,
-  cmd = { "cmake-language-server" },
-  filetypes = { "cmake" },
-  init_options = {
-    buildDirectory = "build",
-  }
-}
-
-lsp.sumneko_lua.setup{
-  on_attach = on_attach,
-  cmd = { "lua-language-server", "-E", "/usr/share/lua-language-server/main.lua" },
-  filetypes = { "lua" },
-  log_level = 2,
-  root_dir = lsp.util.root_pattern("LICENSE", ".git"),
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = vim.split(package.path, ';'),
-      },
-      diagnostics = {
-        enable = true,
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = {
-              [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-              [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        },
-      },
-    },
-  },
-}
-
-lsp.hls.setup{
-  on_attach = on_attach,
-  cmd = { "haskell-language-server-wrapper", "--lsp" },
-  filetypes = { "haskell", "lhaskell" },
-  root_dir = lsp.util.root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml", "LICENSE"),
-  settings = { languageServerHaskell = { formattingProvider = "ormolu" } }
-}
-
 lsp.vimls.setup {
   on_attach = on_attach,
   cmd = { "vim-language-server", "--stdio" },

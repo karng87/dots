@@ -29,7 +29,6 @@ require'nvim-web-devicons'.setup {
 require'lsp.lsp-config'
 require'lsp.lsp-treesitter'
 --require'lsp.lsp-vsnip'
-
 --require'lsp.lsp-config'
 --require'lsp.lsp-treesitter'
 --require'lsp.lsp-utils'

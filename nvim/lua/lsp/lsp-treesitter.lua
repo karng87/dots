@@ -14,5 +14,4 @@ require'nvim-treesitter.configs'.setup {
     rainbow = {enable = false},
     context_commentstring = {enable = true, config = {javascriptreact = {style_element = '{/*%s*/}'}}}
     -- refactor = {highlight_definitions = {enable = true}}
-    }
-}
+    }}
