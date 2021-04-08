@@ -38,7 +38,7 @@ local on_attach_config = function(client, bufnr)
   -- GOTO mappings
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', opts)
- vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gg','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -48,7 +48,7 @@ local on_attach_config = function(client, bufnr)
 
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', opts)
- vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gg','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -164,15 +164,15 @@ lsp.cmake.setup{
   on_attach = on_attach,
   cmd = { "cmake-language-server" },
   filetypes = { "cmake" },
+  root_dir = lsp.util.root_pattern(".git", "compile_commands.json", "build/", "LICENSE"),
   init_options = {
-          buildDirectory = "build",
-          -- root_dir = nvim_lsp.util.root_pattern(".git", "compile_commands.json", "build", "LICENSE")
+    buildDirectory = "build",
   }
 }
 
 lsp.sumneko_lua.setup{
   on_attach = on_attach,
-  cmd = { "lua-language-server", "-E", "/usr/share/lua-language-server/main.lua" },
+  cmd = { "/home/jkarng/lua/lua-language-server/bin/Linux/lua-language-server", "-E", "/home/jkarng/lua/lua-language-server/main.lua" },
   filetypes = { "lua" },
   log_level = 2,
   root_dir = lsp.util.root_pattern("LICENSE", ".git"),

@@ -40,4 +40,5 @@ U.set 'splitbelow'
 U.set ('updatetime', '1000')
 U.set 'showcmd'
 U.set ('showmode', false)
-U.set ('colorcolumn', '80')
+--U.set ('colorcolumn', '80')
+vim.o.shortmess = vim.o.shortmess .. "c"
