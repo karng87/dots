@@ -3,7 +3,7 @@ vim.cmd("packadd! nvim-lspconfig")
 local lsp = require'lspconfig'
 local opts = {noremap = true, silent = true }
 
--- For snippet support
+---- For snippet support
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -26,19 +26,13 @@ local on_attach_config = function(client, bufnr)
   vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", texthl = "GruvboxBlue"})
   vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "GruvboxAqua"})
 
-  --vim.fn.sign_define("LspDiagnosticsSignError", {texthl = "LspDiagnosticsSignError", text = "", numhl = "LspDiagnosticsSignError"})
-  --vim.fn.sign_define("LspDiagnosticsSignWarning", {texthl = "LspDiagnosticsSignWarning", text = "", numhl = "LspDiagnosticsSignWarning"})
-  --vim.fn.sign_define("LspDiagnosticsSignHint", {texthl = "LspDiagnosticsSignHint", text = "", numhl = "LspDiagnosticsSignHint"})
-  --vim.fn.sign_define("LspDiagnosticsSignInformation", {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"})
-  --vim.fn.sign_define("LspDiagnosticsErrorSign", {text = "whatever", texthl = "LspDiagnosticsError"})
-
   --vim.lsp.diagnostic.set_signs(vim.lsp.diagnostic.get(bufnr, client), bufnr, client)
 
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   -- GOTO mappings
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', opts)
- vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gg','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -48,7 +42,7 @@ local on_attach_config = function(client, bufnr)
 
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', opts)
- vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gg','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gh','<cmd>lua vim.lsp.buf.hover()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -56,14 +50,14 @@ local on_attach_config = function(client, bufnr)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gds','<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'i','<leader>gws','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   -- ACTION mappings
- vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>ac','<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
- vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gac','<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gar','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   -- Few language severs support these three
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gf','<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
- vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gi','<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
- vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>go','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gic','<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>goc','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
   -- Diagnostics mapping
- vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>ge','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+ vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gdl','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gn','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>gp','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 -- Set some keybinds conditional on server capabilities
@@ -73,50 +67,46 @@ local on_attach_config = function(client, bufnr)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gf', "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
-  -- Set autocommands conditional on server_capabilities
-    --hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-    --hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-    --hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
   if client.resolved_capabilities.document_highlight then
-  vim.api.nvim_exec([[
-    hi LspReferenceRead cterm=bold ctermbg=red guibg=black
-    hi LspReferenceText cterm=bold ctermbg=blue guibg=black
-    hi LspReferenceWrite cterm=bold ctermbg=yellow guibg=black
-    augroup lsp_document_highlight
-    autocmd! * <buffer>
-    autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    augroup END
-    ]], false)
+    vim.api.nvim_exec([[
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=black
+      hi LspReferenceText cterm=bold ctermbg=blue guibg=black
+      hi LspReferenceWrite cterm=bold ctermbg=yellow guibg=black
+      augroup lsp_document_highlight
+      autocmd! * <buffer>
+      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+      ]], false)
   end
 end
 
 -- local on_attach = function()
--- define an chain complete list
-local chain_complete_list = {
-  default = {
-    {complete_items = {'lsp', 'snippet'}},
-    {complete_items = {'path'}, triggered_only = {'/'}},
-    {complete_items = {'buffers'}},
-  },
-  string = {
-    {complete_items = {'path'}, triggered_only = {'/'}},
-  },
-  comment = {},
-}
-
-local on_attach_completion = function(_)
-  -- passing in a table with on_attach function
-  require'completion'.on_attach({
-    sorting = 'alphabet',
-    matching_strategy_list = {'exact', 'fuzzy'},
-    chain_complete_list = chain_complete_list,
-    })
-end
+---- define an chain complete list
+--local chain_complete_list = {
+--  default = {
+--    {complete_items = {'lsp', 'snippet'}},
+--    {complete_items = {'path'}, triggered_only = {'/'}},
+--    {complete_items = {'buffers'}},
+--  },
+--  string = {
+--    {complete_items = {'path'}, triggered_only = {'/'}},
+--  },
+--  comment = {},
+--}
+--
+--local on_attach_completion = function(_)
+--  -- passing in a table with on_attach function
+--  require'completion'.on_attach({
+--    sorting = 'alphabet',
+--    matching_strategy_list = {'exact', 'fuzzy'},
+--    chain_complete_list = chain_complete_list,
+--    })
+--end
 
 local on_attach = function(client, bufnr)
   on_attach_config(client, bufnr)
-  on_attach_completion()
+  --on_attach_completion()
 end
 
 local on_attach_clangd = function(client, bufnr)
@@ -127,14 +117,23 @@ end
 -- https://sarcasm.github.io/notes/dev/compilation-database.html#clang
 lsp.clangd.setup{
   on_attach = on_attach_clangd,
-  handlers = {
-    ["textDocument/publishDiagnostics"] =
-      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-                                virtual_text = true,
-                                signs = true,
-                                underline = true,
-                                update_in_insert = true })
-  },
+  --handlers = {
+  --  ["textDocument/publishDiagnostics"] =
+  --    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  --                              virtual_text = true,
+  --                              signs = true,
+  --                              underline = true,
+  --                              update_in_insert = true })
+  --},
+  init_options = { clangdFileStatus = true },
+  cmd = {"clangd",
+    			"--background-index",
+    			"--suggest-missing-includes",
+    			"--clang-tidy",
+    			"--header-insertion=iwyu"
+    	},
+  filetypes = {"c", "cpp", "objc", "objcpp"},
+  root_dir = lsp.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git", "LICENSE")
 }
 
 lsp.vimls.setup {

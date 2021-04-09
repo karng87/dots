@@ -10,9 +10,6 @@ require'base.nvim_set_keymap'
 -- ~/Project/dots/nvim/lua/base/gruvbox.lua
 require'base.gruvbox'
 
-vim.cmd('packadd vim-airline')
---vim.cmd('packadd popup')
-
 vim.cmd('packadd nvim-web-devicons')
 require'nvim-web-devicons'.setup {
  -- your personnal icons can go here (to override)
@@ -29,6 +26,11 @@ require'nvim-web-devicons'.setup {
  default = true;
 }
 
+-- ~/Project/dots/nvim/lua/base/galaxyline.lua
+require 'base.galaxyline'
+--vim.cmd('packadd popup')
+
+
 -- ~/Project/dots/nvim/lua/lsp/lsp-config.lua
 require'lsp.lsp-config'
 
@@ -41,6 +43,8 @@ require'lsp.lsp-vsnip'
 -- ~/Project/dots/nvim/lua/lsp/lsp-treesitter.lua
 require'lsp.lsp-treesitter'
 
+-- ~/Project/dots/nvim/lua/lsp/lsp-saga.lua
+require'lsp.lsp-saga'
 --require'lsp.lsp-vsnip'
 --require'lsp.lsp-config'
 --require'lsp.lsp-treesitter'
