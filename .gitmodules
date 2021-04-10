@@ -1,6 +1,9 @@
 [submodule "nvim/pack/theme/opt/gruvbox"]
 	path = nvim/pack/theme/opt/gruvbox
 	url = https://github.com/morhetz/gruvbox.git
+[submodule "nvim/pack/theme/opt/galaxyline-nvim"]
+	path = nvim/pack/theme/opt/galaxyline-nvim
+        url = https://github.com/glepnir/galaxyline.nvim.git
 [submodule "nvim/pack/theme/opt/vim-airline"]
 	path = nvim/pack/theme/opt/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
@@ -40,3 +43,12 @@
 [submodule "nvim/pack/vscode/opt/vim-vsnip-integ"]
 	path = nvim/pack/vscode/opt/vim-vsnip-integ
 	url = https://github.com/hrsh7th/vim-vsnip-integ.git
+[submodule "nvim/pack/lsp/opt/lsp-status"]
+	path = nvim/pack/lsp/opt/lsp-status
+        url = https://github.com/nvim-lua/lsp-status.nvim.git
+[submodule "nvim/pack/lsp/opt/lspkind-nvim"]
+	path = nvim/pack/lsp/opt/lspkind-nvim
+        url = https://github.com/onsails/lspkind-nvim.git
+[submodule "nvim/pack/lsp/opt/lspsaga-nvim"]
+	path = nvim/pack/lsp/opt/lspsaga-nvim
+        url = https://github.com/glepnir/lspsaga.nvim.git
