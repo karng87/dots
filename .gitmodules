@@ -13,3 +13,30 @@
 [submodule "nvim/pack/lsp/opt/nvim-treesitter"]
 	path = nvim/pack/lsp/opt/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+[submodule "nvim/pack/lsp/opt/popfix"]
+	path = nvim/pack/lsp/opt/popfix
+	url = https://github.com/RishabhRD/popfix.git
+[submodule "nvim/pack/lsp/opt/nvim-lsputils"]
+	path = nvim/pack/lsp/opt/nvim-lsputils
+	url = https://github.com/RishabhRD/nvim-lsputils.git
+[submodule "nvim/pack/theme/opt/nvim-web-devicons"]
+	path = nvim/pack/theme/opt/nvim-web-devicons
+	url = https://github.com/kyazdani42/nvim-web-devicons.git
+[submodule "nvim/pack/lsp/opt/plenary"]
+	path = nvim/pack/lsp/opt/plenary
+	url = https://github.com/nvim-lua/plenary.nvim.git
+[submodule "nvim/pack/lsp/opt/telescope"]
+	path = nvim/pack/lsp/opt/telescope
+	url = https://github.com/nvim-telescope/telescope.nvim.git
+[submodule "nvim/pack/lsp/opt/popup"]
+	path = nvim/pack/lsp/opt/popup
+	url = https://github.com/nvim-lua/popup.nvim.git
+[submodule "nvim/pack/lsp/opt/nvim-compe"]
+	path = nvim/pack/lsp/opt/nvim-compe
+	url = https://github.com/hrsh7th/nvim-compe.git
+[submodule "nvim/pack/vscode/opt/vim-vsnip"]
+	path = nvim/pack/vscode/opt/vim-vsnip
+	url = https://github.com/hrsh7th/vim-vsnip.git
+[submodule "nvim/pack/vscode/opt/vim-vsnip-integ"]
+	path = nvim/pack/vscode/opt/vim-vsnip-integ
+	url = https://github.com/hrsh7th/vim-vsnip-integ.git

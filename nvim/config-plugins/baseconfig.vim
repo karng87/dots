@@ -62,9 +62,9 @@ nnoremap <leader>_ <c-w>_
 inoremap <leader>_ <c-w>_
 tnoremap <leader>_ <c-\><c-n><c-w>_
 
-nnoremap <leader>\| <c-w>\|
-inoremap <leader>\| <c-w>\|
-tnoremap <leader>\| <c-\><c-n><c-w>\|
+nnoremap <leader>\| <c-w>\|<c-w>_
+inoremap <leader>\| <c-w>\|<c-w>_
+tnoremap <leader>\| <c-\><c-n><c-w>\|<c-w>_
 
 nnoremap <leader>= <c-w>=
 inoremap <leader>= <c-w>=

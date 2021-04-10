@@ -12,3 +12,4 @@ git submodule deinit -f -- path
 rm -rf .git/module/path
 git rm -f path
 
+git submodule update --init --recursive

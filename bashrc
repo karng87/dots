@@ -1,7 +1,6 @@
 #
 # ~/.bashrc
 #
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -37,7 +36,14 @@ alias cdf="cd $fh && clear && tree -d -L 1"
 alias cdd="cd $dh && clear && tree -d -L 1"
 alias cdb="cd build && clear"
 
-alias ei="cd $nh && nvim init.vim"
+alias ei="cd $nh && nvim init.lua"
 alias eb="cd && nvim .bashrc"
 alias et="cd $th && nvim terms.md"
 alias ec="nvim CMakeLists.txt"
+
+# yarn config set prefix ~/.yarn-global
+export PATH="$PATH:`yarn global bin`"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
