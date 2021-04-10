@@ -18,8 +18,9 @@ U.set ('backup', false)
 U.set ('completeopt', 'menu,menuone,noselect')
 
 -- Tabs configuration
-U.set ('softtabstop', 2)
-U.set ('shiftwidth', 2)
+U.set ('tabstop', 3)
+U.set ('softtabstop', 3)
+U.set ('shiftwidth', 3)
 U.set 'expandtab'
 U.set 'autoindent'
 U.set 'cindent'

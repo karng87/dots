@@ -49,8 +49,9 @@ vim.api.nvim_set_keymap('n', '<leader>d', [[:Lspsaga preview_definition<CR>]], {
 vim.api.nvim_set_keymap('n', '<leader>o', ':Lspsaga hover_doc<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>c', ':Lspsaga code_action<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<leader>c', ':<C-U>Lspsaga range_code_action<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>b', [[:Lspsaga open_floaterm<CR>]], {noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<leader>b', [[<C-\><C-n>:Lspsaga close_floaterm<CR>]], {noremap = true, silent = true})
+-- use dic word macro
+--vim.api.nvim_set_keymap('n', '<leader>b', [[:Lspsaga open_floaterm<CR>]], {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('t', '<leader>b', [[<C-\><C-n>:Lspsaga close_floaterm<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<c-f>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<c-b>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>]], {noremap = true, silent = true})
 
