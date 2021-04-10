@@ -72,6 +72,10 @@ U.map('n', '<leader>we', ':winc =<cr>')
 U.map('i', '<leader>we', '<ESC><c-u>:winc =<cr>')
 U.map('t', '<leader>we', [[<c-\><c-n>:winc =<cr>]])
 
+U.map('n', '<leader>e', [[:Lexplore<cr>:vertical resize 30<cr>]])
+U.map('i', '<leader>e', [[<ESC><c-u>:Lexplore<cr>:vertical resize 30<cr>]])
+U.map('t', '<leader>e', [[<c-\><c-n>:Lexplore<cr>:vertical resize 30<cr>]])
+
 U.map('n', '<leader>wn', ':wall<cr>:botright new')
 U.map('i', '<leader>wn', '<ESC>:wall<cr>:botright new')
 U.map('t', '<leader>wn', [[<c-\><c-n>:botright new]])
@@ -95,8 +99,8 @@ U.map('i', '<leader>p', '<c-o>"+p')
 U.map('c', '<leader>p', '<c-r>+')
 U.map('t', '<leader>p', '<c-e><c-u>dic <c-r>+<cr>')
 
-U.map('n', '<leader>wd', [[b"+yw:botright new term://bash<cr>:winc _<cr>idic <c-\><c-n>"+pi<c-e><cr>]])
-U.map('i', '<leader>wd', [[<ESC>b"+yw:botright new term://bash<cr>:winc _<cr>idic <c-\><c-n>pi<cr>]])
+U.map('n', '<leader>wd', [[b"+yw<cr>:Lspsaga open_floaterm<CR>dic <c-\><c-n>"+pi<c-e><cr>]])
+U.map('i', '<leader>wd', [[<ESC>b"+yw<cr>:Lspsaga open_floaterm<CR>dic <c-\><c-n>pi<cr>]])
 
 U.map('n', '<leader>wb', ':botright new term://bash<cr>')
 U.map('i', '<leader>wb', '<ESC>:w<cr>:botright new term://bash<cr>')
