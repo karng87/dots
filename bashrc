@@ -40,7 +40,7 @@ alias ei="cd $nh && nvim init.lua"
 alias eb="cd && nvim .bashrc"
 alias et="cd $th && nvim terms.md"
 alias ec="nvim CMakeLists.txt"
-
+alias n="nvim"
 # yarn config set prefix ~/.yarn-global
 export PATH="$PATH:`yarn global bin`"
 
