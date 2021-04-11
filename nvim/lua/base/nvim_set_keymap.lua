@@ -3,6 +3,7 @@
   --end
 
   -- Use <Tab> and <S-Tab> to navigate through popup menu
+vim.g.mapleader = ','
   U.map('i', '<c-j>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], true)
   U.map('i', '<c-k>', [[pumvisible() ? "\<C-p>" : "\<Tab>"]], true)
 
@@ -72,9 +73,9 @@ U.map('n', '<leader>we', ':winc =<cr>')
 U.map('i', '<leader>we', '<ESC><c-u>:winc =<cr>')
 U.map('t', '<leader>we', [[<c-\><c-n>:winc =<cr>]])
 
-U.map('n', '<leader>e', [[:Lexplore<cr>:vertical resize 30<cr>]])
-U.map('i', '<leader>e', [[<ESC><c-u>:Lexplore<cr>:vertical resize 30<cr>]])
-U.map('t', '<leader>e', [[<c-\><c-n>:Lexplore<cr>:vertical resize 30<cr>]])
+--U.map('n', '<leader>nl', [[:Lexplore<cr>:vertical resize 30<cr>]])
+--U.map('i', '<leader>nl', [[<ESC><c-u>:Lexplore<cr>:vertical resize 30<cr>]])
+--U.map('t', '<leader>nl', [[<c-\><c-n>:Lexplore<cr>:vertical resize 30<cr>]])
 
 U.map('n', '<leader>wn', ':wall<cr>:botright new')
 U.map('i', '<leader>wn', '<ESC>:wall<cr>:botright new')

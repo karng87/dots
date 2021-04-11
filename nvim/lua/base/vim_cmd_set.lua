@@ -1,4 +1,3 @@
-vim.g.mapleader = ','
 --local function set(key, value)
 --	if value == true or value == nil then
 --		vim.cmd(string.format('set %s', key))

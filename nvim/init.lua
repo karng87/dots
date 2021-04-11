@@ -7,6 +7,9 @@ require'base.vim_cmd_set'
 -- ~/Project/dots/nvim/lua/base/nvim_set_keymap.lua
 require'base.nvim_set_keymap'
 
+-- ~/Project/dots/nvim/lua/base/netrw.lua
+require'base.netrw'
+
 -- ~/Project/dots/nvim/lua/base/gruvbox.lua
 require'base.gruvbox'
 
