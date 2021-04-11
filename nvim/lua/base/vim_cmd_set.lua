@@ -42,3 +42,5 @@ U.set 'showcmd'
 U.set ('showmode', false)
 --U.set ('colorcolumn', '80')
 vim.o.shortmess = vim.o.shortmess .. "c"
+-- tab: <c-v>u2192, end of line: <c-v>u21b2
+vim.cmd([[set listchars=tab:→\ ,eol:↲]])

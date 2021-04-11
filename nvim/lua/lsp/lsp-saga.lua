@@ -50,17 +50,17 @@ vim.api.nvim_set_keymap('n', '<leader>o', ':Lspsaga hover_doc<CR>', {noremap = t
 vim.api.nvim_set_keymap('n', '<leader>c', ':Lspsaga code_action<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<leader>c', ':<C-U>Lspsaga range_code_action<CR>', {noremap = true, silent = true})
 -- use dic word macro
-vim.api.nvim_set_keymap('n', '<leader>b', [[:Lspsaga open_floaterm<CR>]], {noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<leader>b', [[<C-\><C-n>:Lspsaga close_floaterm<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sb', [[:Lspsaga open_floaterm<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<leader>sb', [[<C-\><C-n>:Lspsaga close_floaterm<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<c-f>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<c-b>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>]], {noremap = true, silent = true})
 
-vim.api.nvim_set_keymap('n', '<leader>dr', [[:Lspsaga rename<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sr', [[:Lspsaga rename<CR>]], {noremap = true, silent = true})
 
 -- show diagnostic if line is over the area
-vim.api.nvim_set_keymap('n', '<leader>dl', [[:Lspsaga show_line_diagnostics<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sl', [[:Lspsaga show_line_diagnostics<CR>]], {noremap = true, silent = true})
 -- only show diagnostic if cursor is over the area
-vim.api.nvim_set_keymap('n', '<leader>dc', [[:Lspsaga show_cursor_diagnostics<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sc', [[:Lspsaga show_cursor_diagnostics<CR>]], {noremap = true, silent = true})
 -- jump diagnostic
-vim.api.nvim_set_keymap('n', '<leader>dj', [[:Lspsaga diagnostic_jump_next<CR>]], {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>dk', [[:Lspsaga diagnostic_jump_prev<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sj', [[:Lspsaga diagnostic_jump_next<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sk', [[:Lspsaga diagnostic_jump_prev<CR>]], {noremap = true, silent = true})
