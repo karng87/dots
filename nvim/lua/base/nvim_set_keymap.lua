@@ -1,3 +1,9 @@
+-- normal mode register = "[register name]
+-- insert mode register = <c-r>[register name]
+-- command mode register = <c-r>[register name]
+-- -- :[range] yank [register name]
+-- -- :[range] y [register name]
+--
 --local function map(mod, lhs, rhs, expr)
 --  vim.api.nvim_set_keymap(mod, lhs, rhs, {noremap=true, silent=true, expr=expr})
   --end
@@ -5,10 +11,10 @@
   -- Use <Tab> and <S-Tab> to navigate through popup menu
 vim.g.mapleader = ','
   U.map('n', '<leader>q', [[:q<cr>]])
-  U.map('n', '<leader>qq', [[:Lspsaga close_floaterm<cr>]])
+  --U.map('n', '<leader>sb', [[:Lspsaga close_floaterm<cr>]])
   U.map('i', '<leader>q', '<ESC>:q<cr>')
   U.map('t', '<leader>q', [[<c-\><c-n>:q<cr>]])
-  U.map('t', '<leader>qq', [[<c-\><c-n>:Lspsaga close_floaterm<cr>]])
+  --U.map('t', '<leader>sb', [[<c-\><c-n>:Lspsaga close_floaterm<cr>]])
   U.map('c', '<leader>q', '<c-u>q<cr>')
   U.map('v', '<leader>q', '<ESC>:q<cr>')
   U.map('s', '<leader>q', '<ESC>:q<cr>')
@@ -21,7 +27,7 @@ vim.g.mapleader = ','
   U.map('v', '<leader>0', '<ESC>:q!<cr>')
 
   U.map('i', '<c-j>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], true)
-  U.map('i', '<c-k>', [[pumvisible() ? "\<C-p>" : "\<Tab>"]], true)
+ -- U.map('i', '<c-k>', [[pumvisible() ? "\<C-p>" : "\<Tab>"]], true)
 
   U.map('n', '<leader>,', '<ESC>')
   U.map('i', '<leader>,', '<ESC>')
@@ -98,35 +104,37 @@ U.map('t', '<leader>wv', [[<c-\><c-n>:botright vnew]])
 --U.map('n', '<leader>v', '<c-v>')
 --U.map('i', '<leader>v', '<esc><c-v>')
 --U.map('t', '<leader>v', [[<c-\><c-n><c-v>]])
+-- use dic word macro
+-- ~/Project/dots/nvim/lua/lsp/lsp-saga.lua
 
-
-U.map('n', '<leader>wd', [["+yiw<cr>:Lspsaga open_floaterm<CR>dic <c-\><c-n>"+pi<c-e><cr>]])
-U.map('i', '<leader>wd', [[<ESC>"+yiw<cr>:Lspsaga open_floaterm<CR>dic <c-\><c-n>"+pi<c-e><cr>]])
---U.map('n', '<leader>wd', [["+yiw<cr>:botright new term://bash<CR>idic <c-\><c-n>"+pi<c-e><cr>]])
---U.map('i', '<leader>wd', [[<ESC>"+yiw<cr>:botright new term://bash<CR>idic <c-\><c-n>"+pi<cr>]])
+U.map('n', '<leader>wd', [["+yiw<cr>:botright new term://bash<CR>idic <c-\><c-n>"+pi<c-e><cr>]])
+U.map('i', '<leader>wd', [[<ESC>"+yiw<cr>:botright new term://bash<CR>idic <c-\><c-n>"+pi<cr>]])
+U.map('t', '<leader>wd', [[<c-u>dic <c-\><c-n>"+pi<c-e><cr>]])
 
 U.map('n', '<leader>b', ':up|botright new term://bash<cr>')
 U.map('i', '<leader>b', '<ESC>:up|botright new term://bash<cr>')
 U.map('c', '<leader>b', '<c-u>:up|botright new term:://bash<cr>')
 U.map('t', '<leader>b', '<c-e><c-u>make -j4<cr>')
 
-U.map('n', '<leader>mc', ':up|make -C build|cwin<cr>')
-U.map('i', '<leader>mc', '<ESC>:up|make -C build|cwin<cr>')
-U.map('c', '<leader>mc', '<c-u>:up|make -C build|cwin<cr>')
-U.map('t', '<leader>mc', '<c-e><c-u>make -j4<cr>')
-U.map('n', '<leader>mb', ':up|:Lspsaga open_floaterm<cr>cd build<cr>')
-U.map('i', '<leader>mb', '<ESC>:up|:Lspsaga open_floaterm<cr>cd build<cr>')
-U.map('c', '<leader>mb', '<c-u>:up|:Lspsaga open_floaterm<cr>cd build<cr>')
-U.map('t', '<leader>mb', '<c-e><c-u>make VERBOSE=1 -j4<cr>')
+U.map('n', '<leader>mm', ':up|make -C build -j4|copen<cr>')
+U.map('i', '<leader>mm', '<ESC>:up|make -C build |copen<cr>')
+U.map('c', '<leader>mm', '<c-u>:up|make -C build |copen<cr>')
+U.map('t', '<leader>mm', '<c-e><c-u>make <cr>')
+U.map('n', '<leader>mn', ':up|:set makeprg=ninja | make -C build | copen<cr>')
+U.map('i', '<leader>mn', '<ESC>:up|:set makeprg=ninja | make -C build |copen<cr>')
+U.map('c', '<leader>mn', '<c-u>:up|:set makeprg=ninja | make -C build |copen<cr>')
+U.map('t', '<leader>mn', '<c-e><c-u>ninja<cr>')
+vim.cmd('packadd termdebug')
+U.map('n', '<leader>md', [[:let @a=line('.') | let @b="<c-r>+"<cr><c-u>:Termdebug build/jve<cr>:sleep 100m<cr>i<c-\><c-n>ibreak <c-\><c-n>"ap<cr>i<c-e><cr><c-\><c-n>irun<cr><c-\><c-n>:sleep 200m<cr>ip <c-\><c-n>:put "b<cr>i<cr>]])
 
-U.map('n', '<leader>1', ':botright new $nh/init.lua<cr>')
-U.map('i', '<leader>1', '<esc>:botright new $nh/init.lua<cr>')
+U.map('n', '<leader>1', ':tabnew $nh/init.lua<cr>')
+U.map('i', '<leader>1', '<esc>:tabnew $nh/init.lua<cr>')
 U.map('t', '<leader>1', [[<c-\><c-n>:botright new $nh/init.lua<cr>]])
 
-U.map('n', '<leader>2', ':botright new ~/.bashrc<cr>')
-U.map('i', '<leader>2', '<esc>:botright new ~/.bashrc<cr>')
+U.map('n', '<leader>2', ':tabnew ~/.bashrc<cr>')
+U.map('i', '<leader>2', '<esc>:tabnew ~/.bashrc<cr>')
 U.map('t', '<leader>2', [[<c-\><c-n>:botright new ~/.bashrc<cr>]])
 
-U.map('n', '<leader>3', ':vnew $th/terms.md<cr>')
-U.map('i', '<leader>3', '<esc>:vnew $th/terms.md<cr>')
-U.map('t', '<leader>3', [[<c-\><c-n>:vnew $th/terms.md<cr>]])
+U.map('n', '<leader>3', ':tabnew $th/terms.md<cr>')
+U.map('i', '<leader>3', '<esc>:tabnew $th/terms.md<cr>')
+U.map('t', '<leader>3', [[<c-\><c-n>:tabnew $th/terms.md<cr>]])

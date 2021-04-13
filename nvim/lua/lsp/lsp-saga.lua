@@ -49,9 +49,9 @@ vim.api.nvim_set_keymap('n', '<leader>d', [[:Lspsaga preview_definition<CR>]], {
 vim.api.nvim_set_keymap('n', '<leader>o', ':Lspsaga hover_doc<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>c', ':Lspsaga code_action<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<leader>c', ':<C-U>Lspsaga range_code_action<CR>', {noremap = true, silent = true})
--- use dic word macro
-vim.api.nvim_set_keymap('n', '<leader>sb', [[:Lspsaga open_floaterm<CR>]], {noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<leader>sb', [[<C-\><C-n>:Lspsaga close_floaterm<CR>]], {noremap = true, silent = true})
+---- use dic word macro, move to key_map_setting
+--vim.api.nvim_set_keymap('n', '<leader>sb', [[:Lspsaga open_floaterm<CR>]], {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('t', '<leader>sb', [[<C-\><C-n>:Lspsaga close_floaterm<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<c-f>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<c-b>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>]], {noremap = true, silent = true})
 
@@ -62,5 +62,13 @@ vim.api.nvim_set_keymap('n', '<leader>sl', [[:Lspsaga show_line_diagnostics<CR>]
 -- only show diagnostic if cursor is over the area
 vim.api.nvim_set_keymap('n', '<leader>sc', [[:Lspsaga show_cursor_diagnostics<CR>]], {noremap = true, silent = true})
 -- jump diagnostic
-vim.api.nvim_set_keymap('n', '<leader>sj', [[:Lspsaga diagnostic_jump_next<CR>]], {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>sk', [[:Lspsaga diagnostic_jump_prev<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sn', [[:Lspsaga diagnostic_jump_next<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sp', [[:Lspsaga diagnostic_jump_prev<CR>]], {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<leader>sb', [[:Lspsaga open_floaterm<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<leader>sb', [[<C-\><C-n>:Lspsaga close_floaterm<CR>]], {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<leader>sd', [["+yiw<cr>:Lspsaga open_floaterm<CR>dic <c-\><c-n>"+pi<c-e><cr>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<leader>sd', [[<ESC>"+yiw<cr>:Lspsaga open_floaterm<CR>dic <c-\><c-n>"+pi<c-e><cr>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<leader>sd', [[<c-u>dic <c-\><c-n>"+pi<c-e><cr>]], {noremap = true, silent = true})
+
