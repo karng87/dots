@@ -1,6 +1,6 @@
--- ~/Project/dots/nvim/lua/base/utils.lua
+-- ~/Project/dots/nvim/lua/base/utilslua
 U = require'base.utils'
-vim.cmd('set nobackup nowritebackup')
+
 -- ~/Project/dots/nvim/lua/base/vim_cmd_set.lua
 require'base.vim_cmd_set'
 

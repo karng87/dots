@@ -44,3 +44,7 @@ U.set ('showmode', false)
 vim.o.shortmess = vim.o.shortmess .. "c"
 -- tab: <c-v>u2192, end of line: <c-v>u21b2
 vim.cmd([[set listchars=tab:→\ ,eol:↲]])
+vim.cmd([[set nobackup]])
+vim.cmd([[set nowritebackup]])
+vim.cmd([[set noswapfile]])
+vim.cmd([[set noundofile]])
