@@ -116,44 +116,53 @@ vim.g.mapleader = ','
 
    U.map('n', [[<leader>b]], [[:up|botright new term://bash<cr>]])
    U.map('i', [[<leader>b]], [[<ESC>:up|botright new term://bash<cr>]])
-   U.map('c', [[<leader>b]], [[<c-u>:up|botright new term://bash<cr>]])
    U.map('t', [[<leader>b]], [[<c-e><c-u>make -j4<cr>]])
 
-   U.map('n', [[<leader>cm]], [[:up|make -C build -j4|copen<cr>]])
-   U.map('i', [[<leader>cm]], [[<ESC>:up|make -C build |copen<cr>]])
-   U.map('c', [[<leader>cm]], [[<c-u>:up|make -C build |copen<cr>]])
-   U.map('t', [[<leader>cm]], [[<c-e><c-u>make <cr>]])
+   -- build cmake ccmake make ninja
+   U.map('n', [[<leader>cm]], [[:up|set makeprg=make|make -C build<cr> | <esc>:copen<cr>]])
+   U.map('i', [[<leader>cm]], [[<ESC>:up|make -C build|<esc>:copen<cr>]])
+   U.map('t', [[<leader>cm]], [[<c-e><c-u>make -C build<cr>]])
+
    U.map('n', [[<leader>cn]], [[:up|set makeprg=ninja | make -C build | copen<cr>]])
    U.map('i', [[<leader>cn]], [[<ESC>:up|set makeprg=ninja | make -C build |copen<cr>]])
-   U.map('c', [[<leader>cn]], [[<c-u>:up|set makeprg=ninja | make -C build |copen<cr>]])
-   U.map('t', [[<leader>cn]], [[<c-e><c-u>ninja<cr>]])
+   U.map('t', [[<leader>cn]], [[<c-e><c-u>ninja -C build<cr>]])
+
+   U.map('n', [[<leader>cc]], [[:up | set makeprg=cmake | make -B build<cr> | <esc>:copen<cr>]])
+   U.map('i', [[<leader>cc]], [[<ESC>:up | set makeprg=cmake | make -B build<cr> | <esc>:copen<cr>]])
+   U.map('t', [[<leader>cc]], [[<c-e><c-u>ccmake -B build<cr>]])
+
+   U.map('n', [[<leader>ce]], [[:up | botright new term://bash<cr>|i./build/jve<cr>]])
+   U.map('i', [[<leader>ce]], [[<ESC>::up | botright new term://bash<cr> | i./build/jve<cr>]])
+   U.map('t', [[<leader>ce]], [[<c-e><c-u>./build/jve<cr>]])
+   -- termbug Termbug exex
    vim.cmd('packadd termdebug')
-   U.map('n', [[<leader>cd]], [[:let @a=line('.') | let @b="<c-r>+"<cr>:<c-u>Termdebug build/jve<cr>:sleep 100m<cr>ibreak <c-\><c-n>"ap<cr>i<c-e><cr><c-\><c-n>irun<cr><c-\><c-n>:sleep 200m<cr>ip <c-\><c-n>:put "b<cr>i<cr>]])
 
-   U.map('n', [[<leader>11]], [[:tabnew $nh/init.lua<cr>]])
-   U.map('i', [[<leader>11]], [[<esc>:tabnew $nh/init.lua<cr>]])
-   U.map('t', [[<leader>11]], [[<c-\><c-n>:botright new $nh/init.lua<cr>]])
+   U.map('n', [[<leader>cg]], [[:let @a=expand("%").":".line('.') | let @b="<c-r>+"<cr>:<c-u>Termdebug build/jve<cr>:sleep 100m<cr>ibreak <c-\><c-n>"ap<cr>i<c-e><cr><c-\><c-n>irun<cr><c-\><c-n>:sleep 200m<cr>ip *<c-\><c-n>:put "b<cr>i]])
+   -- shortcut to lua files
+   U.map('n', [[<leader>11]], [[:up|tabnew $nh/init.lua<cr>]])
+   U.map('i', [[<leader>11]], [[<esc>:up|tabnew $nh/init.lua<cr>]])
+   U.map('t', [[<leader>11]], [[<c-\><c-n>:up|botright new $nh/init.lua<cr>]])
 
-   U.map('n', [[<leader>12]], [[:tabnew $nh/lua/base/vim_cmd_set.lua<cr>]])
-   U.map('i', [[<leader>12]], [[<esc>:tabnew $nh/lua/base/vim_cmd_set.lua<cr>]])
-   U.map('t', [[<leader>12]], [[<c-\><c-n>:botright new $nh/lua/base/vim_cmd_set.lua<cr>]])
+   U.map('n', [[<leader>12]], [[:up|tabnew $nh/lua/base/vim_cmd_set.lua<cr>]])
+   U.map('i', [[<leader>12]], [[<esc>:up|tabnew $nh/lua/base/vim_cmd_set.lua<cr>]])
+   U.map('t', [[<leader>12]], [[<c-\><c-n>:up|botright new $nh/lua/base/vim_cmd_set.lua<cr>]])
 
-   U.map('n', [[<leader>13]], [[:tabnew $nh/lua//base/nvim_set_keymap.lua<cr>]])
+   U.map('n', [[<leader>13]], [[:up|tabnew $nh/lua//base/nvim_set_keymap.lua<cr>]])
    U.map('i', [[<leader>13]], [[<esc>:tabnew $nh/lua/base/nvim_set_keymap.lua<cr>]])
    U.map('t', [[<leader>13]], [[<c-\><c-n>:botright new $nh/lua/base/vim_cmd_set.lua<cr>]])
 
-   U.map('n', [[<leader>14]], [[:tabnew $nh/lua/lsp/lsp-config.lua<cr>]])
-   U.map('i', [[<leader>14]], [[<esc>:tabnew $nh/lua/lsp/lsp-config.lua<cr>]])
+   U.map('n', [[<leader>14]], [[:up|tabnew $nh/lua/lsp/lsp-config.lua<cr>]])
+   U.map('i', [[<leader>14]], [[<esc>:up|tabnew $nh/lua/lsp/lsp-config.lua<cr>]])
    U.map('t', [[<leader>14]], [[<c-\><c-n>:botright new $nh/lua/lsp/lsp-config.lua<cr><cr>]])
 
-   U.map('n', [[<leader>15]], [[:tabnew $nh/lua/lsp/lsp-saga.lua<cr>]])
-   U.map('i', [[<leader>15]], [[<esc>:tabnew $nh/lua/lsp/lsp-saga.lua<cr>]])
-   U.map('t', [[<leader>15]], [[<c-\><c-n>:botright new $nh/lua/lsp/lsp-saga.lua<cr><cr>]])
+   U.map('n', [[<leader>15]], [[:up|tabnew $nh/lua/lsp/lsp-saga.lua<cr>]])
+   U.map('i', [[<leader>15]], [[<esc>:up|tabnew $nh/lua/lsp/lsp-saga.lua<cr>]])
+   U.map('t', [[<leader>15]], [[<c-\><c-n>:up|botright new $nh/lua/lsp/lsp-saga.lua<cr><cr>]])
 
-   U.map('n', [[<leader>2]], [[:tabnew ~/.bashrc<cr>]])
-   U.map('i', [[<leader>2]], [[<esc>:tabnew ~/.bashrc<cr>]])
-   U.map('t', [[<leader>2]], [[<c-\><c-n>:botright new ~/.bashrc<cr>]])
+   U.map('n', [[<leader>2]], [[:up|tabnew ~/.bashrc<cr>]])
+   U.map('i', [[<leader>2]], [[<esc>:up|tabnew ~/.bashrc<cr>]])
+   U.map('t', [[<leader>2]], [[<c-\><c-n>:up|botright new ~/.bashrc<cr>]])
 
-   U.map('n', [[<leader>3]], [[:tabnew $th/terms.md<cr>]])
-   U.map('i', [[<leader>3]], [[<esc>:tabnew $th/terms.md<cr>]])
-   U.map('t', [[<leader>3]], [[<c-\><c-n>:tabnew $th/terms.md<cr>]])
+   U.map('n', [[<leader>3]], [[:up|tabnew $th/terms.md<cr>]])
+   U.map('i', [[<leader>3]], [[<esc>:up|tabnew $th/terms.md<cr>]])
+   U.map('t', [[<leader>3]], [[<c-\><c-n>:up|tabnew $th/terms.md<cr>]])

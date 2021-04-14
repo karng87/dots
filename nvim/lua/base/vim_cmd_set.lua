@@ -15,11 +15,10 @@ U.set 'undofile'
 U.set ('swapfile', false)
 U.set ('backup', false)
 U.set ('completeopt', 'menu,menuone,noselect')
-
 -- Tabs configuration
-U.set ('tabstop', 3)
-U.set ('softtabstop', 3)
-U.set ('shiftwidth', 3)
+U.set ('tabstop', 2)
+U.set ('softtabstop', 2)
+U.set ('shiftwidth', 2)
 U.set 'expandtab'
 U.set 'autoindent'
 U.set 'cindent'
@@ -48,3 +47,8 @@ vim.cmd([[set nobackup]])
 vim.cmd([[set nowritebackup]])
 vim.cmd([[set noswapfile]])
 vim.cmd([[set noundofile]])
+
+-- set tabsize by file type
+--autocommand FileType markdown setlocal tabstop=4 shiftwidth=4  softtabstop=4 expandtab noignorecase,
+--au FileType markdown setl ts=4 sw=4  sts=4 et noic autoindent cindent
+vim.cmd([[au BufRead,BufNewFile *.md,*.MD,*.markdown setl ts=4 sw=4  sts=4 nocompatible noic]])
