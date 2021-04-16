@@ -10,3 +10,23 @@ html2text -utf8 -nobs -style compact -width 500 | \
 awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
 awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
 awk '{if(!/^o\s+/ && !/공지사항$/) print $0} END{printf "===========\n"}' 
+
+#### trim ######
+  # ${var%pattern}
+    # % : trim the shortest match from end
+    # %% : trim the longest match from end
+
+    # # : trim the shortest match from beginning
+    # %% : trim the longest match from beginning
+
+#base_name=basename ${audio_file_path%.*}
+# if test ! -f ~/Project/dic/$1.mp3; then
+if [ -f $audio_file_path ]; then
+  mpv --loop=5 ~/Project/dic/mp3/$1.mp3 > /dev/null 2>&1
+else
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$1 | \
+  awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
+  xargs -I{} curl -o ~/Project/dic/mp3/$1.mp3 {} && \
+  mpv --loop=5 ~/Project/dic/mp3/$1.mp3 > /dev/null 2>&1
+fi
+mpv ~/Project/dic/mp3/* > /dev/null 2>&1

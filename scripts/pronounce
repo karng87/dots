@@ -1,0 +1,26 @@
+#!/bin/bash
+
+audio_file_path=~/Project/dic/mp3/$1.mp3
+
+#### trim ######
+  # ${var%pattern}
+    # % : trim the shortest match from end
+    # %% : trim the longest match from end
+
+    # # : trim the shortest match from beginning
+    # %% : trim the longest match from beginning
+
+#base_name=basename ${audio_file_path%.*}
+
+printf '"%s" is audio_file_path\n' "$audio_file_path"
+# if test ! -f ~/Project/dic/$1.mp3; then
+if [ -f $audio_file_path ]; then
+  echo "mp3 file exist...\n"
+  mpv --loop=5 ~/Project/dic/mp3/$1.mp3
+else
+  echo "save mp3 file....\n"
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$1 | \
+  awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
+  xargs -I{} curl -o ~/Project/dic/mp3/$1.mp3 {} && \
+  mpv --loop=5 ~/Project/dic/mp3/$1.mp3
+fi

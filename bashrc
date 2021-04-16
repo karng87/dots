@@ -23,17 +23,20 @@ export ch=$ph/cxx
 export th=$ph/terms
 export dh=$ph/dots
 
+export mh=$ph/dic/mp3
+
 export lh=$ph/lsp
 export fh=$lh/vulkan/FoE
 
-alias cda="cd $ah && clear && tree -d -L 1"
-alias cdn="cd $nh && clear && tree -d -L 1"
-alias cdp="cd $ph && clear && tree -d -L 1"
-alias cdl="cd $lh && clear && tree -d -L 1"
-alias cdt="cd $th && clear && tree -d -L 1"
-alias cdc="cd $ch && clear && tree -d -L 1"
-alias cdf="cd $fh && clear && tree -d -L 1"
-alias cdd="cd $dh && clear && tree -d -L 1"
+alias cda="cd $ah" 
+alias cdn="cd $nh" 
+alias cdp="cd $ph" 
+alias cdl="cd $lh" 
+alias cdt="cd $th" 
+alias cdc="cd $ch" 
+alias cdf="cd $fh" 
+alias cdd="cd $dh" 
+alias cdm="cd $mh" 
 alias cdb="cd build && clear"
 
 alias ei="cd $nh && nvim init.lua"
@@ -41,6 +44,7 @@ alias eb="cd && nvim .bashrc"
 alias et="cd $th && nvim terms.md"
 alias ec="nvim CMakeLists.txt"
 alias n="nvim"
+
 # yarn config set prefix ~/.yarn-global
 export PATH="$PATH:`yarn global bin`"
 
