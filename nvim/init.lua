@@ -1,4 +1,4 @@
--- ~/Project/dots/nvim/lua/base/utilslua
+-- ~/Project/dots/nvim/lua/base/utils.lua
 U = require'base.utils'
 
 -- ~/Project/dots/nvim/lua/base/vim_cmd_set.lua
