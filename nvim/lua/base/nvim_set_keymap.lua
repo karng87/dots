@@ -114,7 +114,8 @@ vim.g.mapleader = ','
    U.map('i', [[<leader>wd]], [[<ESC>"+yiw:botright new term://bash<cr> | idic <c-\><c-n>:put +<cr> i<c-e><cr>]])
    U.map('t', [[<leader>wd]], [[<c-u>dic <c-\><c-n>:put +<cr> | i<c-e><cr>]])
 
-   U.map('n', [[<leader>b]], [[:up | let @a=expand('%:p:h') | botright new term://bash<cr> | icd <c-\><c-n>:put a<cr>i<c-e><cr>]])
+   U.map('n', [[<leader>bh]], [[:up | let @a=expand('%:p:h') | botright new term://bash<cr> | <esc>icd <c-\><c-n>:put a<cr>i<c-e><cr>]])
+   U.map('n', [[<leader>bb]], [[:up | botright new term://bash<cr>]])
 
   -- build
   -- -- cmake -S .. -B build -G Ninja
@@ -128,27 +129,17 @@ vim.g.mapleader = ','
   -- -- ninja -C build clean
   -- -- make -C dir
   -- -- make -C build clean
-   U.map('n', [[<leader>ccm]], [[:up|set makeprg=cmake | make -S . -B build | copen<cr>]])
-   U.map('i', [[<leader>ccm]], [[<ESC>::up|set makeprg=cmake | make -S . -B build | copen<cr>]])
-   U.map('t', [[<leader>ccm]], [[<c-e><c-u>cmake -S . -B build<cr>]])
 
-   U.map('n', [[<leader>ccn]], [[:up|set makeprg=cmake | make -S . -B build -G Ninja| copen<cr>]])
-   U.map('i', [[<leader>ccn]], [[<ESC>::up|set makeprg=cmake | make -S . -B build -G Ninja | copen<cr>]])
-   U.map('t', [[<leader>ccn]], [[<c-e><c-u>cmake -S . -B build -G Ninja<cr>]])
+  -- cmake build
+   U.map('n', [[<leader>cb]], [[:up | set makeprg=cmake | make --build build | :copen<cr>]])
+  -- cmake clean
+   U.map('n', [[<leader>cc]], [[:up | set makeprg=cmake | make --build build --target clean | :copen<cr>]])
 
-  -- make
-   U.map('n', [[<leader>cm]], [[:up | set makeprg=make | make -C build | copen<cr>]])
-   U.map('i', [[<leader>cm]], [[<ESC>:up | set makeprg=make | make -C build<cr> | copen<cr>]])
-   U.map('t', [[<leader>cm]], [[<c-e><c-u>make -C build <cr>]])
-
-  -- ninja
-   U.map('n', [[<leader>cn]], [[:up | set makeprg=ninja | make -C build | copen<cr>]])
-   U.map('i', [[<leader>cn]], [[<ESC>:up | set makeprg=ninja | make -C build | copen<cr>]])
-   U.map('t', [[<leader>cn]], [[<c-e><c-u>ninja -C build <cr>]])
+  -- make or ninja
+   U.map('n', [[<leader>cn]], [[:up | set makeprg=cmake | make -B build -G Ninja| :copen<cr>]])
+   U.map('n', [[<leader>cm]], [[:up | set makeprg=cmake | make -B build | :copen<cr>]])
 
    U.map('n', [[<leader>cx]], [[:up | botright new term://bash<cr>|i./build/jve_engine<cr>]])
-   U.map('i', [[<leader>cx]], [[<ESC>::up | botright new term://bash<cr> | i./build/jve_engine<cr>]])
-   U.map('t', [[<leader>cx]], [[<c-e><c-u>./build/jve_engine<cr>]])
 
    -- termbug Termbug exex
    vim.cmd('packadd termdebug')

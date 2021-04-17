@@ -21,6 +21,7 @@ awk '{if(!/^o\s+/ && !/공지사항$/) print $0} END{printf "===========\n"}'
 
 #base_name=basename ${audio_file_path%.*}
 # if test ! -f ~/Project/dic/$1.mp3; then
+audio_file_path=~/Project/dic/mp3/$1.mp3
 if [ -f $audio_file_path ]; then
   mpv --loop=5 ~/Project/dic/mp3/$1.mp3 > /dev/null 2>&1
 else
