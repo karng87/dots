@@ -110,11 +110,11 @@ vim.g.mapleader = ','
    -- use dic word macro
    -- ~/Project/dots/nvim/lua/lsp/lsp-saga.lua
 
-   U.map('n', [[<leader>wd]], [["+yiw:botright new term://bash<cr> | idic <c-\><c-n>:put +<cr> i<c-e><cr>]])
-   U.map('i', [[<leader>wd]], [[<ESC>"+yiw:botright new term://bash<cr> | idic <c-\><c-n>:put +<cr> i<c-e><cr>]])
+   U.map('n', [[<leader>wd]], [["+yiw:botright new term://bash<cr> | idic <c-\><c-n>:put +<cr>i<cr>]])
+   U.map('i', [[<leader>wd]], [[<ESC>"+yiw:botright new term://bash<cr> | idic <c-\><c-n>:put +<cr>i<cr>]])
    U.map('t', [[<leader>wd]], [[<c-u>dic <c-\><c-n>:put +<cr> | i<c-e><cr>]])
 
-   U.map('n', [[<leader>bh]], [[:up | let @a=expand('%:p:h') | botright new term://bash<cr> | <esc>icd <c-\><c-n>:put a<cr>i<c-e><cr>]])
+   U.map('n', [[<leader>bh]], [[:up | let @a=expand('%:p:h') | botright new term://bash<cr> | <esc>icd <c-\><c-n>:put a<cr>i<cr>]])
    U.map('n', [[<leader>bb]], [[:up | botright new term://bash<cr>]])
 
   -- build
