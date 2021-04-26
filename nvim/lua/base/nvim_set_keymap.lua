@@ -144,7 +144,7 @@ vim.g.mapleader = ','
    -- termbug Termbug exex
    vim.cmd('packadd termdebug')
 
-   U.map('n', [[<leader>cg]], [[:let @a=expand("%").":".line('.') | let @b="<c-r>+"<cr>:<c-u>Termdebug build/jve<cr>:sleep 100m<cr>ibreak <c-\><c-n>"ap<cr>i<c-e><cr><c-\><c-n>irun<cr><c-\><c-n>:sleep 200m<cr>ip *<c-\><c-n>:put "b<cr>i]])
+   U.map('n', [[<leader>cg]], [[:let @a=expand("%").":".line('.') | let @b=expand('<cWORD>')<cr>:<c-u>Termdebug build/jve_engine<cr>:sleep 100m<cr>ibreak <c-\><c-n>:put a<cr>i<c-e><cr><c-\><c-n>irun<cr><c-\><c-n>:sleep 200m<cr>ip *<c-\><c-n>:put b<cr>i]])
 
    -- shortcut to lua files
    U.map('n', [[<leader>11]], [[:up|tabnew $nh/init.lua<cr>]])
