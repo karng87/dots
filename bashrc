@@ -52,4 +52,4 @@ export PATH="$PATH:`yarn global bin`"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-eval `dircolors | tr 01 00`
+eval `dircolors | tr "01;34" "00;36"`
