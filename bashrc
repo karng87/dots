@@ -5,6 +5,7 @@
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
@@ -52,4 +53,4 @@ export PATH="$PATH:`yarn global bin`"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-eval `dircolors | tr "01;34" "00;36"`
+export LS_COLORS="$(vivid generate molokai)"
