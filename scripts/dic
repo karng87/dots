@@ -3,7 +3,7 @@
 #clear &&
 #curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$word | html2text -utf8 -nobs -style compact -width 500 | awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/) print $0}'
 WORD=${1%%.*}
-WORD=${WORD,,}
+#WORD=${WORD,,}
 clear && \
 echo "## $WORD ##" && \
 curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$WORD | \
@@ -33,6 +33,7 @@ else
   curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${WORD}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
   xargs -I{} curl -o ~/Project/dic/mp3/${WORD}.mp3 {} && \
-  mpv --loop=5 ${audio_file_path} > /dev/null 2>&1
-  mpv ~/Project/dic/mp3/* > /dev/null 2>&1
+  mpv --loop=5 ${audio_file_path} > /dev/null 2>&1 
+  #mpv ~/Project/dic/mp3/*.mp3 > /dev/null 2>&1
+  ls ~/Project/dic/mp3/*.mp3 | mpv --playlist=-
 fi
