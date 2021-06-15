@@ -1,0 +1,10 @@
+from ranger.api.commands import *
+
+set preview_images true
+set preview_images_method ueberzug
+
+default_linemode devicons
+set show_hidden true
+set colorscheme solarised
+map DD shell gio trash %s
+default_linemode devicons
