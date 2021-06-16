@@ -31,6 +31,7 @@ vim.g.mapleader = ','
 
    U.map('n', [[<leader>,]], [[<ESC>]])
    U.map('i', [[<leader>,]], [[<ESC>]])
+   U.map('i', [[jj]], [[<ESC>]])
    U.map('c', [[<leader>,]], [[<c-u><cr>]])
    U.map('v', [[<leader>,]], [[<esc>:<cr>]])
    U.map('t', [[<leader>,]], [[<c-\><c-n>]])
