@@ -36,4 +36,6 @@ else
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
   xargs -I{} curl -o ~/Project/dic/mp3/${WORD}.mp3 {} && \
   for i in {1..4}; do mpv ${get_audio} > /dev/null 2>&1; sleep 2; done
+  #mpv ~/Project/dic/mp3/*.mp3 > /dev/null 2>&1
+  #ls ~/Project/dic/mp3/*.mp3 | mpv --playlist=-
 fi
