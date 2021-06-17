@@ -1,39 +1,41 @@
 #!/bin/bash
-#read word
-#clear &&
-#curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$word | html2text -utf8 -nobs -style compact -width 500 | awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/) print $0}'
 WORD=${1%%.*}
-#WORD=${WORD,,}
-clear && \
-echo "## $WORD ##" && \
-curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$WORD | \
-html2text -utf8 -nobs -style compact -width 500 | \
-awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
-awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
-awk '{if(!/^o\s+/ && !/공지사항$/) print $0} END{printf "===========\n"}'
+WORD=${WORD##*/}
+  clear && \
+  echo "## $WORD ##" && \
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$WORD | \
+  html2text -utf8 -nobs -style compact -width 500 | \
+  awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
+  awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
+  awk '{if(!/^o\s+/ && !/공지사항$/) print $0} END{printf "===========\n"}'
 
-#### trim ######
-  # ${var%pattern}
-    # % : trim the shortest match from end
-    # %% : trim the longest match from end
+mp3_audios=~/Project/dic/mp3/*.mp3
+get_audio=~/Project/dic/mp3/${WORD}.mp3
 
-    # # : trim the shortest match from beginning
-    # %% : trim the longest match from beginning
+if [ -f ${get_audio} ]; then
+  for i in {1..4}; do mpv ${get_audio} > /dev/null 2>&1; sleep 2; done
 
-#base_name=basename ${audio_file_path%.*}
-# if test ! -f ~/Project/dic/$1.mp3; then
-audio_file_path=~/Project/dic/mp3/${WORD}.mp3
-#audio_file_path=~/Project/dic/mp3
-#echo "================="
-#echo ${audio_file_path}
-#echo "================="
-if [ -f ${audio_file_path} ]; then
-  mpv --loop=5 ${audio_file_path} > /dev/null 2>&1
+  for i in ${mp3_audios} 
+    do
+      w=${i##*/}
+      w=${w%%.*}
+      clear && \
+      echo "===== $w =====" && \
+      curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$w | \
+      html2text -utf8 -nobs -style compact -width 500 | \
+      awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
+      awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
+      awk '{if(!/^o\s+/ && !/공지사항$/) print $0} END{printf "===========\n"}'
+  
+      mpv "${i}" > /dev/null 2>&1
+      sleep 3
+    done
+
 else
   curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${WORD}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
   xargs -I{} curl -o ~/Project/dic/mp3/${WORD}.mp3 {} && \
-  mpv --loop=5 ${audio_file_path} > /dev/null 2>&1 
+  for i in {1..4}; do mpv ${get_audio} > /dev/null 2>&1; sleep 2; done
   #mpv ~/Project/dic/mp3/*.mp3 > /dev/null 2>&1
-  ls ~/Project/dic/mp3/*.mp3 | mpv --playlist=-
+  #ls ~/Project/dic/mp3/*.mp3 | mpv --playlist=-
 fi
