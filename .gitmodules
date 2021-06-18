@@ -52,3 +52,6 @@
 [submodule "nvim/pack/lsp/opt/lspsaga-nvim"]
 	path = nvim/pack/lsp/opt/lspsaga-nvim
         url = https://github.com/glepnir/lspsaga.nvim.git
+[submodule "nvim/pack/lsp/opt/vimtex"]
+	path = nvim/pack/lsp/opt/vimtex
+	url = https://github.com/lervag/vimtex.git
