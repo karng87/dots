@@ -41,13 +41,14 @@ require'lsp.lsp-config'
 require'lsp.lsp-completion-nvim'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-vsnip.lua
-require'lsp.lsp-vsnip'
+-- require'lsp.lsp-vsnip'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-treesitter.lua
 require'lsp.lsp-treesitter'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-saga.lua
-require'lsp.lsp-saga'
+--require'lsp.lsp-saga'
+
 --require'lsp.lsp-vsnip'
 --require'lsp.lsp-config'
 --require'lsp.lsp-treesitter'
