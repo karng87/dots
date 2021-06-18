@@ -30,7 +30,7 @@ require'nvim-web-devicons'.setup {
 }
 
 -- ~/Project/dots/nvim/lua/base/galaxyline.lua
-require 'base.galaxyline'
+require'base.galaxyline'
 --vim.cmd('packadd popup')
 
 
@@ -41,7 +41,7 @@ require'lsp.lsp-config'
 require'lsp.lsp-completion-nvim'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-vsnip.lua
--- require'lsp.lsp-vsnip'
+require'lsp.lsp-vsnip'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-treesitter.lua
 require'lsp.lsp-treesitter'

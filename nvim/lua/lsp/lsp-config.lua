@@ -191,6 +191,8 @@ lsp.sumneko_lua.setup{
 
 lsp.texlab.setup{
   on_attach = on_attach,
+  cmd = { "texlab" },
+  filetypes = { "tex", "bib" },
   settings = {
     latex = {
       build = {
@@ -200,6 +202,7 @@ lsp.texlab.setup{
   }
 }
 
+lsp.bashls.setup{}
 
 local function lsp_reload(buffer)
   vim.lsp.stop_client(vim.lsp.get_active_clients(buffer))
