@@ -47,6 +47,9 @@ alias et="cd $th && nvim terms.md"
 alias ec="nvim CMakeLists.txt"
 alias n="nvim"
 
+TEXMFDIST=/usr/share/texmf-dist
+alias tlmgr='${TEXMFDIST}/scripts/texlive/tlmgr.pl --usermode'
+
 # yarn config set prefix ~/.yarn-global
 export PATH="$PATH:`yarn global bin`"
 
