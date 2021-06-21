@@ -193,16 +193,11 @@ lsp.texlab.setup{
   on_attach = on_attach,
   cmd = { "texlab" },
   filetypes = { "tex", "bib" },
-  settings = {
-    latex = {
-      build = {
-        onSave = true;
-      }
-    }
-  }
 }
 
-lsp.bashls.setup{}
+lsp.bashls.setup{
+  on_attach = on_attach,
+}
 
 local function lsp_reload(buffer)
   vim.lsp.stop_client(vim.lsp.get_active_clients(buffer))

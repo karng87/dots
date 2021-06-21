@@ -1,0 +1,8 @@
+#!/bin/bash
+
+notify-send -t 3000 "Playing Video" "$(xsel -b -o)"
+echo "mpv $(xsel -b -o)"
+# --fs : full screen mode
+# -af=rubberbadn=pitch if u speed up, u wana retain the pitch
+
+mpv --ytdl-format=bestvideo+bestaudio/best --fs --speed=1.25 --af=rubberband=pitch-scale=0.981818181818181 "$(xsel -b -o)"

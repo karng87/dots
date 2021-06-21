@@ -1,6 +1,11 @@
 # dots
 
 ## neovim
+    pyenv global 3.9 2.7..
+
+    python2.7 -m pip install --upgrade pip
+    python -m pip install --upgrade pip
+
     pip3 uninstall neovim
     pip3 uninstall pynvim
     pip3 install pynvim

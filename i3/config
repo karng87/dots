@@ -303,6 +303,8 @@ mode "$mode_gaps_left" {
         bindsym Escape mode "default"
 }
 
+#
+bindsym $mod+u exec --no-startup-id ~/Project/dots/scripts/ytdl
 
 # Nitorgen
 exec nitrogen --restore
