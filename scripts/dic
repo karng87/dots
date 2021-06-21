@@ -14,7 +14,7 @@ mp3_audios=~/Project/dic/mp3/*.mp3
 get_audio=~/Project/dic/mp3/${WORD}.mp3
 
 if [ -f ${get_audio} ]; then
-  for i in {1..5}; do mpv ${get_audio} > /dev/null 2>&1; sleep 2; done
+  for i in {1..15}; do mpv ${get_audio} > /dev/null 2>&1; sleep 3; done
 
   for i in ${mp3_audios} 
     do
@@ -38,5 +38,5 @@ else
   curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${WORD}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
   xargs -I{} curl -o ~/Project/dic/mp3/${WORD}.mp3 {} && \
-  for i in {1..5}; do mpv ${get_audio} > /dev/null 2>&1; sleep 2; done
+  for i in {1..15}; do mpv ${get_audio} > /dev/null 2>&1; sleep 3; done
 fi
