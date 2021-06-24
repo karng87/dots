@@ -15,36 +15,13 @@ export VISUAL=nvim
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 #source /usr/share/nvm/init-nvm.sh
 
-export nh=~/.config/nvim
-export ah=~/AUR
-#export ah=~/git
-
 export ph=~/Project
-
-export ch=$ph/cxx
-export th=$ph/terms
-export dh=$ph/dots
-
-export mh=$ph/dic/mp3
-
-export lh=$ph/lsp
-export fh=$lh/vulkan/FoE
-
-alias cda="cd $ah" 
-alias cdn="cd $nh" 
+alias cda="cd $ph/ASM_Programming" 
+alias cdd="cd $ph/dots" 
 alias cdp="cd $ph" 
-alias cdl="cd $lh" 
-alias cdt="cd $th" 
-alias cdc="cd $ch" 
-alias cdf="cd $fh" 
-alias cdd="cd $dh" 
-alias cdm="cd $mh" 
-alias cdb="cd build && clear"
-
-alias ei="cd $nh && nvim init.lua"
-alias eb="cd && nvim .bashrc"
-alias et="cd $th && nvim terms.md"
-alias ec="nvim CMakeLists.txt"
+alias cdt="cd $ph/terms" 
+alias cdc="cd $ph/cxx" 
+alias cdm="cd $ph/dic/mp3" 
 alias n="nvim"
 
 TEXMFDIST=/usr/share/texmf-dist

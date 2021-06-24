@@ -47,7 +47,7 @@ require'lsp.lsp-vsnip'
 require'lsp.lsp-treesitter'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-saga.lua
---require'lsp.lsp-saga'
+require'lsp.lsp-saga'
 
 --require'lsp.lsp-vsnip'
 --require'lsp.lsp-config'
