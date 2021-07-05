@@ -52,3 +52,4 @@ vim.cmd([[set noundofile]])
 --autocommand FileType markdown setlocal tabstop=4 shiftwidth=4  softtabstop=4 expandtab noignorecase,
 --au FileType markdown setl ts=4 sw=4  sts=4 et noic autoindent cindent
 vim.cmd([[au BufRead,BufNewFile *.md,*.MD,*.markdown setl ts=4 sw=4  sts=4 nocompatible noic]])
+vim.cmd([[au BufRead,BufNewFile *.nasm,*.asm set ft=nasm]])
