@@ -13,7 +13,7 @@ vim.g.mapleader = ','
    U.map('n', [[<leader>e]], [[:q<cr>]])
    --U.map('n', [[<leader>sb]], [[:Lspsaga close_floaterm<cr>]])
    --U.map('i', [[<leader>q]], [[<ESC>:q<cr>]])
-   U.map('t', [[<leader>e]], [[<c-\><c-n>:q<cr>]])
+   U.map('t', [[<leader>e]], [[<c-\><c-n>iexit<cr>]])
    --U.map('t', [[<leader>sb]], [[<c-\><c-n>:Lspsaga close_floaterm<cr>]])
    U.map('c', [[<leader>e]], [[<c-u>q<cr>]])
    U.map('v', [[<leader>e]], [[<ESC>:q<cr>]])
@@ -116,7 +116,7 @@ vim.g.mapleader = ','
    U.map('t', [[<leader>wd]], [[<c-u>dic <c-\><c-n>:put +<cr> | i<c-e><cr>]])
 
    U.map('n', [[<leader>bh]], [[:up | let @a=expand('%:p:h') | botright new term://bash<cr> | <esc>icd <c-\><c-n>:put a<cr>i<cr>]])
-   U.map('n', [[<leader>bb]], [[:up | botright new term://bash<cr>]])
+   U.map('n', [[<leader>bb]], [[:up | botright new term://bash<cr>i]])
 
   -- build
   -- -- cmake -S .. -B build -G Ninja

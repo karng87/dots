@@ -43,3 +43,5 @@ PERL_MM_OPT="INSTALL_BASE=/home/jkarng/perl5"; export PERL_MM_OPT;
 
 export XDG_RUNTIME_DIR=/run/user/`id -u`
 export PATH="$HOME/.ghcup/bin:$PATH"
+
+export GNUPLOT_LIB="$HOME/.gnuplot"
