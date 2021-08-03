@@ -1,5 +1,6 @@
 #!/bin/bash
 WORD=${1%%.*}
+WORD=${1%%-*}
 WORD=${WORD##*/}
   clear && \
   echo "## $WORD ##" && \
@@ -11,18 +12,19 @@ WORD=${WORD##*/}
   awk 'NR<10 {print $0} END{printf "===========\n"}'
 
 mp3_audios=~/Project/dic/mp3/*.mp3
-get_audio=~/Project/dic/mp3/${WORD}.mp3
+get_audio=~/Project/dic/mp3/${WORD}*.mp3
 
 if [ -f ${get_audio} ]; then
-  for i in {1..15}; do mpv ${get_audio} > /dev/null 2>&1; sleep 1; done
+  for i in {1..5}; do mpv ${get_audio} > /dev/null 2>&1; sleep 1; done
 
   for i in ${mp3_audios} 
     do
       w=${i##*/}
       w=${w%%.*}
+      s=${w%%-*}
       clear && \
-      echo "===== $w =====" && \
-      curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$w | \
+      echo "===== ${w} =====" && \
+      curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=$s | \
       html2text -utf8 -nobs -style compact -width 500 | \
       awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
       awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
