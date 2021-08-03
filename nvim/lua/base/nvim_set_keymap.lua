@@ -13,7 +13,7 @@ vim.g.mapleader = ','
    U.map('n', [[<leader>e]], [[:q<cr>]])
    --U.map('n', [[<leader>sb]], [[:Lspsaga close_floaterm<cr>]])
    --U.map('i', [[<leader>q]], [[<ESC>:q<cr>]])
-   U.map('t', [[<leader>e]], [[<c-\><c-n>:q<cr>]])
+   U.map('t', [[<leader>e]], [[exit<cr>]])
    --U.map('t', [[<leader>sb]], [[<c-\><c-n>:Lspsaga close_floaterm<cr>]])
    U.map('c', [[<leader>e]], [[<c-u>q<cr>]])
    U.map('v', [[<leader>e]], [[<ESC>:q<cr>]])
