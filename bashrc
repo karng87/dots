@@ -28,12 +28,12 @@ TEXMFDIST=/usr/share/texmf-dist
 alias tlmgr='${TEXMFDIST}/scripts/texlive/tlmgr.pl --usermode'
 
 # yarn config set prefix ~/.yarn-global
-export PATH="$PATH:`yarn global bin`"
+#export PATH="$PATH:`yarn global bin`"
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-export LS_COLORS="$(vivid generate molokai)"
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init --path)"
+#export LS_COLORS="$(vivid generate molokai)"
 
 PATH="/home/jkarng/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/jkarng/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
