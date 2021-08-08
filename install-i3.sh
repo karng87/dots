@@ -11,7 +11,10 @@ sudo firewall-cmd --add-port=1025-65535/udp --permanent
 sudo firewall-cmd --reload
 # sudo virsh net-autostart default
 
-sudo pacman -S xorg xorg-xinit i3-wm i3lock i3status i3blocks dmenu terminator firefox ttf-fira-mono ttf-hack ttf-fira-code terminus-font noto-fonts-cjk noto-fonts-emoji ttf-dejavu
+sudo pacman -S xorg xorg-xinit i3lock i3status i3blocks dmenu terminator firefox ttf-fira-mono ttf-hack ttf-fira-code terminus-font noto-fonts-cjk noto-fonts-emoji ttf-dejavu
+
+sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+
 sudo cp /etc/X11/xinit/xinitrc ~/.xinitrc
 # delete line and add exec i3  at the last of ~/.xinitrc  
 
