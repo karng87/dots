@@ -1,0 +1,8 @@
+[Unit]
+Descripton=Goole Chrome service
+
+[Service]
+ExecStart=/usr/bin/google-chrome-stable
+
+[Install]
+WantedBy=default.target

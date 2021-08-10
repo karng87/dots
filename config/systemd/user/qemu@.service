@@ -1,0 +1,6 @@
+[Unit]
+Description=qemu %I emulator
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/qemu-system-x86_64 -m 4G -enable-kvm -cpu host -smp sockets=1,cores=2,threads=2 -drive file=qemu/%i.raw,format=raw -soundhw all
