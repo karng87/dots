@@ -23,7 +23,7 @@ pacman -S libhangul fcitx5-hangul fcitx5
 # pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-echo GRUB_DISABLE_OS_PROBER=FALSE >> /etc/default/grub
+echo "GRUB_DISABLE_OS_PROBER=FALSE" >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable NetworkManager
