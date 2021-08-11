@@ -40,7 +40,7 @@ systemctl enable acpid
 
 useradd -m jkarng
 echo jkarng:8755 | chpasswd
-usermod -aG libvirt jkarng
+usermod -aG libvirt video audio tty input jkarng
 
 echo "jkarng ALL=(ALL) ALL" >> /etc/sudoers.d/jkarng
 
