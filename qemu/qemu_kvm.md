@@ -49,16 +49,16 @@
 
 ## basic raw image:
 ### qemu-img create -f raw win 25G
-### qemu-system-x86_64 -cdrom win.iso -m 4096 -enable-kvm -drive file=win,format=raw -cpu host -smp cores=6 -usbdevice tablet -vga std
+### qemu-system-x86_64 -cdrom win.iso -m 4096 -enable-kvm -drive file=win,format=raw -cpu host -smp cores=2 -usbdevice tablet -vga std
 
-### qemu-system-x86_64 -m 4096 -enable-kvm -drive file=win,format=raw -cpu host -smp cores=6 -vga std -usbdevice tablet -soundhw hda
+### qemu-system-x86_64 -m 4096 -enable-kvm -drive file=win,format=raw -cpu host -smp cores=2 -vga std -usbdevice tablet -soundhw hda
 
 #### Intel CPU
         cat /proc/cpuinfo | grep vmx
 #### AMD CPU
         cat /proc/cpuinfo | grep svm
 #### spice guest tools
-        intall in windows guest 
+        intall spice guest tools in windows guest 
 #### NAT
     network address translation : hub
     NAT 는 사설 IP 주소와 공인 IP 주소를 변환해 주는 일종의 변환기 입니다. 
