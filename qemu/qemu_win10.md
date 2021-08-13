@@ -31,6 +31,7 @@
     /etc/default/grub 에서 
         GRUB_CMDLINE_LINUX_DEFAULT의 끝에 
             intel_iommu=on을 추가합니다.
+    sudo grub-config -o /boot/grub/grub.cfg
     sudo reboot now
 
         실행할때마다 관리자 권한을 요구하므로, 
