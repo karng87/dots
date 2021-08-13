@@ -1,0 +1,59 @@
+#!/bin/bash
+
+function getword(){
+  fW=${1%%.*}
+  fW1=${fW##*/}
+  fW2=${fW1%%-*}
+    echo "## ${fW1} ##" && \
+    curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${fW2} | \
+    html2text -utf8 -nobs -style compact -width 500 | \
+    awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
+    awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
+    awk '{if(!/^o\s+/ && !/공지사항$/) print $0}' | \
+    awk 'NR<10 {print $0} END{printf "===========\n"}'
+}
+
+function playall(){
+  ws=~/Project/dic/mp3/*.mp3
+  for i in ${ws}; do clear; getword ${i}; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; done
+}
+
+W=${1%%.*}
+W1=${W##*/}
+W2=${W1%%-*}
+mp3_audios=~/Project/dic/mp3/*.mp3
+get_audio=~/Project/dic/mp3/${W2}*.mp3
+
+if [[ ${#} -eq 0 ]]; then
+  playall 
+
+elif [[ -f ${get_audio} ]]; then
+  clear
+  getword ${get_audio}
+  for i in {1..5}; do mpv ${get_audio} > /dev/null 2>&1; sleep 1; done
+
+  for i in ${mp3_audios} 
+    do
+      clear 
+      getword ${i}
+  
+      mpv "${i}" > /dev/null 2>&1
+      sleep 1
+      mpv "${i}" > /dev/null 2>&1
+      sleep 1
+      mpv "${i}" > /dev/null 2>&1
+      sleep 1
+    done
+
+else
+  clear 
+  getword ${1}
+
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${W2}" | \
+  awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
+  xargs -I{} curl -o ~/Project/dic/mp3/${W2}.mp3 {} && \
+  for i in {1..5}; do mpv ${get_audio} > /dev/null 2>&1; sleep 1; done
+
+fi
+
+
