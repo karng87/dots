@@ -1,9 +1,9 @@
 #!/bin/bash
-W=${1%%.*}
-W1=${W##*/}
-W2=${W1%%-*}
 
 function getWid(){
+  local W=${1%%.*}
+  local W1=${W##*/}
+  local W2=${W1%%-*}
   echo $( curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${W2}|\
     awk /wordid/ | \
     awk 'NR==1{print $0}' | \
@@ -11,19 +11,20 @@ function getWid(){
     sed -E 's/(.*)\" class$/\1/')
 }
 wid=$(getWid)
-echo ${wid}
-#https://dic.daum.net/word/view.do?wordid=${wid}
 
-#curl -s -A 'Mozilla/4.0' https://dic.daum.net/word/view.do?wordid=${wid} | \
-curl -s -A 'Mozilla/4.0' https://dic.daum.net/word/view.do?wordid=${W2} |\
-  # clas="num_mean">
-#awk -F 'num_mean' '{print $0}'| \
-sed -E 's/[^>]+|>([^<]+<?)/\1/g'
-#grep -E ^[0-9][^0-9] | \
-#sed -E 's/<\s+<//' | \
-#sed -E 's/<*>*$//' | \
-#sed -E 's/\s//g' |\
-#sed -E 's/<+|>+|<>/ /g' |\
-#sed -E 's/^[0-9]\.+/\t/'
-#html2text -utf8 -nobs -style compact -width 500
-
+function printDic(){
+  local W=${1%%.*}
+  local W1=${W##*/}
+  local W2=${W1%%-*}
+    clear
+    curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${W2} |\
+    sed -E 's/[^>]+|>([^<]+<?)/\1/g'
+    #sed -E -n '/완료/,/영영사전 더보기/p'
+    #sed -E 's/^>+\s*//' |\
+    #sed -E '/^[^a-z0-9].+/d' |\
+    #sed -E '/^$/d' |\
+    #sed -E 's/(^[0-9]\.)\s?<>+(.*)/\t\1 \2\n/' |\
+    #sed -E 's/^[a-z].*<>>>$/\t&\n/' |\
+    #sed -E 's/<|>|//g'
+}
+printDic $1
