@@ -1,78 +1,62 @@
 #!/bin/bash
 
 function getWd(){
-  local W=${1%%.*}
-  local W1=${W##*/}
-  local W2=${W1%%-*}
-  wd=$( curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${W2}|\
-    awk /wordid/ |\
-    awk 'NR==1{print $0}' |\
-    sed -E 's/.*>(\w+).*/\1/' )
-}
-
-function getWid(){
-  local W=${1%%.*}
-  local W1=${W##*/}
-  local W2=${W1%%-*}
-  wid=$( curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${W2}|\
-    awk /wordid/ | \
-    awk 'NR==1{print $0}' | \
-    awk -F'=' '{print $3}' | \
-    sed -E 's/(.*)\" class$/\1/')
-}
-
-function printDic(){
-  local W=${1%%.*}
-  local W1=${W##*/}
-  local W2=${W1%%-*}
-    clear
-    echo "#######- ${W2} -#######" && \
-    curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${W2} |\
-    sed -E 's/[^>]+|>([^<]+<?)/\1/g' |\
-    sed -En '/완료/,/영영사전 더보기/p' |\
-    sed -E '/^>$/d' |\
-    sed -E '/^[[>a-z]/!d' |\
-    awk '!x[$0]++' |\
-    sed -E 's/<|>//g' |\
-    sed -E 's/(\.)(\S)/\1 \2/' |\
-    sed -E 's/^[0-9]/\t&/' 
-    #sed -E -n '1,+25p'
-    echo "================ END ==================="
-}
- 
-function getword(){
-  fW=${1%%.*}
-  fW1=${fW##*/}
-  fW2=${fW1%%-*}
-    echo "## ${fW1} ##" && \
-    curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${fW2} | \
-    html2text -utf8 -nobs -style compact -width 500 | \
-    awk '/단어장_저장/,/영영사전_더보기/{if( /^[a-z/]+/ || /^\s+\*/ && !/\|$/) print $0}' | \
-    awk '{sub(/단어장_저장 완료/,""); sub(/영영사전_더보기/,""); print $0}' | \
-    awk '{if(!/^o\s+/ && !/공지사항$/) print $0}' | \
-    awk 'NR<10 {print $0} END{printf "===========\n"}'
-}
-
-function playall(){
-  ws=~/Project/dic/mp3/*.mp3
-  for i in ${ws}; do clear; getword ${i}; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; done
+  local fW=${1%%.*}
+  local fW1=${W##*/}
+  local fW2=${W1%%-*}
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${fW2}|\
+  awk /wordid/ |\
+  awk 'NR==1{print $0}' |\
+  sed -E 's/.*>(\w+).*/\1/'
 }
 
 W=${1%%.*}
 W1=${W##*/}
 W2=${W1%%-*}
-mp3_audios=~/Project/dic/mp3/*.mp3
-get_audio=~/Project/dic/mp3/${W2}*.mp3
+
+wd=$(getWd $1)
+if [[ $wd != $W2 ]]; then clear; echo "=== Did u mean ${wd} instead of ${W2}===";sleep 2; else clear; fi
+wd_audio=~/Project/dic/mp3/${wd}*.mp3
+all_audios=~/Project/dic/mp3/*.mp3
+
+function getWid(){
+  local fwd=$(getWd $1)
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${fwd}|\
+    awk /wordid/ | \
+    awk 'NR==1{print $0}' | \
+    awk -F'=' '{print $3}' | \
+    sed -E 's/(.*)\" class$/\1/'
+}
+
+function printDic(){
+  local fwd=$(getWd $1)
+    echo "#######- ${fwd} -#######" && \
+    curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${fwd} |\
+    sed -E 's/[^>]+|([^<]+)/\1/g' |\
+    sed -En '/완료/,/영영사전 더보기/p' |\
+    sed -E '/^>+$/d' |\
+    sed -E 's/<|>//g' |\
+    sed -E '/^듣기$|^영영사전|^영어사전/d' |\
+    awk '!x[$0]++' |\
+    sed -E 's/(\.)(\S)/\1 \2/' |\
+    sed -E 's/^[0-9]/\t&/'
+    echo "================ END ==================="
+}
+
+function playall(){
+  for i in ${all_audios}; do printDic ${i}; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; clear; done
+}
+
+#####################
 
 if [[ ${#} -eq 0 ]]; then
   playall 
 
-elif [[ -f ${get_audio} ]]; then
-  clear
-  printDic ${get_audio}
-  for i in {1..5}; do mpv ${get_audio} > /dev/null 2>&1; sleep 1; done
+elif [[ -f ${wd_audio} ]]; then
+  printDic ${wd_audio}
+  for i in {1..5}; do mpv ${wd_audio} > /dev/null 2>&1; sleep 1; done
 
-  for i in ${mp3_audios} 
+  for i in ${all_audios} 
     do
       clear 
       printDic ${i}
@@ -84,16 +68,12 @@ elif [[ -f ${get_audio} ]]; then
       mpv "${i}" > /dev/null 2>&1
       sleep 1
     done
-
 else
-  clear 
-  printDic ${1}
-
-  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${W2}" | \
+  printDic ${wd}
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${wd}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
-  xargs -I{} curl -o ~/Project/dic/mp3/${W2}.mp3 {} && \
-  for i in {1..5}; do mpv ${get_audio} > /dev/null 2>&1; sleep 1; done
-
+  xargs -I{} curl -o ~/Project/dic/mp3/${wd}.mp3 {} > /dev/null 2>&1 && \
+  for i in {1..5}; do mpv ${wd_audio} > /dev/null 2>&1; sleep 1; done
 fi
 
 
