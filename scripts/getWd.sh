@@ -10,4 +10,4 @@ function getWd(){
     sed -E 's/.*>(\w+).*/\1/'
 }
 wd=$(getWd $1)
-echo $wd
+echo "myvar: $wd"
