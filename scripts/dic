@@ -13,10 +13,12 @@ function getWd(){
 W=${1%%.*}
 W1=${W##*/}
 W2=${W1%%-*}
+DL=${2:-$}
 
-wd=$(getWd $1)
-if [[ $wd != $W2 ]]; then clear; echo "=== Did u mean ${wd} instead of ${W2}===";sleep 2; else clear; fi
-wd_audio=~/Project/dic/mp3/${wd}*.mp3
+WD=$(getWd $1)
+
+if [[ $WD != $W2 ]]; then clear; echo "=== Did u mean ${WD} instead of ${W2}===";sleep 2; else clear; fi
+wd_audio=~/Project/dic/mp3/${WD}*.mp3
 all_audios=~/Project/dic/mp3/*.mp3
 
 function getWid(){
@@ -30,16 +32,19 @@ function getWid(){
 
 function printDic(){
   local fwd=$(getWd $1)
+  local dnum=$(getWd $1)
     echo "#######- ${fwd} -#######" && \
     curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${fwd} |\
     sed -E 's/[^>]+|([^<]+)/\1/g' |\
-    sed -En '/완료/,/영영사전 더보기/p' |\
+    sed -En '/완료/,/내 단어장에 저장/{//d;p}' |\
     sed -E '/^>+$/d' |\
     sed -E 's/<|>//g' |\
     sed -E '/^듣기$|^영영사전|^영어사전/d' |\
     awk '!x[$0]++' |\
     sed -E 's/(\.)(\S)/\1 \2/' |\
-    sed -E 's/^[0-9]/\t&/'
+    sed -E 's/^[0-9]/\t&/' |\
+    sed -E '1p'
+    #sed -E '/내 단어장에 저장/,$ d'
     echo "================ END ==================="
 }
 
@@ -69,10 +74,10 @@ elif [[ -f ${wd_audio} ]]; then
       sleep 1
     done
 else
-  printDic ${wd}
-  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${wd}" | \
+  printDic ${WD}
+  curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q="${WD}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
-  xargs -I{} curl -o ~/Project/dic/mp3/${wd}.mp3 {} > /dev/null 2>&1 && \
+  xargs -I{} curl -o ~/Project/dic/mp3/${WD}.mp3 {} > /dev/null 2>&1 && \
   for i in {1..5}; do mpv ${wd_audio} > /dev/null 2>&1; sleep 1; done
 fi
 
