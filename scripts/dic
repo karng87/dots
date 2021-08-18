@@ -85,7 +85,7 @@ if [[ ${#} -eq 0 ]]; then
 
 elif [[ -f ${wd_audio} ]]; then
   printDic ${wd_audio}
-  for i in {1..5}; do mpv ${wd_audio} > /dev/null 2>&1; sleep 1; done
+  for i in {1..5}; do mpv ${wd_audio} &>/dev/null; sleep 1; done
 
   for i in ${all_audios} 
     do
@@ -104,6 +104,6 @@ else
   curl -s -A 'Mozilla/4.0' "${daum}=${WD}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
   xargs -I{} curl -o "${dic_dir}/${WD}.mp3" {} > /dev/null 2>&1 && \
-  for i in {1..5}; do mpv ${wd_audio} > /dev/null 2>&1; sleep 1; done
+  for i in {1..5}; do mpv --really-quiet ${wd_audio} &>/dev/null 2>&1; sleep 1; done
 fi
 
