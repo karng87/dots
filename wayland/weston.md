@@ -25,11 +25,27 @@
         - The direct rendering client
         - Kernel-level device driver(DRM)
 
-
 # [DRM](https://en.wikipedia.org/wiki/Direct_Rendering_Manager)
 
 ![Access to video card without DRM](./img/Access_to_video_card_without_DRM.svg)
 *Access to video card without DRM*
+
+![Access to video card with DRM](./img/Access_to_video_card_with_DRM.svg)
+*Access_to_video_card_with_DRM*
+
+![High level Overview of DRM](./img/High_level_Overview_of_DRM.svg)
+*High_level_Overview_of_DRM*
+
+![High level Overview of DRM](./img/DRM_architecture.svg)
+*DRM_architecture*
+
+![Linux kernel and daemons with exclusive access](./img/Linux_kernel_and_daemons_with_exclusive_access.svg)
+*High level Overview of DRM*
+
+![Linux AMD graphics stack](./img/Linux_AMD_graphics_stack.svg)
+*Linux_AMD_graphics_stack*
+
+# DRM
 
     Kernel-level device driver(DRM)
     Direct Rendering Manager
