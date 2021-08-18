@@ -27,7 +27,7 @@
 
 
 # [[DRM]](https://en.wikipedia.org/wiki/Direct_Rendering_Manager)
-[[!Access to video card without DRM]](.img/Access_to_video_card_without_DRM.svg)
+[[!Access to video card without DRM]](./img/Access_to_video_card_without_DRM.svg)
     Kernel-level device driver(DRM)
     Direct Rendering Manager
 
