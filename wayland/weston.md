@@ -27,12 +27,7 @@
 
 
 # [[DRM]](https://en.wikipedia.org/wiki/Direct_Rendering_Manager)
-
-[[!drm directory structure-rashberrypi]](.img/drm_dir_structure.jpeg)
-[[!drm vs fbdev]](.img/drm_vs_fbdev.jpeg)
-
-[[!High level overviwe of drm]](.img/High_level_Overview_of_DRM.png)
-[[!drm architecture]](.img/DRM_architecture.png)
+[[!Access to video card without DRM]](.img/Access_to_video_card_without_DRM.svg)
     Kernel-level device driver(DRM)
     Direct Rendering Manager
 
