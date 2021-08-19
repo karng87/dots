@@ -1,3 +1,6 @@
+# include <fcntl.h>
+    fcntl : Fd CoNTroL
+
 ## $$
     $#, $@, $1..
     $$:
