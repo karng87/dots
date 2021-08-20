@@ -29,10 +29,11 @@ function playall(){
 
 #####################
 function getMp3(){
-  echo start
-  for i in $( curl -s -A 'Mozilla/4.0' "${daum}=${WD}" | sed -En '/pron\/jp/!s/.*data-url="([^"]+)".*/\1/p' );
-  do mpv --really-quiet=yes $i
-  done
+  curl -s -A 'Mozilla/4.0' "${daum}=${WD}" |\
+  sed -En '/영어사전/,/영영사전 더보기/p' |\
+  sed -En '/txt_emph1 || data-url="http/ {s/"([^"])"|>([^<]+)<|./\1\2/g;p}' 
+  #sed -E '/data-url="http/s/>([^<]+)<|./\1/g'
+  
 }
 
 getMp3

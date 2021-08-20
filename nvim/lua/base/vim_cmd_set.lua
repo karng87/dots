@@ -24,7 +24,8 @@ U.set 'autoindent'
 U.set 'cindent'
 
 -- Search configuration
-U.set ('hlsearch', false)
+-- U.set ('hlsearch', false)
+U.set ('hlsearch', true)
 U.set 'ignorecase'
 U.set 'smartcase'
 U.set ('inccommand', 'split')

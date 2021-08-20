@@ -15,6 +15,7 @@ function getWd(){
 function dicInit(){
   W=${1%%.*}
   W1=${W##*/}
+  W2=${W1%%-*}
   W2=${W1%%_*}
   WD=$(getWd $W2)
 
@@ -26,7 +27,8 @@ function dicInit(){
 function getWid(){
   local gW=${1%%.*}
   local gW1=${W##*/}
-  local gW2=${W1%%_*}
+  local gW1=${W1%%-*}
+  local gW2=${W1%%-*}
   WD=$(getWd ${W2})
   wd_audio=${dic_dir}/${WD}.mp3
   all_audios=${dic_dir}/*.mp3
@@ -42,12 +44,13 @@ function printDic(){
   local pW=${1%%.*}
   local pW1=${pW##*/}
   local pW2=${pW1%%_*}
+  local pW2=${pW1%%-*}
   local pWD=$(getWd ${pW2})
   wd_audio=${dic_dir}/${pWD}.mp3
   all_audios=${dic_dir}/*.mp3
 
-    clear
-    echo "####### ${pWD} #######" && \
+    clear && \
+    echo "####### ${pW1} #######" && \
     curl -s -A 'Mozilla/4.0' "${daum}=${pWD}" |\
     sed -En '/완료/,/내 단어장에 저장/p' |\
     #sed -En '/완료/,/영영사전 더보기/p' |\
@@ -74,7 +77,7 @@ function printDic(){
 }
 
 function playall(){
-  for i in ${all_audios}; do printDic ${i}; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; done
+  for i in ${all_audios}; do printDic ${i} && mpv ${i} --really-quiet=yes && sleep 1 && mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} --really-quiet=yes ; sleep 1; done
 }
 
 #####################
@@ -104,6 +107,6 @@ else
   curl -s -A 'Mozilla/4.0' "${daum}=${WD}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
   xargs -I{} curl -o "${dic_dir}/${WD}.mp3" {} > /dev/null 2>&1 && \
-  for i in {1..5}; do mpv --really-quiet ${wd_audio} &>/dev/null 2>&1; sleep 1; done
+  for i in {1..5}; do mpv ${wd_audio} &>/dev/null 2>&1; sleep 1; done
 fi
 
