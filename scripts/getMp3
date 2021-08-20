@@ -23,14 +23,6 @@ if [[ $WD != $W2 ]]; then clear; echo "=== Did u mean ${WD} instead of ${W2}==="
 wd_audio=${mp3_dir}/${WD}*.mp3
 all_audios=${mp3_dir}/*.mp3
 
-function getWid(){
-  local fwd=$(getWd $1)
-  curl -s -A 'Mozilla/4.0' "${daum}=${fwd}"|\
-    awk /wordid/ | \
-    awk 'NR==1{print $0}' | \
-    awk -F'=' '{print $3}' | \
-    sed -E 's/(.*)\" class$/\1/'
-}
 function playall(){
   for i in ${all_audios}; do printDic ${i}; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; clear; done
 }
@@ -38,17 +30,9 @@ function playall(){
 #####################
 function getMp3(){
   echo start
-  curl -s -A 'Mozilla/4.0' "${daum}=${WD}"|\
-  sed -En 's/.*data-url="([^"]+)".*/\1/p' |\
-  sed -En '1p' |\
-  xargs -I{} curl -o ${mp3_dir}/${WD}.mp3 {}
+  for i in $( curl -s -A 'Mozilla/4.0' "${daum}=${WD}" | sed -En '/pron\/jp/!s/.*data-url="([^"]+)".*/\1/p' );
+  do mpv --really-quiet=yes $i
+  done
 }
 
-funciton sedMp3(){
-    sed -En '/txt_pronounce/p' |\
-    sed -E 's/[^[]+(\[[^]]+\])[^"]+("[^"]+").*/\1-\2/' |\
-    sed -E 's/<[^>]+>|(.)/\1/g' |\
-    sed -E 's/"([^"]+)"|./\1/g' |\
-    sed -En '1p' |\
-    xargs -I{} curl -o "${mp3_dir}/${W2}.mp3" {}
-}
+getMp3
