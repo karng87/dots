@@ -1,52 +1,95 @@
 #!/bin/bash
 
-dic_dir="/home/jkarng/Project/dic/mp3"
+function main(){
+
+dic_dir="~/Project/dic/mp3"
 daum="https://dic.daum.net/search.do?q"
 all_audios="${dic_dir}/*.mp3"
 
-function getWd(){
-  curl -s -A 'Mozilla/4.0' "${daum}=${1}"|\
+W1=${1%%.*}
+W2=${W1##*/}
+
+W3=${W2%%-*}
+W4=${W3%%_*}
+WD=$(getWord $W4)
+
+if [[ ${WD} != ${1} ]] 
+  then clear; echo "=== Did u mean ${WD}, can't find the ${W1} ===";sleep 2
+fi
+
+  wd_audio="${dic_dir}/${W2}.mp3"
+
+  echo "$wd_audio"
+
+  if [[ ${#} -eq 0 ]]; then
+    echo playall
+    playall 
+
+  elif [[ -f ${wd_audio} ]]; then
+    printDic ${wd_audio}
+    exit
+    for i in {1..5}; do mpv ${wd_audio} ; sleep 1; done
+
+    for i in ${all_audios} 
+      do
+        clear 
+        echo -e "\\n\\t ${W2}"
+        mpv "${i}" > /dev/null 2>&1
+        sleep 1
+        mpv "${i}" > /dev/null 2>&1
+        sleep 1
+        mpv "${i}" > /dev/null 2>&1
+        sleep 1
+      done
+  else
+    printDic 
+  fi
+  echo end_func...
+}
+
+function getWord(){
+  curl -s -A 'Mozilla/4.0' "${daum}=${W4}" |\
   sed -En '/wordid/!b;p;q' |\
   sed -E 's/>([^<]+)<|./\1/g'
 }
 
-function dicInit(){
-  W1=${1%%.*}
-  W1=${W1##*/}
-  W1=${W1%%-*}
-  W1=${W1%%_*}
-  WD=$( getWd $W1 )
-
-  wd_audio="${dic_dir}/${WD}.mp3"
-
-  if [[ ${WD} != ${W1} ]] 
-    then clear; echo "=== Did u mean ${WD}, can't find the ${W1} ===";sleep 2
-  fi
-}
-
 function printDic(){
-    echo "####### ${W1} #######" && \
+
+    echo "####### ${W2} #######" 
+
     curl -s -A 'Mozilla/4.0' "${daum}=${WD}" |\
-    awk '{str=gensub(/>([^<]+)<|./,"\\1","g");print str}'
-    #sed -E 's/>([^<]+)<|./\1/g' |\
-    #sed -En '/^\S/p' |\
+    sed -En '/완료/,/영영사전 더보기/p' |\
+    sed -E 's/>([^<]+)<|./\1/g' |\
+    sed -En '/^\S/p' |\
+    #sed -En '/^[[가-힣]/!p' |\
+    sed -En '
+        :X
+        $!N
+        /\n[0-9]\./{
+          P
+          D
+          bX
+        }
+
+        :Y
+        $!N
+        D
+        '
+
     #sed -En '/^[0-9]|^[a-z]/p' |\
     #sed -En 'N;/^[0-9]/hp'
-    #sed -En '/완료/,/영영사전 더보기/p'
 
     echo "================ END ==================="
 }
-dicInit $1
-printDic 
-exit
 
 function playall(){
-  for i in ${all_audios}; do echo ${i##*/}; mpv ${i} > /dev/null 2>&1;  sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; done
+  for i in ${all_audios}; do j=${i##*/};j=${j%%.*};echo ${j}; mpv ${i} > /dev/null 2>&1;  sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; done
 }
 
 #####################
-dicInit $1
+main $1
 
+exit
 if [[ ${#} -eq 0 ]]; then
   playall 
 
