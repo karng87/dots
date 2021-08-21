@@ -2,82 +2,46 @@
 
 dic_dir="/home/jkarng/Project/dic/mp3"
 daum="https://dic.daum.net/search.do?q"
-all_audios=${dic_dir}/*.mp3
-wd_audio=${dic_dir}/${$1}*.mp3
+all_audios="${dic_dir}/*.mp3"
 
 function getWd(){
   curl -s -A 'Mozilla/4.0' "${daum}=${1}"|\
-  awk /wordid/ |\
-  awk 'NR==1{print $0}' |\
-  sed -E 's/.*>(\w+).*/\1/'
+  sed -En '/wordid/!b;p;q' |\
+  sed -E 's/>([^<]+)<|./\1/g'
 }
 
 function dicInit(){
-  W=${1%%.*}
-  W1=${W##*/}
-  W2=${W1%%-*}
-  W2=${W1%%_*}
-  WD=$(getWd $W2)
+  W1=${1%%.*}
+  W1=${W1##*/}
+  W1=${W1%%-*}
+  W1=${W1%%_*}
+  WD=$( getWd $W1 )
 
   wd_audio="${dic_dir}/${WD}.mp3"
 
-  if [[ ${WD} != ${W2} ]]; then clear; echo "=== Did u mean ${WD}, can't find the ${W2} ===";sleep 2; else clear; fi
-}
-
-function getWid(){
-  local gW=${1%%.*}
-  local gW1=${W##*/}
-  local gW1=${W1%%-*}
-  local gW2=${W1%%-*}
-  WD=$(getWd ${W2})
-  wd_audio=${dic_dir}/${WD}.mp3
-  all_audios=${dic_dir}/*.mp3
-
-  curl -s -A 'Mozilla/4.0' "${daum}=${WD}" |\
-    awk /wordid/ | \
-    awk 'NR==1{print $0}' | \
-    awk -F'=' '{print $3}' | \
-    sed -E 's/(.*)\" class$/\1/'
+  if [[ ${WD} != ${W1} ]] 
+    then clear; echo "=== Did u mean ${WD}, can't find the ${W1} ===";sleep 2
+  fi
 }
 
 function printDic(){
-  local pW=${1%%.*}
-  local pW1=${pW##*/}
-  local pW2=${pW1%%_*}
-  local pW2=${pW1%%-*}
-  local pWD=$(getWd ${pW2})
-  wd_audio=${dic_dir}/${pWD}.mp3
-  all_audios=${dic_dir}/*.mp3
+    echo "####### ${W1} #######" && \
+    curl -s -A 'Mozilla/4.0' "${daum}=${WD}" |\
+    awk '{str=gensub(/>([^<]+)<|./,"\\1","g");print str}'
+    #sed -E 's/>([^<]+)<|./\1/g' |\
+    #sed -En '/^\S/p' |\
+    #sed -En '/^[0-9]|^[a-z]/p' |\
+    #sed -En 'N;/^[0-9]/hp'
+    #sed -En '/완료/,/영영사전 더보기/p'
 
-    clear && \
-    echo "####### ${pW1} #######" && \
-    curl -s -A 'Mozilla/4.0' "${daum}=${pWD}" |\
-    sed -En '/완료/,/내 단어장에 저장/p' |\
-    #sed -En '/완료/,/영영사전 더보기/p' |\
-    sed -E '/한국어사전 더보기/,$d' |\
-    #sed -E '/중국어사전/,/중국어사전 더보기/d' |\
-    #sed -E '/일본어사전/,/일본어사전 더보기/d' |\
-    sed -E 's/<\/div>/\n/' |\
-
-    sed -E 's/(num_search)/>\1</' |\
-    sed -E 's/(sub_txt)/>\1</' |\
-    sed -E 's/(txt_search)/>\1</' |\
-
-    sed -E 's/[^>]+|([^<]+)/\1/g' |\
-    sed -E '/^$|^>+$|^\s$/{d}' |\
-
-    sed -E '/num_search|sub_txt|txt_search/!d' |\
-    sed -E 's/^>txt_search>([^>]+)>/\n\1/'  |\
-    sed -E 's/^>>txt_search>>(.*)/\t\1/' |\
-    sed -E 's/>+num_search>+/\t/' |\
-    sed -E 's/>+sub_txt>+/\t/' |\
-    sed -E 's/txt_search//' |\
-    sed -E 's/>+//g'
     echo "================ END ==================="
 }
+dicInit $1
+printDic 
+exit
 
 function playall(){
-  for i in ${all_audios}; do printDic ${i} && mpv ${i} --really-quiet=yes && sleep 1 && mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} --really-quiet=yes ; sleep 1; done
+  for i in ${all_audios}; do echo ${i##*/}; mpv ${i} > /dev/null 2>&1;  sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; done
 }
 
 #####################
@@ -88,7 +52,7 @@ if [[ ${#} -eq 0 ]]; then
 
 elif [[ -f ${wd_audio} ]]; then
   printDic ${wd_audio}
-  for i in {1..5}; do mpv ${wd_audio} &>/dev/null; sleep 1; done
+  for i in {1..5}; do mpv ${wd_audio} ; sleep 1; done
 
   for i in ${all_audios} 
     do
@@ -106,7 +70,7 @@ else
   printDic ${WD}
   curl -s -A 'Mozilla/4.0' "${daum}=${WD}" | \
   awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
-  xargs -I{} curl -o "${dic_dir}/${WD}.mp3" {} > /dev/null 2>&1 && \
-  for i in {1..5}; do mpv ${wd_audio} &>/dev/null 2>&1; sleep 1; done
+  xargs -I{} curl -o "${dic_dir}/${WD}.mp3" {} && \
+  for i in {1..5}; do mpv ${wd_audio}; sleep 1; done
 fi
 
