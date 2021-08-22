@@ -1,1 +1,0 @@
-    curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${W2} |\
