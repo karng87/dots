@@ -1,50 +1,56 @@
 #!/bin/bash
+function trimArg(){
+    W1=${1%%.*}
+    W2=${W1##*/}
+
+    W3=${W2%%-*}
+    W4=${W3%%_*}
+
+    W=$( ./getWID.sh $W4 )
+    WD=${W##*>}
+    WID=${W%%>*}
+}
 
 function main(){
 
-dic_dir="~/Project/dic/mp3"
 daum="https://dic.daum.net/search.do?q"
+daum_id="https://dic.daum.net/word/view.do?wordid" #=ekw000146827
+
+dic_dir="~/Project/dic/mp3"
 all_audios="${dic_dir}/*.mp3"
 
-W1=${1%%.*}
-W2=${W1##*/}
-
-W3=${W2%%-*}
-W4=${W3%%_*}
-WD=$(getWord $W4)
+trimArg $1
 
 if [[ ${WD} != ${1} ]] 
-  then clear; echo "=== Did u mean ${WD}, can't find the ${W1} ===";sleep 2
+  then clear; echo "=== Did you mean ${WD}, can't find the ${W1} ===";sleep 2
 fi
 
   wd_audio="${dic_dir}/${W2}.mp3"
 
-  echo "$wd_audio"
-
   if [[ ${#} -eq 0 ]]; then
-    echo playall
     playall 
 
   elif [[ -f ${wd_audio} ]]; then
     printDic ${wd_audio}
-    exit
-    for i in {1..5}; do mpv ${wd_audio} ; sleep 1; done
+    for i in {1..5}; do mpv ${wd_audio} > /dev/null 2>&1 ; sleep 1; done
 
     for i in ${all_audios} 
       do
-        clear 
-        echo -e "\\n\\t ${W2}"
+        echo -e "$i"
+        mpv "${i}" > /dev/null 2>&1
+        sleep 1
+        echo -e "===>\\t ${W2} \\t<==="
         mpv "${i}" > /dev/null 2>&1
         sleep 1
         mpv "${i}" > /dev/null 2>&1
+        echo -e "${i}"
         sleep 1
-        mpv "${i}" > /dev/null 2>&1
-        sleep 1
+        clear
       done
   else
-    printDic 
+    printDic $1
+
   fi
-  echo end_func...
 }
 
 function getWord(){
@@ -54,66 +60,38 @@ function getWord(){
 }
 
 function printDic(){
-
+    trimArg $1
     echo "####### ${W2} #######" 
 
-    curl -s -A 'Mozilla/4.0' "${daum}=${WD}" |\
-    sed -En '/완료/,/영영사전 더보기/p' |\
+    curl -s -A 'Mozilla/4.0' "${daum_id}=${WID}" |\
+    sed -En '/완료/,/영영사전 더보기/{s/완료/'"${WD}"'/;p}'|\
     sed -E 's/>([^<]+)<|./\1/g' |\
     sed -En '/^\S/p' |\
-    #sed -En '/^[[가-힣]/!p' |\
     sed -En '
-        :X
         $!N
-        /\n[0-9]\./{
-          P
-          D
-          bX
-        }
 
-        :Y
-        $!N
+        /^[^0-9]/ { /\n[0-9]/ bX}
+        /^[0-9]/  { /\n[0-9]/ bX}
+        /^[0-9]/  { /\n[^0-9]/bX}
+
+        bY
+        :X
+        s/^[0-9].*/\t&/
+        P
+        D
+
+        :Y 
         D
         '
 
-    #sed -En '/^[0-9]|^[a-z]/p' |\
-    #sed -En 'N;/^[0-9]/hp'
+    echo "======= END of $WD ==================="
 
-    echo "================ END ==================="
 }
 
 function playall(){
-  for i in ${all_audios}; do j=${i##*/};j=${j%%.*};echo ${j}; mpv ${i} > /dev/null 2>&1;  sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; done
+  for i in ${all_audios}; do echo ${i}; mpv ${i} > /dev/null 2>&1;  sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; done
 }
 
 #####################
 main $1
-
-exit
-if [[ ${#} -eq 0 ]]; then
-  playall 
-
-elif [[ -f ${wd_audio} ]]; then
-  printDic ${wd_audio}
-  for i in {1..5}; do mpv ${wd_audio} ; sleep 1; done
-
-  for i in ${all_audios} 
-    do
-      #clear 
-      printDic ${i}
-  
-      mpv "${i}" > /dev/null 2>&1
-      sleep 1
-      mpv "${i}" > /dev/null 2>&1
-      sleep 1
-      mpv "${i}" > /dev/null 2>&1
-      sleep 1
-    done
-else
-  printDic ${WD}
-  curl -s -A 'Mozilla/4.0' "${daum}=${WD}" | \
-  awk -F "\"" '/txt_pronounce/{print $4;exit}' | \
-  xargs -I{} curl -o "${dic_dir}/${WD}.mp3" {} && \
-  for i in {1..5}; do mpv ${wd_audio}; sleep 1; done
-fi
 

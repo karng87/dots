@@ -1,39 +1,10 @@
 #!/bin/bash
 
 daum="https://dic.daum.net/search.do?q"
-mp3_dir="~/Project/dic/mp3"
+dic_dir="~/Project/dic/mp3"
+all_audios="${dic_dir}/*.mp3"
 
-function getWd(){
-  local fW=${1%%.*}
-  local fW1=${fW##*/}
-  local fW2=${fW1%%-*}
-  curl -s -A 'Mozilla/4.0' "${daum}=${fW2}"|\
-  awk /wordid/ |\
-  awk 'NR==1{print $0}' |\
-  sed -E 's/.*>(\w+).*/\1/'
-}
-
-W=${1%%.*}
-W1=${W##*/}
-W2=${W1%%-*}
-WD=$(getWd $1)
-
-if [[ $WD != $W2 ]]; then clear; echo "=== Did u mean ${WD} instead of ${W2}===";sleep 1; else echo $W2; fi
-
-wd_audio=${mp3_dir}/${WD}*.mp3
-all_audios=${mp3_dir}/*.mp3
-
-function playall(){
-  for i in ${all_audios}; do printDic ${i}; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; clear; done
-}
-
-#####################
-function getMp3(){
-  curl -s -A 'Mozilla/4.0' "${daum}=${WD}" |\
-  sed -En '/영어사전/,/영영사전 더보기/p' |\
-  sed -En '/txt_emph1 || data-url="http/ {s/"([^"])"|>([^<]+)<|./\1\2/g;p}' 
-  #sed -E '/data-url="http/s/>([^<]+)<|./\1/g'
+      curl -s -A 'Mozilla/4.0' "${daum}=${1}" |\
+      sed -E 's/data-audio data-url="(http[^"]+)"|./\1/g' |\
+      sed -En '/^$/!p' 
   
-}
-
-getMp3

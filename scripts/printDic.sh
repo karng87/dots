@@ -1,35 +1,23 @@
 #!/bin/bash
-function printDic(){
-  local W=${1%%.*}
-  local W1=${W##*/}
-  local W2=${W1%%-*}
-  local dic_dir=~/Project/dots/scripts
-    clear
-    echo "#######- ${W2} -#######" && \
-    curl -s -A 'Mozilla/4.0' https://dic.daum.net/search.do?q=${W2} |\
+daum_id="https://dic.daum.net/word/view.do?wordid" #=ekw000146827
+dic_dir=~/Project/dots/scripts
 
-    sed -En '/완료/,/내 단어장에 저장/p' |\
-    ##sed -En '/완료/,/영영사전 더보기/p' |\
-    sed -E '/한국어사전 더보기/,$d' |\
-    ##sed -E '/중국어사전/,/중국어사전 더보기/d' |\
-    ##sed -E '/일본어사전/,/일본어사전 더보기/d' |\
-    sed -E 's/<\/div>/\n/' |\
-#
-    sed -E 's/(num_search)/>\1</' |\
-    sed -E 's/(sub_txt)/>\1</' |\
-    sed -E 's/(txt_search)/>\1</' |\
-#
-      ##sed -E 's/[^>"]+|"([^"]+)"|([^<"]+)/\1\2/g' |\
-    sed -E 's/[^>]+|([^<]+)/\1/g' |\
-    sed -E '/^$|^>+$|^\s$/{d}' |\
-      ## num_search  sub_txt txt_search
-    sed -E '/num_search|sub_txt|txt_search/!d' |\
-    sed -E 's/^>txt_search>([^>]+)>/\n\1/'  |\
-    sed -E 's/^>>txt_search>>(.*)/\t\1/' |\
-    sed -E 's/>+num_search>+/\t/' |\
-    sed -E 's/>+sub_txt>+/\t/' |\
-    sed -E 's/txt_search//' |\
-    sed -E 's/>+//g'
+function printDic(){
+  local W1=${1%%.*}
+  local W2=${W##*/}
+
+  local W3=${W1%%_*}
+  local W4=${W1%%-*}
+
+  local W=$( ./getWID.sh $W4 )
+  local WD=${W##*>}
+  local WID=${W%%>*}
+
+    clear
+    echo "#######- ${WD} -#######" && \
+    curl -s -A 'Mozilla/4.0' "${daum_id}=${WID}" |\
+    sed -E 's/>([^<]+)<|data-audio data-url="([^"]+)"|./\1\2/g' |\
+    sed -En '/^$/!p'
 
     echo "================ END ==================="
 }
