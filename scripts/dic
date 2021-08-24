@@ -8,7 +8,7 @@ function trimArg(){
 
     W=$( ./getWID.sh $W4 )
     WD=${W##*>}
-    WID=${W%%>*}
+    WID=${WD%%>*}
 }
 
 function main(){
