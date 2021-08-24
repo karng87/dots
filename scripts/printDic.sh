@@ -45,7 +45,10 @@ function printDic(){
 
     clear
     echo "======== ${WD} ========"
-    sed -En   '/txt_pronounce|txt_cleanword|data-audio data-url="http/{s/(>[^<]+\n?)|data-url=("[^"]+")|./\1\2/g;H;b}; ${g;p}' <<< $Contents_1
+    sed -En '/mean_example|txt_example|txt_pronounce|data-audio data-url="http/{s/(>[^<]+<)|data-url=("[^"]+")|./\1\2/gp}' <<< $Contents_1 \
+    |sed -En -e '/^>/{s/[<>]//g;s/\.$/&\n/;bX};/^"/{s/^"([^"]+).*/\1/;bX};b;' -e ':X p'
+              
+      
 
     num=0
 
