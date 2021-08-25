@@ -45,12 +45,16 @@ function printDic(){
 
     clear
     echo "======== ${WD} ========"
-    sed -En '/mean_example|txt_example|txt_pronounce|data-audio data-url="http/{s/(>[^<]+<)|data-url=("[^"]+")|./\1\2/gp}' <<< $Contents_1 \
-    |sed -En -e '/^>/{s/[<>]//g;s/\.$/&\n/;bX};/^"/{s/^"([^"]+).*/\1/;bX};b;' -e ':X p'
+    sed -En '/num_mean"|inner_tit"|tit_word"|txt_emph1|mean_info"|mean_example"|txt_example"|txt_pronounce|data-audio data-url="http/{s/(>[^<]+<)|data-url=("[^"]+")|./\1\2/gp}' <<< $Contents_1 \
+      |sed -En -e '/^>/{s/[<>]//g;s/\.$/&\n/;bX}'\
+               -e '/^"/{s/^"([^"]+).*/\1/;bX}'\
+               -e '/txt_cleanword/{s/.*/binggo/;bX}'\
+               -e 'b'\
+               -e ':X p' \
+    |awk '{if($0 ~ /^http/) {cmd="xargs -I{} mpv {} > /dev/null 2>&1"; print $0 | cmd ; close (cmd)} else print $0;print "sleep 2" | "/bin/bash" ; close("/bin/bash")}'
               
       
 
-    num=0
 
   #for i in $Contents_snd;do curl -o ${audio_dir}/${WD}_$(( num++ )).mp3 $i 1>/dev/null; mpv $i 1>/dev/null 2>&1;sleep 1;done
     echo "================ END ==================="

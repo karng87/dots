@@ -1,4 +1,11 @@
 #!/bin/bash
+
+daum='https://dic.daum.net/search.do?q'
+daum_id='https://dic.daum.net/word/view.do?wordid' #=ekw000146827
+
+dic_dir=~/Project/dic/mp3
+all_audios=${dic_dir}/*.mp3
+
 function trimArg(){
     W1=${1%%.*}
     W2=${W1##*/}
@@ -13,11 +20,6 @@ function trimArg(){
 
 function main(){
 
-daum="https://dic.daum.net/search.do?q"
-daum_id="https://dic.daum.net/word/view.do?wordid" #=ekw000146827
-
-dic_dir="~/Project/dic/mp3"
-all_audios="${dic_dir}/*.mp3"
 
 trimArg $1
 
@@ -25,13 +27,10 @@ if [[ ${WD} != ${1} ]]
   then clear; echo "=== Did you mean ${WD}, can't find the ${W1} ===";sleep 2
 fi
 
-  wd_audio="${dic_dir}/${W2}.mp3"
+  wd_audio=${dic_dir}/${W2}.mp3
 
-  if [[ ${#} -eq 0 ]]; then
-    playall 
-
-  elif [[ -f ${wd_audio} ]]; then
-    printDic ${wd_audio}
+  if [[ -z ${1} ]]; then playall 
+  elif [[ -f ${wd_audio} ]]; then printDic ${wd_audio}
     for i in {1..5}; do mpv ${wd_audio} > /dev/null 2>&1 ; sleep 1; done
 
     for i in ${all_audios} 
