@@ -6,6 +6,14 @@ daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
 audio_dir=~/Project/dic/mp3
 all_audios=${audio_dir}/*.mp3
 
+function trim_voice(){
+  sed -E -e 's/.*_(.*).mp3$/\1/'  <<< $1
+}
+function urlencoding(){
+  sed -E -e '/%27/{s//'"'"'/g}'\
+         -e '/%3A/{s//:/g}'\
+         -e 's/\+/ /g' <<< $1
+}
 function gosed(){
     sed -En -e '/link_speller/{s/>([^<]+)<|./\1/g;p;q}' \
         -e '/wordid/!b;s/wordid=([^"]+)"|(>[^<]+)<|./\1\2/g;p;q' \
@@ -51,12 +59,11 @@ function printDic(){
   fi
 
   for i in ${all_audios} 
-    do 
-      [[ ${i} =~ ${WD} ]] && echo match || echo dismatc
-    done
+  do [[ ${i} =~ ${WD} ]] && ( urlencoding $(trim_voice $i) ; mpv $i >/dev/null 2>&1 ; bing=0;)
+  done
 
-  echo end
-exit
+  [[ "$bing" == "0" ]] || (
+
   # txt_cleanword
   #   num_mean txt_mean
   #     txt_pronounce
@@ -128,6 +135,7 @@ exit
               
   #for i in $Contents_snd;do curl -o ${audio_dir}/${WD}_$(( num++ )).mp3 $i 1>/dev/null; mpv $i 1>/dev/null 2>&1;sleep 1;done
     echo "================ END ==================="
+  )
 }
 
 printDic $1
