@@ -5,13 +5,16 @@ daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
 
 audio_dir=~/Project/dic/mp3
 all_audios=${audio_dir}/*.mp3
+bing=''
 
 function trim_voice(){
-  sed -E -e 's/.*_(.*).mp3$/\1/'  <<< $1
+  sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
+    -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< $1
 }
 function urlencoding(){
   sed -E -e '/%27/{s//'"'"'/g}'\
          -e '/%3A/{s//:/g}'\
+         -e '/%2C/{s//,/g}'\
          -e 's/\+/ /g' <<< $1
 }
 function gosed(){
@@ -34,15 +37,30 @@ function getWid(){
 }
 
 function playall(){
-  for i in ${all_audios}; do echo ${i}; mpv ${i} > /dev/null 2>&1;  sleep 1; mpv ${i} > /dev/null 2>&1; sleep 1; mpv ${i} > /dev/null 2>&1; done
+  for i in ${all_audios} 
+    do 
+        echo ${i}
+        mpv ${i} > /dev/null 2>&1
+        sleep 1
+        mpv ${i} > /dev/null 2>&1
+        sleep 1
+        mpv ${i} > /dev/null 2>&1
+    done
+
+  for i in ${all_audios} 
+    do  
+        urlencoding $(trim_voice $i)
+        mpv $i >/dev/null 2>&1
+        sleep 1
+    done
 }
 
 function printDic(){
   local W1=${1%%.*}
-  local W2=${W##*/}
+  local W2=${W1##*/}
 
-  local W3=${W1%%_*}
-  local W4=${W1%%-*}
+  local W3=${W2%%_*}
+  local W4=${W3%%-*}
 
   local W="$( getWid $W4 )"
   local WD=${W##*>}
@@ -50,7 +68,7 @@ function printDic(){
 
   local MD=${audio_dir}/${WD}
 
-  local Contents_1=$( curl -s -A 'Mozilla/4.0' "${daum_id}=${WID}" )
+  local Contents_1=$(  )
   local Contents_wd=$( sed -E \
                           -e 's/(>[^<]+<)|data-audio data-url="([^"]+)"|./\1/g' \
                         <<< $Contents_1 )
@@ -58,68 +76,44 @@ function printDic(){
     then clear; echo "=== Did you mean ${WD}, can't find the ${W1} ===";sleep 2
   fi
 
-  for i in ${all_audios} 
-  do [[ ${i} =~ ${WD} ]] && ( urlencoding $(trim_voice $i) ; mpv $i >/dev/null 2>&1 ; bing=0;)
-  done
-
-  [[ "$bing" == "0" ]] || (
-
-  # txt_cleanword
-  #   num_mean txt_mean
-  #     txt_pronounce
-  #       data-audio data-url="h..
-
-  # inner_tit = 뜻
-  # tit_sort
-  #   txt_sort
-  #   txt_subword
-  #     num_mean txt_mean
-
-
-  # card_tit = families
-  # inner_tit = 관련어
-  # tit_word
-  #   txt_emph1
-  #     mena_info 
-
-
-  # card_tit = examples
-  # inner_tit = 예문
-  # txt_word
-  #   txt_example txt_ex
-  #     data-audio data-url="h..
-  #     mean_example txt_ex
-
     clear
     echo -e "======== ${WD} ========\n"
-    sed -En '/num_mean"|tit_word"|txt_emph1|mean_info"|mean_example"|txt_example"|txt_pronounce|data-audio data-url="http/{s/(>[^<]+<)|data-url=("[^"]+")|./\1\2/gp}' <<< $Contents_1 \
-      |sed -En -e '/^>/{s/[<>]//g;s/\.$/&\n/;bX}'\
-               -e '/^"/{s/^"([^"]+).*/\1/;bX}'\
-               -e 'b'\
-               -e ':X p' \
-      |awk -v MD=${MD} 'BEGIN{
-                FNAME
-                I
+
+    curl -s -A 'Mozilla/4.0' "${daum_id}=${WID}"\
+    |sed -En -e '/num_mean/bX'\
+            -e '/mean_info/bX'\
+            -e '/mean_example/bX'\
+            -e '/txt_mean/bX'\
+            -e '/inner_tit/bX'\
+            -e '/tit_sort"/bX'\
+            -e '/txt_sort"/bX'\
+            -e '/tit_word"/bX'\
+            -e '/txt_subword/bX'\
+            -e '/txt_emph1/bX'\
+            -e '/txt_example/bX'\
+            -e '/txt_pronounce/bX'\
+            -e '/data-audio data-url="http/bX'\
+            -e 'b'\
+            -e ':X s/>([^<]+)<|data-url=("[^"]+")|./\1\2/g'\
+            -e 's/\s+/ /g'\
+            -e 's/유의어|복합어.*|관련어|뜻\/문법|예문|미국|영국/\n\t<< & >>\n/'\
+            -e 's/^[가-힣]([2-9][0-9]?)/\n\1/g'\
+            -e 's/^[0-9][0-9]?[. ]/\t&/Mg'\
+            -e 's/^\s?[가-힣]+.*/\t&\n/g'\
+            -e 's/^"(http[^"]+)".*/\1/'\
+            -e 'p'\
+    |awk -v MD=${MD} 'BEGIN{ FNAME; I;}
+            checkfile(file){
+
             }
 
-            {
-              if(/^[^a-zA-Z]/){
-                    $0 = "\t"$0"\n"
-              }
-              if(/[A-Z ]+$/){
-                $0 = gensub(/([^.]+[.?])([^.?]+$)/,"\\1 \"\\2\"",1)
-              }
-              if(/유의어|복합어|미국|영국/){
-                    $0 = "\n "$0 
-              }
-
-              if($0 ~ /^http/) {
-                    if(/mpeg$/){
-                      FNAME = gensub(/.*en&*txt=([^.&]+).*/,MD"_\\1.mp3","1")
-                      print FNAME
-                    }else if (!/mpeg$/) {
+            {if($0 ~ /http/) {
+                    if(/&format/){\
+                      FNAME = gensub(/.*en&*txt=([^&.]+).*/,MD"_\\1.mp3","1")
+                      #print FNAME
+                    }else {
                       FNAME = MD"_"(I++)".mp3"
-                      print FNAME
+                      #print FNAME
                     }
                       cmd_curl="xargs -I{} curl -o "FNAME" {} > /dev/null 2>&1" 
                       print $0 | cmd_curl
@@ -129,13 +123,10 @@ function printDic(){
                       close (cmd_mpv)
                 }else  print $0
 
-              print "sleep 2" | "/bin/bash"
+              print "sleep 1" | "/bin/bash"
               close("/bin/bash")
             }'
-              
-  #for i in $Contents_snd;do curl -o ${audio_dir}/${WD}_$(( num++ )).mp3 $i 1>/dev/null; mpv $i 1>/dev/null 2>&1;sleep 1;done
     echo "================ END ==================="
-  )
 }
 
 printDic $1
