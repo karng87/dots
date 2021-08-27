@@ -27,7 +27,7 @@ function getDaum(){
 }
 
 function getWid(){
-  local A1=${1%%.*}
+  local A1=${1%.*}
   local A2=${A1##*/}
 
   local A3=${A2%%_*}
