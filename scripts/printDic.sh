@@ -5,7 +5,6 @@ daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
 
 audio_dir=~/Project/dic/mp3
 all_audios=${audio_dir}/*.mp3
-bing=''
 
 function trim_voice(){
   sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
@@ -28,7 +27,13 @@ function gocurl(){
 }
 
 function getWid(){
-    res=$( gosed "$( gocurl ${1} )" )
+  local A1=${1%%.*}
+  local A2=${A1##*/}
+
+  local A3=${A2%%_*}
+  local A4=${A3%%-*}
+
+    res=$( gosed "$( gocurl ${A4} )" )
 
     if [[ "$res" =~ '>' ]]
       then echo $res
@@ -36,49 +41,8 @@ function getWid(){
     fi
 }
 
-function playall(){
-  for i in ${all_audios} 
-    do 
-        echo ${i}
-        mpv ${i} > /dev/null 2>&1
-        sleep 1
-        mpv ${i} > /dev/null 2>&1
-        sleep 1
-        mpv ${i} > /dev/null 2>&1
-    done
-
-  for i in ${all_audios} 
-    do  
-        urlencoding $(trim_voice $i)
-        mpv $i >/dev/null 2>&1
-        sleep 1
-    done
-}
-
-function printDic(){
-  local W1=${1%%.*}
-  local W2=${W1##*/}
-
-  local W3=${W2%%_*}
-  local W4=${W3%%-*}
-
-  local W="$( getWid $W4 )"
-  local WD=${W##*>}
-  local WID=${W%%>*}
-
-  local MD=${audio_dir}/${WD}
-
-  local Contents_1=$(  )
-  local Contents_wd=$( sed -E \
-                          -e 's/(>[^<]+<)|data-audio data-url="([^"]+)"|./\1/g' \
-                        <<< $Contents_1 )
-  if [[ ${WD} != ${1} ]] 
-    then clear; echo "=== Did you mean ${WD}, can't find the ${W1} ===";sleep 2
-  fi
-
-    clear
-    echo -e "======== ${WD} ========\n"
-
+function showDicWithWID(){
+  echo $WID
     curl -s -A 'Mozilla/4.0' "${daum_id}=${WID}"\
     |sed -En -e '/num_mean/bX'\
             -e '/mean_info/bX'\
@@ -101,23 +65,26 @@ function printDic(){
             -e 's/^[0-9][0-9]?[. ]/\t&/Mg'\
             -e 's/^\s?[가-힣]+.*/\t&\n/g'\
             -e 's/^"(http[^"]+)".*/\1/'\
-            -e 'p'\
-    |awk -v MD=${MD} 'BEGIN{ FNAME; I;}
-            checkfile(file){
-
-            }
+            -e 'p'
+}
+function playdic(){
+            awk -v sfile=${2} -v exist=${3} 'BEGIN{FNAME; I;}
 
             {if($0 ~ /http/) {
                     if(/&format/){\
-                      FNAME = gensub(/.*en&*txt=([^&.]+).*/,MD"_\\1.mp3","1")
-                      #print FNAME
+                      FNAME = gensub(/.*en&*txt=([^&.]+).*/,sfile"_\\1.mp3","1")
+                      print FNAME
                     }else {
-                      FNAME = MD"_"(I++)".mp3"
-                      #print FNAME
+                      FNAME = sfile"_"(I++)".mp3"
+                      print FNAME
                     }
-                      cmd_curl="xargs -I{} curl -o "FNAME" {} > /dev/null 2>&1" 
-                      print $0 | cmd_curl
-                      close(cmd_curl) 
+                    
+                      if(exist=="false"){
+                        cmd_curl="xargs -I{} curl -o "FNAME" {} > /dev/null 2>&1" 
+                        print $0 | cmd_curl
+                        close(cmd_curl)
+                        print "curl running"
+                      }
                       cmd_mpv="mpv "FNAME" > /dev/null 2>&1"
                       print $0 | cmd_mpv 
                       close (cmd_mpv)
@@ -125,8 +92,49 @@ function printDic(){
 
               print "sleep 1" | "/bin/bash"
               close("/bin/bash")
-            }'
-    echo "================ END ==================="
+            }' <<< $1
 }
 
-printDic $1
+function playall(){
+  for i in ${audio_dir}/*_0.mp3
+    do 
+        showDicWithWID "$( getWid $1 )"
+        for i in ${audio_dir}/$(urlencoding $( trim_voice $i ))*.mp3
+          do  
+              urlencoding $(trim_voice $i)
+              mpv $i >/dev/null 2>&1
+              sleep 1
+          done
+    done
+
+}
+
+function setVAR(){
+  W1=${1%%.*}
+  W2=${W1##*/}
+
+  W3=${W2%%_*}
+  W4=${W3%%-*}
+
+  W="$( getWid $W4 )"
+  WD=${W##*>}
+  WID=${W%%>*}
+  sfile=${audio_dir}/${WD}
+  exist=""
+  [[ -f ${sfile}_0.mp3 ]] && exist=true || exist="New Word"
+}
+
+function printDic(){
+
+  if [[ ${WD} != ${W4} ]] 
+    then clear; echo "=== Did you mean ${WD}, can't find the ${W4} ===";sleep 2
+  fi
+
+    clear
+    echo -e "======== ${WD} == ${exist} ======\n"
+    playdic "${showDicWithWID}" $sfile $exist
+    echo "================ END ==================="
+}
+setVAR $1
+[[ -f ${sfile}_0.mp3 ]] && playall ||  printDic $1
+
