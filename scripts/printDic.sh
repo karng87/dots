@@ -6,23 +6,23 @@ daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
 audio_dir=~/Project/dic/mp3
 all_audios=${audio_dir}/*.mp3
 
-function trim_voice(){
+function trimVoice(){
   sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
     -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< $1
 }
-function urlencoding(){
+function urlEncoding(){
   sed -E -e '/%27/{s//'"'"'/g}'\
          -e '/%3A/{s//:/g}'\
          -e '/%2C/{s//,/g}'\
          -e 's/\+/ /g' <<< $1
 }
-function gosed(){
+function checkSpell(){
     sed -En -e '/link_speller/{s/>([^<]+)<|./\1/g;p;q}' \
         -e '/wordid/!b;s/wordid=([^"]+)"|(>[^<]+)<|./\1\2/g;p;q' \
         <<< $1
 }
 
-function gocurl(){
+function getDaum(){
     curl -s -A 'Mozilla/4.0' "${daum}=$1"
 }
 
@@ -33,16 +33,18 @@ function getWid(){
   local A3=${A2%%_*}
   local A4=${A3%%-*}
 
-    res=$( gosed "$( gocurl ${A4} )" )
+    res=$( checkSpell "$( getDaum ${A4} )" )
 
     if [[ "$res" =~ '>' ]]
       then echo $res
-      else gosed "$( gocurl $res )"
+      else checkSpell "$( getDaum $res )"
     fi
 }
 
 function showDicWithWID(){
-  echo $WID
+    setVAR $1
+    clear
+    echo -e "======== ${WD} == ${exist} ======\n"
     curl -s -A 'Mozilla/4.0' "${daum_id}=${WID}"\
     |sed -En -e '/num_mean/bX'\
             -e '/mean_info/bX'\
@@ -66,24 +68,28 @@ function showDicWithWID(){
             -e 's/^\s?[가-힣]+.*/\t&\n/g'\
             -e 's/^"(http[^"]+)".*/\1/'\
             -e 'p'
+
+    echo "================ END ==================="
 }
+
 function playdic(){
+
             awk -v sfile=${2} -v exist=${3} 'BEGIN{FNAME; I;}
 
             {if($0 ~ /http/) {
                     if(/&format/){\
                       FNAME = gensub(/.*en&*txt=([^&.]+).*/,sfile"_\\1.mp3","1")
-                      print FNAME
+                      #print FNAME
                     }else {
                       FNAME = sfile"_"(I++)".mp3"
-                      print FNAME
+                      #print FNAME
                     }
                     
-                      if(exist=="false"){
+                      if(exist=="New"){
                         cmd_curl="xargs -I{} curl -o "FNAME" {} > /dev/null 2>&1" 
                         print $0 | cmd_curl
                         close(cmd_curl)
-                        print "curl running"
+                        print "curl downloading... "
                       }
                       cmd_mpv="mpv "FNAME" > /dev/null 2>&1"
                       print $0 | cmd_mpv 
@@ -96,13 +102,15 @@ function playdic(){
 }
 
 function playall(){
-  for i in ${audio_dir}/*_0.mp3
+  [[ -e ${1} ]] && v2=${1/%/_0} || v1="*_0"
+
+  for i in ${audio_dir}/${v1}.mp3
     do 
         showDicWithWID "$( getWid $1 )"
-        for i in ${audio_dir}/$(urlencoding $( trim_voice $i ))*.mp3
+        for j in ${i/0/*}
           do  
-              urlencoding $(trim_voice $i)
-              mpv $i >/dev/null 2>&1
+              #urlEncoding $(trimVoice $j)
+              mpv $j > /dev/null 2>&1
               sleep 1
           done
     done
@@ -121,20 +129,18 @@ function setVAR(){
   WID=${W%%>*}
   sfile=${audio_dir}/${WD}
   exist=""
-  [[ -f ${sfile}_0.mp3 ]] && exist=true || exist="New Word"
+  [[ -f ${sfile}_0.mp3 ]] && exist=Old || exist=New
 }
 
-function printDic(){
+function mainDic(){
+  setVAR $1
+  clear
 
   if [[ ${WD} != ${W4} ]] 
     then clear; echo "=== Did you mean ${WD}, can't find the ${W4} ===";sleep 2
   fi
-
-    clear
-    echo -e "======== ${WD} == ${exist} ======\n"
-    playdic "${showDicWithWID}" $sfile $exist
-    echo "================ END ==================="
+    playdic "$( showDicWithWID $1 )" ${sfile} ${exist}
 }
-setVAR $1
-[[ -f ${sfile}_0.mp3 ]] && playall ||  printDic $1
 
+setVAR $1
+[[ -f ${sfile}_0.mp3 ]] && playall || ( mainDic $1 )
