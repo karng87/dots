@@ -10,12 +10,14 @@ function trimVoice(){
   sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
     -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< $1
 }
+
 function urlEncoding(){
   sed -E -e '/%27/{s//'"'"'/g}'\
          -e '/%3A/{s//:/g}'\
          -e '/%2C/{s//,/g}'\
          -e 's/\+/ /g' <<< $1
 }
+
 function checkSpell(){
     sed -En -e '/link_speller/{
                                 s/>([^<]+)<|./\1/g
@@ -117,4 +119,4 @@ function mainDic(){
     playdic "$( showDicWithWID )" ${sfile} ${exist}
 }
 
-[[ -n $1 ]] && ( setVAR $1; mainDic $1; ) || ( playall ; exit; )
+[[ -n $1 ]] && (setVAR $1; mainDic $1; exit;) || (playall ; exit;)
