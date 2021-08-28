@@ -17,9 +17,16 @@ function urlEncoding(){
          -e 's/\+/ /g' <<< $1
 }
 function checkSpell(){
-    sed -En -e '/link_speller/{s/>([^<]+)<|./\1/g;p;q}' \
-        -e '/wordid/!b;s/wordid=([^"]+)"|(>[^<]+)<|./\1\2/g;p;q' \
-        <<< $1
+    sed -En -e '/link_speller/{
+                                s/>([^<]+)<|./\1/g
+                                p
+                                q
+                              }' \
+        -e '/wordid/{
+             !b
+             s/wordid=([^"]+)"|(>[^<]+)<|./\1\2/g
+             p
+             q}' <<< $1
 }
 
 function getDaum(){
@@ -27,13 +34,7 @@ function getDaum(){
 }
 
 function getWid(){
-  local A1=${1%%.*}
-  local A2=${A1##*/}
-
-  local A3=${A2%%_*}
-  local A4=${A3%%-*}
-
-    res=$( checkSpell "$( getDaum ${A4} )" )
+    res=$( checkSpell "$( getDaum ${W4} )" )
 
     if [[ "$res" =~ '>' ]]
       then echo $res
@@ -42,9 +43,8 @@ function getWid(){
 }
 
 function showDicWithWID(){
-    setVAR $1
     clear
-    echo -e "======== ${WD} == ${exist} ======"
+    echo -e "=====  ${WD} ${exist/new/**/} ======"
     curl -s -A 'Mozilla/4.0' "${daum_id}=${WID}"\
       |sed -En -e '/num_mean/{s/>([^<]+)<|./\1/g;s/[0-9]\.[^0-9]+/\n&/g;s/\.\s+/. /g;bX}'\
             -e '/inner_tit/{s/.*>([^<]+)<.*/\n<<< \1 >>>/;bX}'\
@@ -62,22 +62,19 @@ function showDicWithWID(){
 
 function playdic(){
 
-            awk -v sfile=${2} -v exist=${3} 'BEGIN{FNAME; I;}
+            awk -v sfile=${sfile} -v exist=${exist} 'BEGIN{FNAME; I;}
 
             {if($0 ~ /http/) {
                     if(/&format/){\
                       FNAME = gensub(/.*en&*txt=([^&.]+).*/,sfile"_\\1.mp3","1")
-                      #print FNAME
                     }else {
                       FNAME = sfile"_"(I++)".mp3"
-                      #print FNAME
                     }
                     
-                      if(exist=="New"){
+                      if(exist=="new"){
                         cmd_curl="xargs -I{} curl -o "FNAME" {} > /dev/null 2>&1" 
                         print $0 | cmd_curl
                         close(cmd_curl)
-                        print "curl downloading... "
                       }
                       cmd_mpv="mpv "FNAME" > /dev/null 2>&1"
                       print $0 | cmd_mpv 
@@ -91,18 +88,10 @@ function playdic(){
 
 function playall(){
   [[ ${1} != '' ]] && v1=${1/%/_0} || v1="*_0"
-
   for i in ${audio_dir}/${v1}.mp3
     do 
-        showDicWithWID "$( getWid $i )"
-        for j in ${i/0/*}
-          do  
-              #urlEncoding $(trimVoice $j)
-              mpv $j > /dev/null 2>&1
-              sleep 1
-          done
+        mainDic ${i}
     done
-
 }
 
 function setVAR(){
@@ -117,18 +106,15 @@ function setVAR(){
   WID=${W%%>*}
   sfile=${audio_dir}/${WD}
   exist=""
-  [[ -f ${sfile}_0.mp3 ]] && exist=Old || exist=New
+  [[ -f ${sfile}_0.mp3 ]] && exist="" || exist="new"
 }
 
 function mainDic(){
   setVAR $1
-  clear
-
   if [[ ${WD} != ${W4} ]] 
     then clear; echo "=== Did you mean ${WD}, can't find the ${W4} ===";sleep 2
   fi
-    playdic "$( showDicWithWID $1 )" ${sfile} ${exist}
+    playdic "$( showDicWithWID )" ${sfile} ${exist}
 }
 
-setVAR $1
-[[ -f ${sfile}_0.mp3 ]] && playall || ( mainDic $1 )
+[[ -n $1 ]] && ( setVAR $1; mainDic $1; ) || ( playall ; exit; )
