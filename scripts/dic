@@ -20,7 +20,6 @@ function saveMp3(){
 }
 
 function setVAR(){
-    cn=0
     W1=${1%%.*}
     W2=${W1##*/}
 
@@ -37,12 +36,11 @@ function setVAR(){
     M_SFILE="${audio_dir}/${WD}"
 
     for i in ${all_audios}
-    do M_NEW=$( sed -En -e '/'"${1}"'/bX;q' -e ':X e echo NO' <<< ${i##*/} )
-       break 
-    done
+      do M_NEW=$( sed -En -e '/'"${1}"'/bX;q' -e ':X e echo NO' <<< ${i##*/} )
+         [ "$M_NEW" = "NO" ] && break 
+      done
     echo "$M_NEW"
 }
-
 
 function trimVoice(){
     sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
@@ -72,10 +70,11 @@ function showEDic(){
 }
 
 function dicLocal(){
-
+  setVAR $1
     clear
-    echo "===== ${W4}: no downloading mp3 ====="
+    echo "===== ${W1} ====="
     curl -s -A 'Mozilla/4.0' "${daum_sch}=${W4}"\
+    |sed -E '='\
     |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/data-audio data-url="http/{s/\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|./\1\2\3/g;bZ}'\
     -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
@@ -83,15 +82,17 @@ function dicLocal(){
     -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
-    -e ':Z h;s#>\s|"([^"]+)"|(.)#\2#gp;g;s##\1#'\
-    -e 's##mpv '"${audio_dir}/${WD}"'_\2.mp3 >/dev/null 2>\&1;#e'\
+    -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
+    -e 'g;s##mpv '"${audio_dir}/${WD}"'_\3.mp3 >/dev/null 2>\&1;#e'\
     -e ':X p; e sleep 2'
 
       echo "================ END ==================="
 }
 
 function displayOnly(){
-    echo "===== ${W4} *** ====="
+  setVAR $1
+    clear
+    echo "===== ${1} all ====="
     curl -s -A 'Mozilla/4.0' "${daum_sch}=${W4}"\
     |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
@@ -104,8 +105,11 @@ function displayOnly(){
       echo "================ END ==================="
 }
 function dicWeb(){
-    echo "===== ${W4} *** ====="
+  setVAR $1
+    clear
+    echo "===== ${1} *** ====="
     curl -s -A 'Mozilla/4.0' "${daum_sch}=${W4}"\
+    |sed -E '='\
     |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/data-audio data-url="http/{s/\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|./\1\2\3/g;bZ}'\
     -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
@@ -113,8 +117,9 @@ function dicWeb(){
     -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
-    -e ':Z h;s#>\s|"([^"]+)"|(.)#\2#gp;g;s##\1#g;h;;s#(.+/(.+))#curl -s -o '"${audio_dir}/${WD}"'_\2.mp3 "\1";#e'\
-    -e 'g;s##mpv '"${audio_dir}/${WD}"'_\2.mp3 >/dev/null 2>\&1;#e'\
+    -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
+    -e 'g;h;s%%curl -s -o "'"${audio_dir}/${WD}"'"_\3.mp3 "\2"%e'\
+    -e 'g;s##mpv '"${audio_dir}/${WD}"'_\3.mp3 >/dev/null 2>\&1;#e'\
     -e ':X p; e sleep 2'
 
       echo "================ END ==================="
@@ -143,7 +148,7 @@ function showKDic(){
 
 function playdic(){
 
-            awk -v SFILE=${M_SFILE} -v NEW=${M_NEW} 'BEGIN{FNAME; I;}
+            awk -v SFILE=${M_SFILE} -v NEW=${M_NEW} 'BEGIN{FNAME; I=00;}
 
             {if($0 ~ /http/) {
                     if(/&format/){\
@@ -167,37 +172,50 @@ function playdic(){
             }' <<< $1
 }
 function playAll(){
+
   for i in ${all_audios}
-  do 
-    echo $i
-    setVAR $i
-    res=$( sed -En 's#^(.*/)([^_]+)_(.*)#\2#p' <<< "$i" )
-    echo $res
-    playWord $res
+      do 
+        #setVAR $i
+        arr1=$( sed -En 's#^(.*/)([^_]+)_(.*)#\2#p' <<< "$i" )
+        exist=no
+
+        for a in ${arr[@]}
+            do  if [ "$arr1" = "$a" ]
+                  then 
+                    exist=ok
+                    break
+                fi
+        done
+
+        if [ "$exist" = "no" ]
+        then arr+=("$arr1")
+        fi
   done
+  playWord ${arr[@]}
 }
 
 function playWord(){
 
-  if [ "$fwd" != $1 ]; then 
-    setVAR ${1}
-    displayOnly
-    for i in ${audio_dir}/${WD}*.mp3
+    for i in "${@}"
       do 
-        mpv $i > /dev/null 2>&1
-        #sleep 1
-      done
-    fwd=$1
-  fi
+        displayOnly $i
+        for m in ${audio_dir}/${i}_*.mp3
+          do
+            mpv $m > /dev/null 2>&1
+            #sleep 1
+        done
+    done
 }
 
 function mainDic(){
     dicWeb $W4
     #playdic "$( showKDic $W4 )"
 }
+
 echo $1
 if [ -n "$1" ]; then  
     setVAR $1
-    [ "$M_NEW" = "NO" ] && dicLocal || dicWeb
+    [ "$M_NEW" = "NO" ] && dicLocal $1 || dicWeb $1
 else playAll
 fi 
+
