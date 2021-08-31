@@ -1,90 +1,90 @@
 #!/bin/bash
 daum="https://dic.daum.net"
-daum_sch="${daum}/search.do?q"
-dic_all='&dic=all'
-daum_id="${daum}/word/view.do?wordid" #=ekw000146827
-daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
+      daum_sch="${daum}/search.do?q"
+      dic_all='&dic=all'
+      daum_id="${daum}/word/view.do?wordid" #=ekw000146827
+      daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
 
-audio_dir=~/Project/dic/mp3
-all_audios=${audio_dir}/*.mp3
+      audio_dir=~/Project/dic/mp3
+      all_audios=${audio_dir}/*.mp3
 
-function saveMp3(){
-  M_SFILE=${audio_dir}/${WD}${num}.mp3
-  let num++
-  curl -o "${M_SFILE}" "${1}" > /dev/null 2>&1
+        function saveMp3(){
+          M_SFILE=${audio_dir}/${WD}${num}.mp3
+          let num++
+          curl -o "${M_SFILE}" "${1}" > /dev/null 2>&1
 
-  mpv $M_SFILE > /dev/null 2>&1
-  echo $1
-}
+            mpv $M_SFILE > /dev/null 2>&1
+            echo $1
+          }
 
-function setVAR(){
-  W1=${1%%.*}
-  W2=${W1##*/}
+          function setVAR(){
+            W1=${1%%.*}
+            W2=${W1##*/}
 
-  W3=${W2%%_*}
-  W4=${W3%%-*}
+            W3=${W2%%_*}
+            W4=${W3%%-*}
 
-  EE=$(sed -En '1p' <<< $(checkNgetSpell $W4))
-  EK=$(sed -En '$p' <<< $(checkNgetSpell $W4))
-  ER=$(sed -En '/^[^\/a-zA-Z]+/p' <<< $(checkNgetSpell $W4))
+            EE=$(sed -En '1p' <<< $(checkNgetSpell $W4))
+            EK=$(sed -En '$p' <<< $(checkNgetSpell $W4))
+            ER=$(sed -En '/^[^\/a-zA-Z]+/p' <<< $(checkNgetSpell $W4))
 
-  WD=$(sed -En 's/^[^a-zA-Z]*([a-zA-Z]+)/\1/p' <<< ${ER})
-  WD=${WD:-${W4}}
+            WD=$(sed -En 's/^[^a-zA-Z]*([a-zA-Z]+)/\1/p' <<< ${ER})
+            WD=${WD:-${W4}}
 
-  M_SFILE=${audio_dir}/${WD}
-  [[ -f ${M_SFILE}_0.mp3 ]] && M_NEW="" || M_NEW='OK'
-}
+            M_SFILE=${audio_dir}/${WD}
+            [[ -f ${M_SFILE}_0.mp3 ]] && M_NEW="" || M_NEW='OK'
+          }
 
 
-function trimVoice(){
-  sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
-    -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< $1
-}
+          function trimVoice(){
+            sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
+              -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< $1
+          }
 
-function urlEncoding(){
-  sed -E -e '/%27|&#039/{s//'"'"'/g}'\
-         -e '/%3A/{s//:/g}'\
-         -e '/%2C/{s//,/g}'\
-         -e 's/\+/ /g' <<< $1
-}
+          function urlEncoding(){
+            sed -E -e '/%27|&#039/{s//'"'"'/g}'\
+                   -e '/%3A/{s//:/g}'\
+                   -e '/%2C/{s//,/g}'\
+                   -e 's/\+/ /g' <<< $1
+          }
 
-function checkNgetSpell(){
-  # <a href="/word/view.do?wordid=eew000034775"
-    sed -En -e ':X N; /link_speller/{s/>([^<]+)<|./\1/g;H;n;n;n;n;n}'\
-            -e '/do\?wordid=ek/{/eku/!{s/[^"]*"([^"]+).*/\1/;H;n}}'\
-            -e '/do\?wordid=ee/{s/[^"]*"([^"]+).*/\1/;TX;G;p;q}' <<< $( curl -s -A 'Mozilla/4.0' "${daum_sch}=$1" )
-}
+          function checkNgetSpell(){
+            # <a href="/word/view.do?wordid=eew000034775"
+              sed -En -e ':X N; /link_speller/{s/>([^<]+)<|./\1/g;H;n;n;n;n;n}'\
+                      -e '/do\?wordid=ek/{/eku/!{s/[^"]*"([^"]+).*/\1/;H;n}}'\
+                      -e '/do\?wordid=ee/{s/[^"]*"([^"]+).*/\1/;TX;G;p;q}' <<< $( curl -s -A 'Mozilla/4.0' "${daum_sch}=$1" )
+          }
 
-function showEDic(){
-    curl -s -A 'Mozilla/4.0' "${daum}${EE}"\
-      |sed -En -e '/txt_mean/{s/>([^<]+)<|./\1/g;{s/.*/\t&/;bX}}'\
-            -e 'b'\
-            -e ':X p'
+          function showEDic(){
+              curl -s -A 'Mozilla/4.0' "${daum}${EE}"\
+                |sed -En -e '/txt_mean/{s/>([^<]+)<|./\1/g;{s/.*/\t&/;bX}}'\
+                      -e 'b'\
+                      -e ':X p'
 
-}
+          }
 
-function dic_All(){
+function dicAll(){
 
-            #-e '/data-audio data-url="http/{s/data-url="([^"]+)|>([^<]+)<|./\1\2/g;{s/(.*[^,])?(\s+)?(http.*)/echo "\1";curl -o '${FNAME}' \3 > \/dev\/null 2>\&1;mpv '"${FNAME}"' > \/dev\/null 2>\&1;echo '"${FNAME}"'/e;bY}}'\
-    FNAME="~\/Project\/dic\/mp3\/${1}.mp3"
+                      #-e '/data-audio data-url="http/{s/data-url="([^"]+)|>([^<]+)<|./\1\2/g;{s/(.*[^,])?(\s+)?(http.*)/echo "\1";curl -o '${FNAME}' \3 > \/dev\/null 2>\&1;mpv '"${FNAME}"' > \/dev\/null 2>\&1;echo '"${FNAME}"'/e;bY}}'\
+    FNAME=~\Project\dic\mp3\${1}.mp3
+    echo $FNAME
     
-    clear
-    echo "===== "${WD} ${M_NEW/OK/**}" ====="
+    echo "===== "${1} ${M_NEW/OK/**}" ====="
     curl -s -A 'Mozilla/4.0' "${daum_sch}=${1}"\
-      |sed -En -e '/tit_speller/{s/>([^<]+)<|./\1/g;bX}'\
-      -e '/data-audio data-url="http/{s/>([^<]+)<|data-url="([^"]+)|./\1\2/g;s#(\S+)\s(.*)#echo -e "\1";#e;bZ}'\
-            -e '/"tit_word"/{s/.*>\s?([^<]+)<.*/\n\t<<< \1 >>>/;bX}'\
-            -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
-            -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
-            -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
-            -e 'b'\
-            -e ':Z q'\
-            -e ':X p; e sleep 1'
+    |sed -En -e '/tit_speller/{s/>([^<]+)<|./\1/g;bX}'\
+    -e '/data-audio data-url="http/{s/\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|./\1\2\3/g;bZ}'\
+      -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
+        -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
+        -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
+        -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
+        -e 'b'\
+        -e ':Z h;s#>\s|"([^"]+)"|(.)#\2#gp;g;s##mpv \1 > /dev/null 2>\&1;#ge'\
+       -e ':X p'
 
-    echo "================ END ==================="
-}
+      echo "================ END ==================="
+  }
 
-dic_All $1
+  dicAll $1
 exit
 
 function showKDic(){
