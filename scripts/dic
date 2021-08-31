@@ -72,13 +72,13 @@ function dic_All(){
     echo "===== "${WD} ${M_NEW/OK/**}" ====="
     curl -s -A 'Mozilla/4.0' "${daum_sch}=${1}"\
       |sed -En -e '/tit_speller/{s/>([^<]+)<|./\1/g;bX}'\
-      -e '/data-audio data-url="http/{s/data-url="([^"]+)|>([^<]+)<|./\1\2/g;bY}'\
+      -e '/data-audio data-url="http/{s/>([^<]+)<|data-url="([^"]+)|./\1\2/g;s#(\S+)\s(.*)#echo -e "\1";#e;bZ}'\
             -e '/"tit_word"/{s/.*>\s?([^<]+)<.*/\n\t<<< \1 >>>/;bX}'\
             -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
             -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
             -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
             -e 'b'\
-            -e ':Y s/^(.*)\s+(.*)/\2\1/p;q' \
+            -e ':Z q'\
             -e ':X p; e sleep 1'
 
     echo "================ END ==================="
