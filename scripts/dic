@@ -8,16 +8,6 @@ daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
 audio_dir="${HOME}/Project/dic/mp3"
 #audio_dir="~/Project/dic/mp3"
 all_audios="${audio_dir}/*.mp3"
-fwd=''
-
-function saveMp3(){
-  M_SFILE=${audio_dir}/${WD}${num}.mp3
-  let num++
-  curl -o "${M_SFILE}" "${1}" > /dev/null 2>&1
-
-    mpv $M_SFILE > /dev/null 2>&1
-    echo $1
-}
 
 function setVAR(){
     W1=${1%%.*}
@@ -150,27 +140,30 @@ function playdic(){
 
             awk -v SFILE=${M_SFILE} -v NEW=${M_NEW} 'BEGIN{FNAME; I=00;}
 
-            {if($0 ~ /http/) {
+            {
+              if($0 ~ /http/) {
                     if(/&format/){\
                       FNAME = gensub(/.*en&*txt=([^&.]+).*/,SFILE"_\\1.mp3","1")
                     }else {
                       FNAME = SFILE"_"(I++)".mp3"
                     }
                     
-                      if(NEW=="OK"){
-                        cmd_curl="xargs -I{} curl -o "FNAME" {} > /dev/null 2>&1" 
-                        print $0 | cmd_curl
-                        close(cmd_curl)
-                      }
-                      cmd_mpv="mpv "FNAME" > /dev/null 2>&1"
-                      print $0 | cmd_mpv 
-                      close (cmd_mpv)
-                }else  print $0
+                    if(NEW=="OK"){
+                      cmd_curl="xargs -I{} curl -o "FNAME" {} > /dev/null 2>&1" 
+                      print $0 | cmd_curl
+                      close(cmd_curl)
+                    }
+
+                    cmd_mpv="mpv "FNAME" > /dev/null 2>&1"
+                    print $0 | cmd_mpv 
+                    close (cmd_mpv)
+              }else  print $0
 
               print "sleep 1" | "/bin/bash"
               close("/bin/bash")
             }' <<< $1
 }
+
 function playAll(){
 
   for i in ${all_audios}
@@ -180,21 +173,23 @@ function playAll(){
         exist=no
 
         for a in ${arr[@]}
-            do  if [ "$arr1" = "$a" ]
-                  then 
+           do  if [ "$arr1" = "$a" ]
+                then 
                     exist=ok
                     break
                 fi
-        done
+          done
 
         if [ "$exist" = "no" ]
-        then arr+=("$arr1")
-        fi
+          then arr+=("$arr1")
+          fi
   done
-  playWord ${arr[@]}
+
+  playWords ${arr[@]}
+
 }
 
-function playWord(){
+function playWords(){
 
     for i in "${@}"
       do 
@@ -203,8 +198,8 @@ function playWord(){
           do
             mpv $m > /dev/null 2>&1
             #sleep 1
-        done
-    done
+          done
+      done
 }
 
 function mainDic(){
