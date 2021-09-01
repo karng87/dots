@@ -46,14 +46,14 @@ function urlEncoding(){
 
 function checkNgetSpell(){
     # <a href="/word/view.do?wordid=eew000034775"
-      sed -En -e ':X N; /link_speller/{s/>([^<]+)<|./\1/g;H;n;n;n;n;n}'\
-              -e '/do\?wordid=ek/{/eku/!{s/[^"]*"([^"]+).*/\1/;H;n}}'\
-              -e '/do\?wordid=ee/{s/[^"]*"([^"]+).*/\1/;TX;G;p;q}' <<< $( curl -s -A 'Mozilla/4.0' "${daum_sch}=$1" )
+    sed -En -e ':X N; /link_speller/{s/>([^<]+)<|./\1/g;H;n;n;n;n;n}'\
+            -e '/do\?wordid=ek/{/eku/!{s/[^"]*"([^"]+).*/\1/;H;n}}'\
+            -e '/do\?wordid=ee/{s/[^"]*"([^"]+).*/\1/;TX;G;p;q}' <<< $( curl -s -A 'Mozilla/4.0' "${daum_sch}=$1" )
 }
 
 function showEDic(){
       curl -s -A 'Mozilla/4.0' "${daum}${EE}"\
-        |sed -En -e '/txt_mean/{s/>([^<]+)<|./\1/g;{s/.*/\t&/;bX}}'\
+      |sed -En -e '/txt_mean/{s/>([^<]+)<|./\1/g;{s/.*/\t&/;bX}}'\
               -e 'b'\
               -e ':X p'
 
@@ -76,7 +76,7 @@ function dicLocal(){
     -e 'g;s##mpv '"${audio_dir}/${WD}"'_\3.mp3 >/dev/null 2>\&1;#e'\
     -e ':X p; e sleep 2'
 
-      echo "================ END ==================="
+    echo "================ END ==================="
 }
 
 function displayOnly(){
