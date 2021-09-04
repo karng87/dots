@@ -29,9 +29,9 @@ vim.g.mapleader = ','
    U.map('c', [[<cr>]], [[pumvisible() ? "\<C-y>" : "\<cr>"]], true)
 
    U.map('n', [[<leader>,]], [[<ESC>]])
-   --U.map('i', [[<leader>,]], [[<ESC>]])
+   U.map('i', [[<leader>,]], [[<ESC>]])
    --U.map('i', [[zz]], [[<ESC>i<cr><ESC>O]])
-   U.map('i', [[hh]], [[<ESC>]])
+   --U.map('i', [[hh]], [[<ESC>]])
    U.map('c', [[<leader>,]], [[<c-u><cr>]])
    U.map('v', [[<leader>,]], [[<esc>:<cr>]])
    U.map('t', [[<leader>,]], [[<c-\><c-n>]])
