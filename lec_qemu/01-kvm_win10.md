@@ -43,23 +43,23 @@ sudo reboot now
     Open terminal and type virt-manager, 
         this would open up Linux Virtual machine manager. 
     Click on Create a New virtual machine button.
-[![01]](../img/win-01.png)
+![01](../img/win-01.png)
 
 ### Step 2 
     Select local install media and click forward.
-[![02]](../img/win-02.png)
+![02](../img/win-02.png)
 
 ### Step 3
     You need to point the windows 10 ISO image 
         to the Virtualisation manager, 
     click on Browse.
 
-[![03]](../img/win-03.png)
+![03](../img/win-03.png)
 
 ### Step 4
     Select Windows 10 iso image and click on open.
 
-[![04]](../img/win-04.png)
+![04](../img/win-04.png)
 
 ### Step 5
     Uncheck the option 
@@ -67,23 +67,23 @@ sudo reboot now
     and select the OS type as Windows and Microsoft Windows 10 
     and click Forward.
 
-[![05]](../img/win-05.png)
+![05](../img/win-05.png)
 
 ### Step 6
     You have to define the memory and CPU here, 
     I am assigning 8192 MB as the memory and 4 CPUs 
     and click Forward.
-[![06]](../img/win-06.png)
+![06](../img/win-06.png)
 
 ### Step 7
     For the storage, you may leave it as default 40 GB and click forward.
-[![07]](../img/win-07.png)
+![07](../img/win-07.png)
     
 ### Step 8
     Name your VM, 
     and check the option which says Customize configuration before install, 
     also select the network interface which you would like to use for your guest VM.
-[![08]](../img/win-08.png)
+![08](../img/win-08.png)
 
 ## Customizing the Hardware for Windows 10
 ### Step 1 
@@ -97,7 +97,7 @@ sudo reboot now
     drop-down list and 
     click Apply.
 
-[![09]](../img/win-09.png)
+![09](../img/win-09.png)
 
 ### Step 2
     Click on CPU, 
@@ -112,14 +112,14 @@ sudo reboot now
     You may type the command 'virsh nodeinfo' in the terminal 
     to see your CPU and it’s socket information.
 
-[![10]](../img/win-10.png)
+![10](../img/win-10.png)
 
 ## Update the Virtual Network Interface
     Click on the NIC, 
     change the device model from Hypervisor default to virtio, 
     and click Apply.
 
-[![11]](../img/win-11.png)
+![11](../img/win-11.png)
 
 ## Adding Windows 10 storage and hardware drivers for KVM
     We now need to attach the windows 10 iso image and virtio driver image that you had downloaded earlier in this lab. If you have not downloaded the windows virtio driver yet, please go ahead and download from 
@@ -128,22 +128,22 @@ sudo reboot now
 ### Step 1
     To add windows 10 ISO image as CDROM. 
     Click on Add hardware.
-[![12]](../img/win-12.png)
+![12](../img/win-12.png)
 
 ### Step 2
     Click on Storage, 
     Select Device type as CDROM device, and 
     click Finish.
 
-[![13]](../img/win-13.png)
+![13](../img/win-13.png)
 
 ### Step 3
     Click on IDE CDROM1 
         that we just added and check the box Sharable and click on Connect.
-[![14]](../img/win-14.png)
+![14](../img/win-14.png)
     On the prompt, you need to select the Windows 10 ISO image.
-[![15]](../img/win-15.png)
-[![16]](../img/win-16.png)
+![15](../img/win-15.png)
+![16](../img/win-16.png)
 
 ### Step 4 
     Attach the windows virtio drivers
@@ -154,24 +154,24 @@ sudo reboot now
     Check the option sharable. 
     And click on Connect.
 
-[![17]](../img/win-17.png)
-[![18]](../img/win-18.png)
+![17](../img/win-17.png)
+![18](../img/win-18.png)
 
 ## Configure Boot device order for windows 10.
-[![19]](../img/win-19.png)
+![19](../img/win-19.png)
 
 ## Begin Windows 10 installation on KVM.
 
-[![20]](../img/win-20.png)
-[![21]](../img/win-21.png)
-[![22]](../img/win-22.png)
+![20](../img/win-20.png)
+![21](../img/win-21.png)
+![22](../img/win-22.png)
 
     Remember we had attached virtio driver as CDROM 2 during the VM setup, 
     In the CD Drive (E:) virtio-win-0.1.204.iso
-[![23]](../img/win-23.png)
+![23](../img/win-23.png)
 
     Goto the location -> viostor/w10/amd64 click on Ok
-[![24]](../img/win-24.png)
+![24](../img/win-24.png)
     Red Hat VirtIO SCSI controller select that
 
 ##  Install QEMU Window 10 virtio drivers
@@ -181,8 +181,8 @@ sudo reboot now
     right-click on it and 
     click on Manage. 
     This would open up the device manager.,0
-[![25]](../img/win-25.png)
-[![26]](../img/win-26.png)
+![25](../img/win-25.png)
+![26](../img/win-26.png)
 
 ## Installation of KVM QXL display drivers for windows 10. 
 ### Step 1
@@ -202,9 +202,9 @@ sudo reboot now
 
     And Just like how you updated the hardware for other devices, 
     install the display adapter from Redhat
-[![27]](../img/win-27.png)
-[![28]](../img/win-28.png)
-[![29]](../img/win-29.png)
+![27](../img/win-27.png)
+![28](../img/win-28.png)
+![29](../img/win-29.png)
 
 # If you wanted to access the VM on your Linux, 
 ## you can type 'virt-viewer' on the terminal. And 
