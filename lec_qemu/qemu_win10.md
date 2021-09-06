@@ -1,3 +1,62 @@
+# Virtual Machine (VM)
+[redhat vm](https://www.redhat.com/en/topics/virtualization/what-is-a-virtual-machine)
+    A virtual machine (VM) is 
+        a virtual environment that 
+            functions as a virtual computer system 
+                with its own CPU, memory, network interface, and storage, 
+            created on a physical hardware system (located off- or on-premises). 
+### with
+    서로 힘을 보태는, 혼자는 할 수 없는.
+### by
+    요리저리 봐도 주변 전체에서 깔려 있어 어쩔수 없이 압박을 받는
+
+### on, off
+    연결된. 켜진
+
+### from
+    눈으로 경계를 볼수 있는 집합의 원소들중에서 가지고 나온 원소
+### of
+    경계지울수 없는 집합의 원소들중에서 떼어 가지고 온 원소
+### to
+    결국 대응이 된
+
+# Hypervisor
+    hyper : 과도한
+    visor : 햇빛 가리개
+    완전 가리개
+        : processor
+    A hypervisor is software that 
+        creates and runs virtual machines (VMs). 
+    A hypervisor, sometimes called 
+        a virtual machine monitor (VMM), 
+            isolates 
+        the hypervisor operating system and resources 
+            from the virtual machines and 
+        enables the creation and management of those VMs.
+# KVM
+    Kernel-based Virtual Machine (KVM) is 
+        an open source virtualization technology built into Linux®. 
+    Specifically, 
+    KVM lets you turn Linux into 
+        a hypervisor that 
+            allows a host machine to run multiple, 
+            isolated virtual environments called guests or virtual machines (VMs).
+    All hypervisors need some operating system-level components—such as 
+        a memory manager, 
+        process scheduler, 
+        input/output (I/O) stack, 
+        device drivers, 
+        security manager, 
+        a network stack, 
+            and more—to run VMs. 
+    KVM has all these components 
+        because it’s part of the Linux kernel. 
+    Every VM is implemented as a 
+        regular Linux process, 
+        scheduled by the standard Linux scheduler, 
+        with dedicated virtual hardware 
+            like a network card, graphics adapter, CPU(s), memory, and disks.
+
 # install
     paru qemu
     paru virt-manager

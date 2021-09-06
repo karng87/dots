@@ -1,13 +1,72 @@
-# vmware xen kvm
+# Virtual Machine (VM)
+[redhat vm](https://www.redhat.com/en/topics/virtualization/what-is-a-virtual-machine)
+    A virtual machine (VM) is 
+        a virtual environment that 
+            functions as a virtual computer system 
+                with its own CPU, memory, network interface, and storage, 
+            created on a physical hardware system (located off- or on-premises). 
+### with
+    서로 힘을 보태는, 혼자는 할 수 없는.
+### by
+    요리저리 봐도 주변 전체에서 깔려 있어 어쩔수 없이 압박을 받는
+
+### on, off
+    연결된. 켜진
+
+### from
+    눈으로 경계를 볼수 있는 집합의 원소들중에서 가지고 나온 원소
+### of
+    경계지울수 없는 집합의 원소들중에서 떼어 가지고 온 원소
+### to
+    결국 대응이 된
+
+# Hypervisor
+    hyper : 과도한
+    visor : 햇빛 가리개
+    완전 가리개
+        : processor
+    A hypervisor is software that 
+        creates and runs virtual machines (VMs). 
+    A hypervisor, sometimes called 
+        a virtual machine monitor (VMM), 
+            isolates 
+        the hypervisor operating system and resources 
+            from the virtual machines and 
+        enables the creation and management of those VMs.
+### KVM
+    Kernel-based Virtual Machine (KVM) is a hypervisor
+        is an open source virtualization technology built into Linux®. 
+    Specifically, 
+    KVM lets you turn Linux into 
+        a hypervisor that 
+            allows a host machine to run multiple, 
+            isolated virtual environments called guests or virtual machines (VMs).
+    All hypervisors need some operating system-level components—such as 
+        a memory manager, 
+        process scheduler, 
+        input/output (I/O) stack, 
+        device drivers, 
+        security manager, 
+        a network stack, 
+            and more—to run VMs. 
+    KVM has all these components 
+        because it’s part of the Linux kernel. 
+    Every VM is implemented as a 
+        regular Linux process, 
+        scheduled by the standard Linux scheduler, 
+        with dedicated virtual hardware 
+            like a network card, graphics adapter, CPU(s), memory, and disks.
+
+### vmware xen 
     vmware: full virtualization
     xen: para-virtualization
     kvm: kernel base virtualization
 
-## hypervisor
-    a kind of emulator
-    virtual machine monitor
-    [[!hypervisor]](./img/hypervisor.svg)
-
+### Qemu
+    When used as a machine emulator
+        : run programs made for one machine on a different machine
+    When used as a virtualization
+        : execute the guest code directly on the host CPU
 # kvm /  qemu based 
     https://qemu.weilnetz.de/w64/
     https://www.youtube.com/watch?v=Ov3FnPsmChc
@@ -67,25 +126,18 @@
     VMware Workstation 은 이 NAT 라우터를 자체적으로 내장하여 
     내부 사설망으로 구성된 가상 머신들이 외부와 통신할 수 있게 해줍니다.
 
-#### Bridged Network
-    호스트의 네트워크와 게스트의 네트워크를 브릿지하여(연결하여) 
-    게스트 컴퓨터가 네트워킹 하는 방식입니다. 
-    즉, 호스트와 게스트를 하나로 연결하여 
-    두 개의 네트워크를 마치 하나의 네트워크처럼 쓰는 것 입니다.
+#### Bridged Network (32 bit - 4 byte)
+    Dxxx.xxxx.xxxx.hhhh/24
+    CCxx.xxxx.xxxx.hhhh/24
+    BBBx.xxxx.xxxx.hhhh/24
+        D,CC,BBB:
+            class
+        subnet: 
+                32 - 24 = 8 (6 +2) 
+                network id(24) + host id((32-24)-2)
 
-    브릿지 네트워킹은 
-        VMnet0 스위치에 
-        게스트 컴퓨터의 네트워크 어댑터와 
-        호스트 컴퓨터의 네트워크 어댑터가 연결되어 
-    서로 브릿지된 상태입니다. 
-    이렇게 게스트와 호스트의 네트워크가 브릿지 됨으로써 
-    호스트 네트워크와 게스트 네트워크가 서로 동등한 수준의 네트워크를 제공받게 됩니다.
-
-    호스트와 게스트가 서로 동등한 자격을 가지기 때문에 
-    게스트 컴퓨터에도 호스트 컴퓨터와 같이 
-        공인(Public) IP를 할당하거나 
-        호스트 컴퓨터가 사설망에 연결된 경우 호스트와 동일한 IP 대역을 할당할 수 있습니다. 
-        이 때는 반드시 공인이든 사설이든 
-        게스트 컴퓨터에도 할당할 수 있는 여분의 IP가 존재해야 합니다.
-    
+        subnetmask:
+                255.255.255.0
+                255   => network id range
+                0     => host id range + network ip + broadcast ip
 
