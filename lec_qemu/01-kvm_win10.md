@@ -12,6 +12,21 @@
 ## virtio 드라이버
 [virtio driver](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/)
 
+## bridge network
+[ibm config file](https://www.ibm.com/docs/en/linux-on-systems?topic=choices-kvm-default-nat-based-networking)
+
+    위 링크의 1번 과정인 
+    Create a new libvirt network configuration like the following의 
+        xml을 사실상 이름만 바꿔서 사용중입니다.
+
+    sudo virsh net-define ./net-nat-network.xml
+        으로 네트워크를 등록하고
+
+    sudo virsh net-autostart netnat
+        자동으로 실행되게 합니다.
+
+    이제 윈도우vm을 설정할 때 네트워크에서 
+    default대신 미리 생성한 네트워크를 이용합니다.
 
 ## check hardware 
 ```
@@ -212,3 +227,60 @@ sudo reboot now
     you should be able to access the VM on your computer 
     similar to how you access a windows machine over RDP.
 
+# 공유 폴더
+    spice의 webdav를 이용하였으며,
+    https://dausruddin.com/how-to-enable-clipboard-and-folder-sharing-in-qemu-kvm-on-windows-guest/
+
+    이 글에 따르면, 
+    virt-manager는 
+        spice의 webdav기능을 지원하지 않는다고 합니다.
+
+    따라서 추가로 cockpit을 사용합니다.
+
+    yay virt-viewer
+    yay cockpit
+
+    윈도우vm을 실행한 다음,
+    https://www.spice-space.org/download/windows/spice-webdavd/
+    spice webdav를 설치합니다.
+
+    virt-manager에서 vm설정으로 진입하여,
+    다음과 같이 채널을 추가합니다.
+![30](../img/win-30.png)
+
+    cockpit 서비스를 등록합니다.
+
+### 등록 방법
+    https://cockpit-project.org/running
+
+        cockpit을 실행합니다.
+    sudo systemctl start cockpit
+
+    이제 다음 주소로 cockpit에 접근 가능합니다.
+    http://localhost:9090
+    계정 정보는 리눅스 사용자 정보와 같습니다.
+    저는 webapp-manager에 등록후 사용중입니다.
+
+
+    좌측 메뉴의 가상머신에 들어가면 기존에 설치한 윈도우가 있습니다.
+    실행 후
+    원격 뷰어 시작을 누릅니다.
+    virt-viewer를 설치했다면,
+    그냥 열면 바로 실행됩니다.(firefox)
+    파일 > preferences를 선택하면
+![31](../img/win-31.png)
+
+    share folder를 체크하고
+    경로를 설정해줍니다.
+
+    그리고 윈도우vm에 들어가서
+    services.msc
+        을 실행한 다음
+
+    Spice webdav proxy
+        를 시작하시면 정상적으로 연결된 모습을 확인할 수 있습니다.
+
+    다음과 같이 연결된 모습을 확인할 수 있습니다.
+![32](../img/win-32.png)
+
+    
