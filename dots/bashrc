@@ -13,12 +13,15 @@ export VISUAL=nvim
 #source /usr/share/nvm/init-nvm.sh
 
 export ph=~/Project
-alias cda="cd $ph/ASM_Programming" 
+#alias cda="cd $ph/ASM_Programming" 
+alias cda="cd $ph/modern_x86_64_assembly" 
 alias cdd="cd $ph/dots" 
-alias cdp="cd $ph" 
 alias cdt="cd $ph/terms" 
-alias cdc="cd $ph/cxx" 
 alias cdm="cd $ph/dic/mp3" 
+
+alias cdp="cd $ph" 
+alias cdp="cd $ph" 
+alias cdc="cd $ph/cxx" 
 alias n="nvim"
 
 TEXMFDIST=/usr/share/texmf-dist
