@@ -1,3 +1,6 @@
+# virtio_win_driver
+    https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.204-1/virtio-win.iso
+
 # pacman -S qemu virt-manager
     sudo usermod -a -G libvirt $(whoami)
     sudo vim /etc/libvirt/libvirtd.conf
@@ -6,6 +9,54 @@
 # nat과 bridge연결을 위해
     pacman -S iptables-ntf, dnsmasq, bridge-utils
 
+    sudo virsh net-list --all
+    sudo virsh net-start default
+    sudo virsh net-autostart default
+
+    sudo virsh net-audtostart br10 --disable
+    sudo virsh net-destroy br10
+    sudo virsh net-undefine br10
+
+    sudo virsh dumpxml win10 | grep 'mac address'
+    sudo virsh net-update default add ip-dhcp-host \
+                "<host mac='xx:...' name=win10 ip=192.168.122.2' /> \
+                --live --config
+
+    sudo virsh domblklist win10
+    sudo virsh change-media win10 sda --eject
+    sudo virsh change-media win10 sda /pathto/img.iso --insert
+
+    sudo virsh list --all
+    sudo virsh start win10
+    sudo virsh shutdown win10
+    sudo virsh destroy win10 강제 종료
+    sudo virsh reboot win10
+    sudo virsh reset win10 (재시작)
+    sudo virsh suspend win10
+    sudo virsh resume win10
+
+    sudo virsh autostart win10
+    sudo virsh autostart win10 --disable
+
+    sudo virsh snapshot-create-as win10 --name win10-snapshot-01
+    sudo virsh snapshot-list win10
+    sudo virsh snapshot-revert win10 --snapshotname win10-snapshot-01
+    sudo virsh snapshot-delete win10 --snapshotname win10-snapshot-01
+
+
+    sudo virsh undefine win10 (가상머신 삭제)
+
+    sudo virsh edit win10
+
+    cd ~/virtbackupdir
+    touch win10.xml.bak
+    sudo virsh dumpxml win10 > win10.xml.bak
+    sudo cp /var/lib/libvirt/images/win10.qcouw2 /bacupdir
+
+    sudo cp /backupdir/win10.qcow2 /var/lib/libvirt/images/win10.qcow2
+    sudo virsh define --file /bak_dir/win10.xml.bak
+
+    
 ## 윈도우iso
 [wind10](https://www.microsoft.com/ko-kr/software-download/windows10ISO)
 

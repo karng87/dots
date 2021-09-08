@@ -15,18 +15,21 @@ audio_dir="${HOME}/Project/dic/mp3"
 all_audios="${audio_dir}/*.mp3"
 
 function setVAR(){
-    W1="${1%%.*}"
+    W1="${1%.*}"
     W2="${W1##*/}"
 
     W3="${W2%%_*}"
     W4="${W3%%-*}"
+
+    URL=$(curl -s -A 'Mozilla/4.0' --data-urlencode "q=${W4}" "${daum_dic}")
+    FM=$(getMean "${URL}")
 
     WD_ENCODE=''
     WD_ENCODE=$(sed -En 's#"([^"]+)".*#\1#p' <<< $( checkNgetSpell "${W4}" ) )
     WD=$(sed -En 's#"([^"]+)"\s*(.*)#\2#p' <<< $( checkNgetSpell "${W4}") )
     WD="${WD:-${W4}}"
 
-    URL=$(curl -s -A 'Mozilla/4.0' --data-urlencode "q=${W4}" "${daum_dic}")
+
 
     M_SFILE="${audio_dir}/${W4}"
 
@@ -51,11 +54,16 @@ function urlEncoding(){
 function checkNgetSpell(){
     # <a href="/word/view.do?wordid=eew000034775"
     sed -En -e '/tit_speller/{s/>([^<]+)<|./\1/g;bZ}'\
+            -e '/"num_search"/{s/>([^<0-9]+)<|./\1/g;bZ}'\
             -e ':X /link_speller/{s#href=("[^"]+")|>([^<]+)<|.#\1\2#gp;q}'\
             -e 'b'\
             -e ':Z p' <<< $( curl -s -A 'Mozilla/4.0' --data-urlencode "q=${1}" "${daum_dic}" )
 }
 
+function getMean(){
+    sed -En -e '/"num_search"/{s/>([^<0-9]+)<|./\1/g;p;q}' \
+        <<< "${1}" 
+}
 
 function showEDic(){
     sed -En -e '/txt_mean/{s/>([^<]+)<|./\1/g;{s/.*/\t&/;bX}}'\
@@ -67,7 +75,7 @@ function showEDic(){
 function dicLocal(){
   setVAR "$1"
     clear
-    echo "=====Local: ${W1} ====="
+    echo "=====Local: ${W2} ====="
     sed -E '=' <<< "${URL}"\
     |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/data-audio data-url="http/{s/\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|./\1\2\3/g;bZ}'\
@@ -78,7 +86,7 @@ function dicLocal(){
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
     -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;s##mpv '"${audio_dir}/${W4}"'_\3.mp3 >/dev/null 2>\&1;#e'\
+    -e 'g;s##mpv '"${audio_dir}/${W4}-${FM}"'_\3.mp3 >/dev/null 2>\&1;#e'\
     -e ':X p; e sleep 1'
 
     echo "================ END ==================="
@@ -87,7 +95,7 @@ function dicLocal(){
 function displayOnly(){
   setVAR "$1"
     clear
-    echo "===== ${W4} ====="
+    echo "===* ${W4}: ${FM} *==="
     sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
     -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
@@ -103,7 +111,7 @@ function displayOnly(){
 function dicWeb(){
   setVAR "$1"
     clear
-    echo "===== *** ${W4} *** ====="
+    echo "===== *** ${W4}: ${FM} *** ====="
     sed -E '=' <<< "${URL}" \
     |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bZ}'\
@@ -114,8 +122,8 @@ function dicWeb(){
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
     -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;h;s%%curl -s -o "'"${audio_dir}/${W4}"'"_\3.mp3 "\2"%e'\
-    -e 'g;s##mpv '"${audio_dir}/${W4}"'_\3.mp3 >/dev/null 2>\&1;#e'\
+    -e 'g;h;s%%curl -s -o "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 "\2"%e'\
+    -e 'g;s##mpv '"${audio_dir}/${W4}-${FM}"'_\3.mp3 >/dev/null 2>\&1;#e'\
     -e ':X p;e sleep 1' 
 
       echo "================ END ==================="
