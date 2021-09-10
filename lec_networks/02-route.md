@@ -1,0 +1,2 @@
+# netstat -r
+    netstat --route
