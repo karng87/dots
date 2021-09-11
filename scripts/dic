@@ -1,6 +1,6 @@
 #!/bin/bash
 daum="https://dic.daum.net"
-
+daum_tts="http://tts-dic.daum.net/read?lang=en\&txt" #=Look+at+the+response+to+the+tsunami+--+it%27s+inspiring.&format=mpeg
 daum_dic="${daum}/search.do"
 daum_id="${daum}/word/view.do" #=ekw000146827
 
@@ -8,7 +8,6 @@ daum_wdic="${daum}/search.do?q"
 daum_wid="${daum}/word/view.do?wordid" #=ekw000146827
 
 dic_all='&dic=all'
-daum_tts="https://tts-dic.daum.net/read?lang=en&txt" #=
 
 audio_dir="${HOME}/Project/dic/mp3"
 #audio_dir="~/Project/dic/mp3"
@@ -22,13 +21,13 @@ function setVAR(){
     W4="${W3%%-*}"
 
     URL=$(curl -s -A 'Mozilla/4.0' --data-urlencode "q=${W4}" "${daum_dic}")
-    FM=$(getMean "${URL}")
+    FM="$(getMean "${URL}")"
+    MP="${audio_dir}//${W4}-${FM}"
 
     WD_ENCODE=''
     WD_ENCODE=$(sed -En 's#"([^"]+)".*#\1#p' <<< $( checkNgetSpell "${W4}" ) )
     WD=$(sed -En 's#"([^"]+)"\s*(.*)#\2#p' <<< $( checkNgetSpell "${W4}") )
     WD="${WD:-${W4}}"
-
 
 
     M_SFILE="${audio_dir}/${W4}"
@@ -43,6 +42,18 @@ function trimVoice(){
     sed -E -e '/\+/{s/.*_(.+)\.mp3$/\1/}'\
       -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< "$1"
 }
+
+function tts(){
+  mpv $( sed -E -e 's/'"'"'/%27/g'\
+           -e 's/:/--/g'\
+           -e 's/,/--/g'\
+           -e 's/ /+/g'\
+           -e 's#\(#--#g'\
+           -e 's#\)#--#g'\
+           -e 's#^#'"${daum_tts}"='#'\
+           -e 's#$#.\&format=mpeg#' <<< "$1" )
+}
+
 
 function urlEncoding(){
     sed -E -e '/%27|&#039/{s//'"'"'/g}'\
@@ -86,7 +97,7 @@ function dicLocal(){
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
     -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;s##mpv '"${audio_dir}/${W4}-${FM}"'_\3.mp3 >/dev/null 2>\&1;#e'\
+    -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
     -e ':X p; e sleep 1'
 
     echo "================ END ==================="
@@ -122,9 +133,10 @@ function dicWeb(){
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
     -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;h;s%%curl -s -o "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 "\2"%e'\
-    -e 'g;s##mpv '"${audio_dir}/${W4}-${FM}"'_\3.mp3 >/dev/null 2>\&1;#e'\
-    -e ':X p;e sleep 1' 
+    -e 'g;h;s##curl -s -o "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 "\2"#e'\
+    -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
+    -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^".*#./tts.sh &#e}'\
+    -e 'e sleep 1' 
 
       echo "================ END ==================="
 }
