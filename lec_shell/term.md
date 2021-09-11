@@ -3,6 +3,7 @@
 # distributive property
 # dd if=/dev/zero of=/dev/sd?
     Dump Disk 
+
 # pacman -Qo bin file
 
 # login shell
@@ -10,6 +11,7 @@
         -> ~/.bash_profile 
         -> ~/.bash_login 
         -> ~/.profile ( . ~/bashrc )
+
 # non login shell
     /etc/bash.bashrc
     ~/.bashrc
@@ -137,71 +139,13 @@
 
     * ? []
         => glob character
+
     " ;
         => quote character
+
     = +=
         => assignment character
-# escape
-    \
-# quote
-## in assignment oprator
-    processed by no quote, double quote, single quote
-    
-    str=\w*foo\w*
-    echo "$str"
-        => w*foow*
-## in no quotes
-    No quotes 
-        기본적으로 
-        모든 
-            "문자"에 대해서
-                escape 처리해서 인자로 넘겨준다.
 
-        shell 키워드, 
-        메타문자, 
-        alias, 
-        glob 문자, 
-        quotes, 
-        whitespace 문자를 
-            escape 하여 
-                해당 기능을 disable 할 수 있습니다.
-
-    둘 이상의 공백은 의미가 없으므로 하나의 공백으로 대체
-
-    ! history 확장 escape
-        ```bash
-            date
-            echo hello !!
-                => echo hello date
-                => hello date
-            echo hello \!!
-                => hello !!
-        ```
-## in double quotes
-    " $ ` \ newline(real newline not \n)
-        만 escape 처리 해준다
-
-       echo "\" \$ \` \
-       > next line"
-
-                => $`next line
-                => translate escape character with that
-
-## in single quotes
-    any escape 전혀 처리해주지 않는다
-    single quote 연결만 사용 가능 
-
-    foo'bar
-    echo 'foo'\''bar'
-    echo 'foo'"'"'bar'
-
-    ```bash
-        AA=100
-        sh -c "AA=200; echo $AA"
-            100
-        sh -c 'AA=200; echo $AA'
-            200
-    ```
 
 # keyword
 ### delmeter

@@ -1,6 +1,8 @@
 #!/bin/bash
 daum="https://dic.daum.net"
-daum_tts="http://tts-dic.daum.net/read?lang=en\&txt" #=Look+at+the+response+to+the+tsunami+--+it%27s+inspiring.&format=mpeg
+lang=en
+lang=zh
+tts="http://tts-dic.daum.net/read?lang=${lang}\&txt" #=Look+at+the+response+to+the+tsunami+--+it%27s+inspiring.&format=mpeg
 daum_dic="${daum}/search.do"
 daum_id="${daum}/word/view.do" #=ekw000146827
 
@@ -43,7 +45,7 @@ function trimVoice(){
       -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< "$1"
 }
 
-function tts(){
+function tts_(){
   mpv $( sed -E -e 's/'"'"'/%27/g'\
            -e 's/:/--/g'\
            -e 's/,/--/g'\
@@ -135,7 +137,7 @@ function dicWeb(){
     -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
     -e 'g;h;s##curl -s -o "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 "\2"#e'\
     -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
-    -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^".*#./tts.sh &#e}'\
+    -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^".*#tts &#e}'\
     -e 'e sleep 1' 
 
       echo "================ END ==================="

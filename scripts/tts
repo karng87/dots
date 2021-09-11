@@ -1,0 +1,51 @@
+#!/bin/bash
+#daum_tts="http://tts-dic.daum.net/read?lang=${2:-en}&txt=Look+at+the+response+to+the+tsunami+--+it%27s+inspiring.&format=mpeg
+daum_tts="http://tts-dic.daum.net/read"
+tts_foramt="&format=mpeg"
+
+function pre_encode(){
+  sed -E -e 's/'"'"'/%27/g'\
+           -e 's/:/%3A/g'\
+           -e 's/,/%2C/g'\
+           -e 's/\(/%2C/g'\
+           -e 's/\)/%2C/g'\
+           -e 's/\?/%3F/g'\
+           -e 's/\s+/ /g'\
+           -e 's/ /+/g' <<< "$1"
+}
+
+txt="$( pre_encode "$1" )"
+lang="${2:-en}"
+format="mpeg"
+
+curl -G \
+    -o ${txt} \
+    --data-urlencode "lang=${lang}" \
+    --data-urlencode "txt=${txt}" \
+    --data-urlencode "format=${format}" \
+    --trace dump \
+    "${daum_tts}" \
+&& mpv ${txt} 
+
+function ascii_encode(){
+    local str="${1}"
+    local strlen=${#str}
+    local encoded=""
+    local pos c o
+
+    for (( pos=0 ; pos<strlen ; pos++ )) 
+    do
+      c=${str:$pos:1}
+      case "$c" in
+        [-_,~a-zA-Z0-9] ) 
+          o="${c}" 
+          ;;
+
+        * )               
+          printf -v o '%%%02x' "'$c"
+          ;;
+      esac
+      encoded+="${o}"
+    done
+    echo $"${encoded}"
+}
