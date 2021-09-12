@@ -1,7 +1,5 @@
 #!/bin/bash
 #daum_tts="http://tts-dic.daum.net/read?lang=${2:-en}&txt=Look+at+the+response+to+the+tsunami+--+it%27s+inspiring.&format=mpeg
-daum_tts="http://tts-dic.daum.net/read"
-tts_foramt="&format=mpeg"
 
 function pre_encode(){
   sed -E -e 's/\s+/ /g' \
@@ -35,22 +33,19 @@ function url_encode(){
 audio_dir="${HOME}/Project/dic/mp3"
 filename="${audio_dir}/${1}.mp3"
 
+daum_tts="http://tts-dic.daum.net/read"
+txt="$( url_encode "$1" )"
+lang="${2:-en}"
+format="mpeg"
 
-#daum_tts="http://tts-dic.daum.net/read?lang=${2:-en}&txt=Look+at+the+response+to+the+tsunami+--+it%27s+inspiring.&format=mpeg
-if [ "$2" != "already" ]
-then 
-    txt="$( url_encode "$1" )"
-    lang="${2:-en}"
-    format="mpeg"
+url="${daum_tts}?lang=${lang}&txt=${txt}&format=${format}"
+mpv ${url} > /dev/null 2>&1
 
-    url="${daum_tts}?lang=${lang}&txt=${txt}&format=${format}"
-    curl -G -s\
-      -o "${filename}" \
-      "${url}" \
-    && mpv "${filename}" > /dev/null 2>&1
-else 
-    mpv "${filename}" > /dev/null 2>&1
-fi
+#curl -G -s\
+#  -o "${filename}" \
+#  "${url}" \
+#&& mpv "${filename}" > /dev/null 2>&1
+
 # curl -G -s\
 #   -o "${filename}" \
 #   --data-urlencode "lang=${lang}" \

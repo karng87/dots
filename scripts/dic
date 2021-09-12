@@ -88,7 +88,7 @@ function showEDic(){
 function displayOnly(){
   setVAR "$1"
     clear
-    echo "===* ${W4}: ${FM} *==="
+    echo "===* ${WD}: ${FM} *==="
     sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
     -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
@@ -104,7 +104,7 @@ function displayOnly(){
 function dicLocal(){
   setVAR "$1"
     clear
-    echo "=== Locak ${W4}: ${FM} ==="
+    echo "=== Locak ${WD}: ${FM} ==="
     sed -E '=' <<< "${URL}" \
     |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bZ}'\
@@ -115,7 +115,7 @@ function dicLocal(){
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
     -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
+    -e 'g;s##mpv "'"${audio_dir}/${WD}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
     -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^"\s*(.*)"$#tts "\1" already #e}'\
     -e 'e sleep 1' 
 
@@ -124,21 +124,31 @@ function dicLocal(){
 function dicWeb(){
   setVAR "$1"
     clear
-    echo "===== *** ${W4}: ${FM} *** ====="
+    echo "===== *** ${WD}: ${FM} *** ====="
     sed -E '=' <<< "${URL}" \
-    |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
-    -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bZ}'\
-    -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
-    -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
-    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
-    -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
-    -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
+    |sed -En -e 's/^\s*$//' \
+    -e '/tit_speller"/{s/>([^<]+)<|./\1/g;bT}'\
+    -e '/link_speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ = &/;bT}}'\
+    -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\n\t<<< & >>>/;bT}}'\
+    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bT}'\
+    -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/  &/;bT}'\
+    -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bT}}'\
+    -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/\t&/;bT}}'\
+    -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bX}'\
     -e 'b'\
-    -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;h;s##curl -s -o "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 "\2"#e'\
-    -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
-    -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^"\s*(.*)"$#tts "\1"#e}'\
-    -e 'e sleep 1' 
+    -e ':X N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
+    -e 'g;h;s##curl -s -o "'"${audio_dir}/${WD}-${FM}"'"_\3.mp3 "\2"#e'\
+    -e 'g;s##mpv "'"${audio_dir}/${WD}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e;bZ'\
+    -e ':Y p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^"\s*(.*)"$#tts "\1"#e;bZ}'\
+    -e ':T /^[^가-힣]*[가-힣]+/bH'\
+        -e '/[^a-zA-Z]*[a-zA-Z]+/bE'\
+        -e '/[^あ-ん]*[あ-ん]+/bJ'\
+        -e '/[^⺀-⿕]*[⺀-⿕]+/bC'\
+    -e ':E p;s#^[^a-zA-Z]*([^>]+).*#tts "\1" en#e;bZ'\
+    -e ':H p;s#^[^가-힣]*([^>]+).*#tts "\1" kr#e;bZ'\
+    -e ':J p;s#^[⺀-⿕]*([^>]+).*#tts "\1" ja#e;bZ'\
+    -e ':C p;s#^[^⺀-⿕0-9]*([^>]+).*#tts "\1" zh#e;bZ'\
+    -e ':Z ' 
 
       echo "================ END ==================="
 }
