@@ -4,31 +4,13 @@ daum_tts="http://tts-dic.daum.net/read"
 tts_foramt="&format=mpeg"
 
 function pre_encode(){
-  sed -E -e 's/'"'"'/%27/g'\
-           -e 's/:/%3A/g'\
-           -e 's/,/%2C/g'\
-           -e 's/\(/%2C/g'\
-           -e 's/\)/%2C/g'\
-           -e 's/\?/%3F/g'\
-           -e 's/\s+/ /g'\
-           -e 's/ /+/g' <<< "$1"
+  sed -E -e 's/\s+/ /g' \
+         -e 's/^\s+//' \
+         -e 's/ /+/g' <<< "$1"
 }
 
-txt="$( pre_encode "$1" )"
-lang="${2:-en}"
-format="mpeg"
-
-curl -G \
-    -o ${txt} \
-    --data-urlencode "lang=${lang}" \
-    --data-urlencode "txt=${txt}" \
-    --data-urlencode "format=${format}" \
-    --trace dump \
-    "${daum_tts}" \
-&& mpv ${txt} 
-
-function ascii_encode(){
-    local str="${1}"
+function url_encode(){
+    local str=$( pre_encode "${1}" )
     local strlen=${#str}
     local encoded=""
     local pos c o
@@ -37,15 +19,43 @@ function ascii_encode(){
     do
       c=${str:$pos:1}
       case "$c" in
-        [-_,~a-zA-Z0-9] ) 
+        [+-_,~a-zA-Z0-9] ) 
           o="${c}" 
           ;;
 
         * )               
-          printf -v o '%%%02x' "'$c"
+          o=$( xxd -p <<< "${c}" | sed -E ':X s/^([^%]*)([^%]{2})/\1%\2/;tX;s/(.*)...$/\1/' )
           ;;
       esac
       encoded+="${o}"
     done
     echo $"${encoded}"
 }
+
+audio_dir="${HOME}/Project/dic/mp3"
+filename="${audio_dir}/${1}.mp3"
+
+
+#daum_tts="http://tts-dic.daum.net/read?lang=${2:-en}&txt=Look+at+the+response+to+the+tsunami+--+it%27s+inspiring.&format=mpeg
+if [ "$2" != "already" ]
+then 
+    txt="$( url_encode "$1" )"
+    lang="${2:-en}"
+    format="mpeg"
+
+    url="${daum_tts}?lang=${lang}&txt=${txt}&format=${format}"
+    curl -G -s\
+      -o "${filename}" \
+      "${url}" \
+    && mpv "${filename}" > /dev/null 2>&1
+else 
+    mpv "${filename}" > /dev/null 2>&1
+fi
+# curl -G -s\
+#   -o "${filename}" \
+#   --data-urlencode "lang=${lang}" \
+#   --data-urlencode "txt=${txt}" \
+#   --data-urlencode "format=${format}" \
+#   "${daum_tts}" 
+# && mpv ${filename} > /dev/null 2>&1
+

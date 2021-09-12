@@ -85,26 +85,6 @@ function showEDic(){
 
 }
 
-function dicLocal(){
-  setVAR "$1"
-    clear
-    echo "=====Local: ${W2} ====="
-    sed -E '=' <<< "${URL}"\
-    |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
-    -e '/data-audio data-url="http/{s/\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|./\1\2\3/g;bZ}'\
-    -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
-    -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
-    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
-    -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
-    -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
-    -e 'b'\
-    -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
-    -e ':X p; e sleep 1'
-
-    echo "================ END ==================="
-}
-
 function displayOnly(){
   setVAR "$1"
     clear
@@ -121,6 +101,26 @@ function displayOnly(){
     echo "================ END ==================="
 }
 
+function dicLocal(){
+  setVAR "$1"
+    clear
+    echo "=== Locak ${W4}: ${FM} ==="
+    sed -E '=' <<< "${URL}" \
+    |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
+    -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bZ}'\
+    -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
+    -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
+    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
+    -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
+    -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
+    -e 'b'\
+    -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
+    -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
+    -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^"\s*(.*)"$#tts "\1" already #e}'\
+    -e 'e sleep 1' 
+
+      echo "================ END ==================="
+}
 function dicWeb(){
   setVAR "$1"
     clear
@@ -137,7 +137,7 @@ function dicWeb(){
     -e ':Z N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
     -e 'g;h;s##curl -s -o "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 "\2"#e'\
     -e 'g;s##mpv "'"${audio_dir}/${W4}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e'\
-    -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^".*#tts &#e}'\
+    -e ':X p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^"\s*(.*)"$#tts "\1"#e}'\
     -e 'e sleep 1' 
 
       echo "================ END ==================="
