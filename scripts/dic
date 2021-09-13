@@ -45,25 +45,6 @@ function trimVoice(){
       -e '/\+/!{s/.*\/([^_]+)_.*/\1/}' <<< "$1"
 }
 
-function tts_(){
-  mpv $( sed -E -e 's/'"'"'/%27/g'\
-           -e 's/:/--/g'\
-           -e 's/,/--/g'\
-           -e 's/ /+/g'\
-           -e 's#\(#--#g'\
-           -e 's#\)#--#g'\
-           -e 's#^#'"${daum_tts}"='#'\
-           -e 's#$#.\&format=mpeg#' <<< "$1" )
-}
-
-
-function urlEncoding(){
-    sed -E -e '/%27|&#039/{s//'"'"'/g}'\
-           -e '/%3A/{s//:/g}'\
-           -e '/%2C/{s//,/g}'\
-           -e 's/\+/ /g' <<< "$1"
-}
-
 function checkNgetSpell(){
     # <a href="/word/view.do?wordid=eew000034775"
     sed -En -e '/tit_speller/{s/>([^<]+)<|./\1/g;bZ}'\
@@ -76,13 +57,6 @@ function checkNgetSpell(){
 function getMean(){
     sed -En -e '/"num_search"/{s/>([^<0-9]+)<|./\1/g;p;q}' \
         <<< "${1}" 
-}
-
-function showEDic(){
-    sed -En -e '/txt_mean/{s/>([^<]+)<|./\1/g;{s/.*/\t&/;bX}}'\
-            -e 'b'\
-            -e ':X p' <<< "${URL}"
-
 }
 
 function displayOnly(){
@@ -109,8 +83,8 @@ function dicLocal(){
     |sed -En -e '/speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ < & >/;bX}}'\
     -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bZ}'\
     -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\t<<< & >>>/;bX'}}\
-    -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
-    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bX}'\
+    -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/\n  emph1: & >>/;bX}'\
+    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n  searchword: & >>/;bX}'\
     -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/    &/;bX}}'\
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bX}}'\
     -e 'b'\
@@ -124,34 +98,37 @@ function dicLocal(){
 function dicWeb(){
   setVAR "$1"
     clear
-    echo "===== *** ${WD}: ${FM} *** ====="
-    sed -E '=' <<< "${URL}" \
-    |sed -En -e 's/^\s*$//' \
+    echo "=== *** ${WD}: ${FM} *** ==="
+    sed -En -e 's/^\s*$//' \
     -e '/tit_speller"/{s/>([^<]+)<|./\1/g;bT}'\
-    -e '/link_speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/ = &/;bT}}'\
+    -e '/link_speller"/{s/>([^<]+)<|./\1/g;{s/[a-z]+/: &/;bT}}'\
     -e '/"tit_word"/{s/>([^<]+)<|./\1/g;{s/[^ ]+/\n\t<<< & >>>/;bT}}'\
-    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n  << & >>\n/;bT}'\
+    -e '/"txt_searchword"/{s/>([^<]+)<|./\1/g;s/.*/\n\t<< & >>/;bT}'\
     -e '/"txt_emph1"/{s/>([^<]+)<|./\1/g;s/.*/  &/;bT}'\
     -e '/num_search/{/txt_search"/{s/>([^<]+)<|./\1/g;s/.*/\t&/;bT}}'\
     -e '/txt_search"/{/num_search"/!{s/>([^<]+)<|./\1/g;s/.*/\t&/;bT}}'\
-    -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bX}'\
     -e 'b'\
-    -e ':X N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
-    -e 'g;h;s##curl -s -o "'"${audio_dir}/${WD}-${FM}"'"_\3.mp3 "\2"#e'\
-    -e 'g;s##mpv "'"${audio_dir}/${WD}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e;bZ'\
-    -e ':Y p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^"\s*(.*)"$#tts "\1"#e;bZ}'\
-    -e ':T /^[^가-힣]*[가-힣]+/bH'\
-        -e '/[^a-zA-Z]*[a-zA-Z]+/bE'\
-        -e '/[^あ-ん]*[あ-ん]+/bJ'\
-        -e '/[^⺀-⿕]*[⺀-⿕]+/bC'\
-    -e ':E p;s#^[^a-zA-Z]*([^>]+).*#tts "\1" en#e;bZ'\
-    -e ':H p;s#^[^가-힣]*([^>]+).*#tts "\1" kr#e;bZ'\
-    -e ':J p;s#^[⺀-⿕]*([^>]+).*#tts "\1" ja#e;bZ'\
-    -e ':C p;s#^[^⺀-⿕0-9]*([^>]+).*#tts "\1" zh#e;bZ'\
-    -e ':Z ' 
+    -e ':T p;s/[\t<>(｢〔…"`'"'"']*//g;s/[0-9]\.//'\
+        -e '/[가-힣]+/bH'\
+        -e '/[一-龥]+/bC'\
+        -e '/[a-zA-Z]+/bE'\
+        -e '/[あ-ん]+/bJ'\
+        -e '/[⺀-⿕]+/bJ'\
+        -e 'bJ'\
+    -e ':H s#^[[:space:]<.:(｢〔0-9]*(.*)#tts "\1" kr#e;bZ'\
+    -e ':E s#^[[:space:]<.:(｢〔]*(.*)#tts "\1" en#e;bZ'\
+    -e ':C s/[a-zA-Z]*//g;s#^[[:space:]<.:(｢〔]*(.*)#tts "\1" zh#e;bZ'\
+    -e ':J s#^[[:space:]<.:(｢〔]*(.*)#tts "\1" ja#e;bZ'\
+    -e ':Z ' <<< $URL} 
 
-      echo "================ END ==================="
+    echo "================ END ==================="
+#    -e ':Y p;/^\s+[a-zA-Z0-9(]+\.?\s?[a-zA-Z]+.*/{s##"&"#;s#^"\s*(.*)"$#tts "\1"#e;bZ}'\
+#    -e '/data-audio data-url="http/{s#\s+([가-힣]+)|>([^<]+)<|data-url=("[^"]+")|.#\1\2\3#g;bX}'\
+#    -e ':X N;s/\n|\s+/ /g;h;s/^([^"]+)?"([^"]+)"\s(.*)/\1/p'\
+#    -e 'g;h;s##curl -s -o "'"${audio_dir}/${WD}-${FM}"'"_\3.mp3 "\2"#e'\
+#    -e 'g;s##mpv "'"${audio_dir}/${WD}-${FM}"'"_\3.mp3 >/dev/null 2>\&1;#e;bZ'\
 }
+
 
 function showKDic(){
     #clear
@@ -203,7 +180,6 @@ function playdic(){
 }
 
 function playAll(){
-
   for i in ${all_audios}
       do 
         #setVAR $i
@@ -238,11 +214,6 @@ function playWords(){
             #sleep 1
           done
       done
-}
-
-function mainDic(){
-    dicWeb $W4
-    #playdic "$( showKDic $W4 )"
 }
 
 echo "${1}"
