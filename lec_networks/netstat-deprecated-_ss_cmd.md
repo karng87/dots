@@ -1,3 +1,5 @@
+# deprecated
+
 # netstat
     package net-tools
 
