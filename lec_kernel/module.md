@@ -9,7 +9,7 @@
 ## automatic module loading with systemd
     sudo vi /etc/modules-load.d/my_filename.conf
         # load virtio_net.ko at boot
-        virtio_net
+        vhost_net
 
     cf) blacklist pcspkr
 
