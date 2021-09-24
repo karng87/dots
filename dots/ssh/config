@@ -1,6 +1,4 @@
 #https://www.cyberciti.biz/faq/x11-connection-rejected-because-of-wrong-authentication/
-Host *
-ForwardX11 yes
 
 Host git
   HostName github.com
