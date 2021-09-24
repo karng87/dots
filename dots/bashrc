@@ -18,6 +18,7 @@ alias cda="cd $ph/modern_x86_64_assembly"
 alias cdd="cd $ph/dots" 
 alias cdt="cd $ph/terms" 
 alias cdm="cd $ph/dic/mp3" 
+alias cdn="cd $ph/nasm_game" 
 
 alias cdp="cd $ph" 
 alias cdc="cd $ph/cxx" 
