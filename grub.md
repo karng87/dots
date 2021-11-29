@@ -1,4 +1,4 @@
-# boot menu
+# [boot menu[(http://nemonein.egloos.com/5327629)
 ## e
 ```
 grub> ls
