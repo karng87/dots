@@ -92,7 +92,7 @@ vim.g.mapleader = ','
    U.map('t', [[<leader>we]], [[<c-\><c-n>:winc =<cr>]])
 
    U.map('n', [[<leader>wl]], [[:Lexplore|vertical resize 20<cr>]])
-   U.map('i', [[<leader>wl]], [[<ESC><c-u>:Lexplore|vertical resize 20<cr>]])
+   --U.map('i', [[<leader>wl]], [[<ESC><c-u>:Lexplore|vertical resize 20<cr>]])
    U.map('t', [[<leader>wl]], [[<c-\><c-n>:Lexplore|vertical resize 20<cr>]])
 
    U.map('n', [[<leader>wn]], [[:up|botright new]])
@@ -102,9 +102,9 @@ vim.g.mapleader = ','
    --U.map('i', [[<leader>wv]], [[<ESC>:up|botright vnew]])
    U.map('t', [[<leader>wv]], [[<c-\><c-n>:botright vnew]])
 
-   U.map('n', [[<leader>wt]], [[:up|tabnew<c-l>]])
+   --U.map('n', [[<leader>wt]], [[:up|tabnew<c-l>]])
    --U.map('i', [[<leader>wt]], [[<ESC>:up|tabnew<c-l>]])
-   U.map('t', [[<leader>wt]], [[<c-\><c-n>:tabnew<c-l>]])
+   --U.map('t', [[<leader>wt]], [[<c-\><c-n>:tabnew<c-l>]])
    --U.map('n', [[<leader>v]], [[<c-v>]])
    --U.map('i', [[<leader>v]], [[<esc><c-v>]])
    --U.map('t', [[<leader>v]], [[<c-\><c-n><c-v>]])
