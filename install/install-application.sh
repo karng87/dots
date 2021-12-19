@@ -7,7 +7,7 @@ makepkg -si
 parun -S google-chrome
 
 # fcitx5
-sudo pacman -S fcitx5 fictx5-configtool libhangul fictx5-hangul fcitx5-gtk fcitx5-qt
+sudo pacman -S noto-fonts-cjk fcitx5 fcitx5-configtool libhangul fcitx5-hangul fcitx5-gtk fcitx5-qt
 
 vim /etc/environment
 #    GTK_IM_MODULE=fcitx 

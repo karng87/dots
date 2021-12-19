@@ -6,9 +6,6 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-export EDITOR=vi
-export VISUAL=vi
-
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 #source /usr/share/nvm/init-nvm.sh
 
@@ -25,6 +22,8 @@ alias cdc="cd $ph/cxx"
 
 TEXMFDIST=/usr/share/texmf-dist
 alias tlmgr='${TEXMFDIST}/scripts/texlive/tlmgr.pl --usermode'
+alias vi='nvim'
+alias vim='nvim'
 
 # yarn config set prefix ~/.yarn-global
 #export PATH="$PATH:`yarn global bin`"
@@ -46,9 +45,6 @@ export XDG_RUNTIME_DIR=/run/user/`id -u`
 export PATH="$HOME/.ghcup/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-#export TERMINAL=alacritty
-
-export GNUPLOT_LIB="$HOME/.gnuplot"
 
 #pyenv
 #export PYENV_ROOT="$HOME/.pyenv"
