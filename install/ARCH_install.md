@@ -6,19 +6,9 @@
     station wlan0 connent homeip
         passwd
 
-## pacman -Sy
+# timedatectl set-ntp true
 
 ## lsblk -f
-    gdisk /dev/sda
-        n
-        +250M
-        ef00
-
-        n
-        -8G
-        
-        n
-        swap
 ## mkfs
     mkfs.vfat /dev/sda1
     mkswap /dev/sda2
@@ -35,7 +25,8 @@
     mount /dev/sda4 /mnt/home
     
 ## pacstrap /mnt
-    pacstrap /mnt base linux linux-firmware git nvim intel-ucode
+    pacstrap /mnt base linux linux-firmware git vim intel-ucode
+
 ## genfstab -U /mnt >> /mnt/etc/fstab
 ## arch-chroot /mnt
 
@@ -44,4 +35,15 @@
     nvim bash.sh
         root:passwd
 
+## after isntall
+>  nmtui
 
+## brightness
+> xrandr --output eDP1 --brightness .5
+
+## optimus-manager
+> paru -S optimus-manager
+>> reboot
+>> optimus-manager --switch nvidia
+>> optimus-manager --switch integrated 
+>> optimus-manager --switch hybrid
