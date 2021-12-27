@@ -33,9 +33,9 @@
 # vi /etc/fstab
 ## /swapfile none swap default 0 0
 
-efi=/dev/sdb1
-hdd=/dev/sdb2
-swap=/dev/sdb3
+efi='/dev/sdb1'
+hdd='/dev/sdb2'
+swap='/dev/sdb3'
 
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 hwclock --systohc
@@ -97,7 +97,7 @@ systemctl enable acpid
 useradd -mG wheel jkarng
 echo jkarng:8755 | chpasswd
 
-#usermod -aG wheel libvirt video audio tty input jkarng
+usermod -aG wheel libvirt video audio tty input jkarng
 
 echo "jkarng ALL=(ALL) ALL" >> /etc/sudoers.d/jkarng
 

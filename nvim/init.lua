@@ -13,6 +13,8 @@ require'base.netrw'
 -- ~/Project/dots/nvim/lua/base/gruvbox.lua
 require'base.gruvbox'
 
+vim.cmd('packadd magma-nvim')
+
 vim.cmd('packadd nvim-web-devicons')
 require'nvim-web-devicons'.setup {
  -- your personnal icons can go here (to override)
@@ -38,7 +40,7 @@ require'base.galaxyline'
 require'lsp.lsp-config'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-completion-nvim.lua
-require'lsp.lsp-completion-nvim'
+-- require'lsp.lsp-completion-nvim'
 
 -- ~/Project/dots/nvim/lua/lsp/lsp-vsnip.lua
 require'lsp.lsp-vsnip'

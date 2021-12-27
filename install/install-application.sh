@@ -15,3 +15,7 @@ vim /etc/environment
 #    XMODIFIERS=@im=fcitx
 
 ficitx5-configtool
+
+# firefox vim
+sudo pacman -S firefox-tridactyl
+

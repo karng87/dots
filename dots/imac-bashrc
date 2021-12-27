@@ -1,4 +1,5 @@
-# xrandr --output eDP-1 --brightness 0.5
+# xrandr -q
+# xrandr --output DP3 --brightness 0.5
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return

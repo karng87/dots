@@ -55,3 +55,6 @@
 [submodule "nvim/pack/lsp/opt/vimtex"]
 	path = nvim/pack/lsp/opt/vimtex
 	url = https://github.com/lervag/vimtex.git
+[submodule "nvim/pack/lsp/opt/magma-nvim"]
+	path = nvim/pack/lsp/opt/magma-nvim
+	url = https://github.com/dccsillag/magma-nvim.git

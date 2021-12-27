@@ -22,6 +22,7 @@ U.set ('shiftwidth', 2)
 U.set 'expandtab'
 U.set 'autoindent'
 U.set 'cindent'
+U.set ('mouse','a')
 
 -- Search configuration
 -- U.set ('hlsearch', false)
