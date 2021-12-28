@@ -313,6 +313,7 @@ exec nitrogen --restore
 
 # xrandr -q
 exec xrandr --output eDP-1 --brightness 0.6
+exec xrandr --outputexec xrandr --output eDP-1-1 --brightness 0.6
 # Picom
 # exec picom -f
 exec fcitx5 -d
