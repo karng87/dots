@@ -1,0 +1,9 @@
+# https://superuser.com/questions/290115/how-to-change-console-keymap-in-linux
+# should locate to /etc/dafault/
+# see /usr/share/X11/xkb/rules/base.lst
+
+# XKBOPTIONS="ctrl:swapcaps"
+XKBOPTIONS="caps:swapescape"
+
+# udevadm trigger --subsystem-match=input --action=change
+# sudo restart lightdm
