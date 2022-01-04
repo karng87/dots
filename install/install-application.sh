@@ -15,7 +15,11 @@ vim /etc/environment
 #    XMODIFIERS=@im=fcitx
 
 ficitx5-configtool
+# apl dyalog
 
 # firefox vim
-sudo pacman -S firefox-tridactyl
+# sudo pacman -S firefox-tridactyl
 
+# ijconsole
+paru -S j901-bin
+# setxkbmap -layout us,apl -variant ,dyalog -option grp:ctrl_shift_toggle kr -option korean:ralt_hangul korean:rctrl_hanja
