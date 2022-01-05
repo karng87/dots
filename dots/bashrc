@@ -3,8 +3,7 @@ setxkbmap -layout us,apl -variant \
   kr -option korean:ralt_hangul korean:rctrl_hanja
 
 # setxkbmap -layout us,apl,kr -variant ,dyalog -option grp:switch -option lv3:rwin_switch
-# /usr/share/X11/xkb/rules/base.lst
-#/usr/bin/setxkbmap -option "caps:escape"
+# refer /usr/share/X11/xkb/rules/base.lst
 #/usr/bin/setxkbmap -option "caps:ctrl_modifier"
 /usr/bin/setxkbmap -option "caps:escape"
 
