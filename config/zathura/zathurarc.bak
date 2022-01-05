@@ -1,5 +1,5 @@
 # Basic Settings
-
+set font 16
 set highlight-transparency .1
 set zoom-center "true"
 set selection-clipboard clipboard
