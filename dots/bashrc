@@ -24,6 +24,7 @@ alias cdd="cd $ph/dots"
 alias cdt="cd $ph/terms" 
 alias cdm="cd $ph/dic/mp3" 
 alias cdn="cd $ph/nasm_game" 
+alias cdv="cd $HOME/.config/nvim"
 
 alias cdp="cd $ph" 
 alias cdc="cd $ph/cxx" 
