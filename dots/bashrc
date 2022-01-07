@@ -1,9 +1,9 @@
 setxkbmap -layout us,apl -variant \
-  ,dyalog -option grp:ctrl_shift_toggle \
+  ,dyalog -option grp:shift_caps_toggle\
   kr -option korean:ralt_hangul korean:rctrl_hanja
 
 # setxkbmap -layout us,apl,kr -variant ,dyalog -option grp:switch -option lv3:rwin_switch
-# refer /usr/share/X11/xkb/rules/base.lst
+# refer /usr/share/X11/xkb/rules/evdev.lst
 #/usr/bin/setxkbmap -option "caps:ctrl_modifier"
 /usr/bin/setxkbmap -option "caps:escape"
 
