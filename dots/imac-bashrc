@@ -2,3 +2,6 @@ source ~/Project/dots/dots/bashrc
 
 xrandr --output DP3 --brightness 0.5
 
+setxkbmap -layout us,apl -variant \
+  ,dyalog -option grp:shift_caps_toggle\
+  kr -option korean:ralt_hangul korean:rctrl_hanja
