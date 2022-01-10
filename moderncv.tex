@@ -27,18 +27,22 @@
 \maketitle
 
 \section{bluetooth}
-\subsection{bluetoothctl}
-\cvitem{power on}{}
-\cvitem{agent on}{}
-\cvitem{default-agent}{}
-\cvitem{scan on}{}
-\cvitem{pair 00:1D:..}{}
-\cvitem{connect 00:1D:..}{}
+\cvitem{bluetoothctl}{}
+\cvitem{}{power on}
+\cvitem{}{paired-devices}
+\cvitem{}{connect tab}
+\cvlistitem{if Erro}
+\cvitem{}{power on}
+\cvitem{}{agent on}
+\cvitem{}{default-agent}
+\cvitem{}{scan on}
+\cvitem{}{pair 00:1D:..}
+\cvitem{}{connect 00:1D:..}
 \cvitem{Error:}{org.bluze.Error.Failed}
-\cvitem{then}{pulseaudio -k}
-\cvitem{connect 00:1D..}{}
-\cvitem{trust 00:1D..}{}
-\subsection{auto connection}
+\cvitem{pulseaudio -k}{}
+\cvitem{}{connect 00:1D..}
+\cvitem{}{trust 00:1D..}
+\section{auto connection}
 \cvitem{edit}{/etc/pulse/default.pa}
 \cvitem{$\to$}{load-module module-switch-on-connect}
 
