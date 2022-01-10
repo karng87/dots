@@ -1,0 +1,42 @@
+\documentclass[a4paper]{moderncv}
+\usepackage[scale=0.9]{geometry}
+\usepackage{blindtext}
+\usepackage{amsmath, kotex}
+\moderncvtheme[blue]{classic}
+\firstname{Arch}
+\familyname{Linux}
+\title{Arch Linux}
+\address{Seoul, Korea}
+\mobile{010-3201-xxxx}
+\email{karng87@gmail.com}
+\photo{arch.png}
+\recipient{수령지}{Garden Street 1\\432 Big-City\\German}
+\opening{ooo 에게}
+\closing{안녕~}
+
+\begin{document}
+%\makelettertitle
+%\blindtext
+%\makeletterclosing
+%\newpage
+
+\maketitle
+
+\section{bluetooth}
+\subsection{bluetoothctl}
+\cvitem{power on}{}
+\cvitem{agent on}{}
+\cvitem{default-agent}{}
+\cvitem{scan on}{}
+\cvitem{pair 00:1D:..}{}
+\cvitem{connect 00:1D:..}{}
+\cvitem{Error:}{org.bluze.Error.Failed}
+\cvitem{then}{pulseaudio -k}
+\cvitem{connect 00:1D..}{}
+\cvitem{trust 00:1D..}{}
+\subsection{auto connection}
+\cvitem{edit}{/etc/pulse/default.pa}
+\cvitem{$\to$}{load-module module-switch-on-connect}
+
+\end{document}
+
