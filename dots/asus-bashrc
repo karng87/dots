@@ -13,3 +13,5 @@ setxkbmap -layout us,apl -variant \
 # refer /usr/share/X11/xkb/rules/evdev.lst
 # /usr/bin/setxkbmap -option "caps:ctrl_modifier"
 #/usr/bin/setxkbmap -option "caps:ctrl_modifier"
+
+alias luamake=/home/jkarng/lua/lua-language-server/3rd/luamake/luamake

@@ -56,6 +56,8 @@ PATH="$HOME/.local/bin:$PATH"
 
 PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
 PATH="$PATH:$HOME/.emacs.d/bin"
+PATH="$PATH:$HOME/lua/lua-language-server/bin"
+PATH="$PATH:$HOME/lua/ltex-ls-15.2.0/bin"
 
 export PATH
 #pyenv
