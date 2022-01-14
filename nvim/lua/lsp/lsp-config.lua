@@ -188,10 +188,10 @@ lsp.cmake.setup{
 
 lsp.sumneko_lua.setup{
   on_attach = on_attach,
-  cmd = { "/home/jkarng/lua/lua-language-server/bin/Linux/lua-language-server", "-E", "/home/jkarng/lua/lua-language-server/main.lua" },
+  cmd = { "/home/jkarng/lua/lua-language-server/bin/lua-language-server", "-E", "/home/jkarng/lua/lua-language-server/bin/main.lua" },
   filetypes = { "lua" },
   log_level = 2,
-  root_dir = lsp.util.root_pattern("LICENSE", ".git"),
+  root_dir = lsp.util.root_pattern("root.tex", ".git"),
   settings = {
     Lua = {
           runtime = {
@@ -215,15 +215,8 @@ lsp.sumneko_lua.setup{
   },
 }
 
-lsp.texlab.setup{
-  on_attach = on_attach,
-  cmd = { "texlab" },
-  filetypes = { "tex", "bib" },
-}
-
-lsp.bashls.setup{
-  on_attach = on_attach,
-}
+lsp.ltex.setup{ on_attach = on_attach, }
+lsp.bashls.setup{ on_attach = on_attach, }
 
 local function lsp_reload(buffer)
   vim.lsp.stop_client(vim.lsp.get_active_clients(buffer))
