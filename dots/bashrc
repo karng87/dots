@@ -1,5 +1,6 @@
-/usr/bin/setxkbmap -option "caps:escape"
+#set -o vi
 
+/usr/bin/setxkbmap -option "caps:escape"
 #setxkbmap -layout us,apl -variant \
 #  ,dyalog -option grp:shift_caps_toggle\
 #  kr -option korean:ralt_hangul korean:rctrl_hanja
@@ -8,7 +9,6 @@
 # refer /usr/share/X11/xkb/rules/evdev.lst
 #/usr/bin/setxkbmap -option "caps:ctrl_modifier"
 
-#set -o vi
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -19,16 +19,16 @@ PS1='[\u@\h \W]\$ '
 #source /usr/share/nvm/init-nvm.sh
 
 ph=~/Project
-#alias cda="cd $ph/ASM_Programming" 
-alias cda="cd $ph/modern_x86_64_assembly" 
-alias cdd="cd $ph/dots" 
-alias cdt="cd $ph/terms" 
-alias cdm="cd $ph/dic/mp3" 
-alias cdn="cd $ph/nasm_game" 
+#alias cda="cd $ph/ASM_Programming"
+alias cda="cd $ph/modern_x86_64_assembly"
+alias cdd="cd $ph/dots"
+alias cdt="cd $ph/terms"
+alias cdm="cd $ph/dic/mp3"
+alias cdn="cd $ph/nasm_game"
 alias cdv="cd $HOME/.config/nvim"
 
-alias cdp="cd $ph" 
-alias cdc="cd $ph/cxx" 
+alias cdp="cd $ph"
+alias cdc="cd $ph/cxx"
 
 TEXMFDIST=/usr/share/texmf-dist
 alias tlmgr='${TEXMFDIST}/scripts/texlive/tlmgr.pl --usermode'
@@ -46,11 +46,11 @@ export PERL5LIB
 PERL_LOCAL_LIB_ROOT="/home/jkarng/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
 export PERL_LOCAL_LIB_ROOT
 PERL_MB_OPT="--install_base \"/home/jkarng/perl5\""
-export PERL_MB_OPT;
+export PERL_MB_OPT
 PERL_MM_OPT="INSTALL_BASE=/home/jkarng/perl5"
-export PERL_MM_OPT;
+export PERL_MM_OPT
 
-export XDG_RUNTIME_DIR=/run/user/`id -u`
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
 PATH="$HOME/.ghcup/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 
