@@ -1,4 +1,5 @@
 #set -o vi
+export MANPAGER="less -R --use-color -Dd+r -Du+b"
 
 /usr/bin/setxkbmap -option "caps:escape"
 #setxkbmap -layout us,apl -variant \
