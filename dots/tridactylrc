@@ -17,17 +17,17 @@ bind j scrollline 1
 bind k scrollline -1
 
 " <c-d>, <c-u> 가 좋겠지만 귀찮다. vimium 과 똑같이 설정한다.
-"bind d scrollpage 0.3
-"bind u scrollpage -0.3
+bind d scrollpage 0.3
+bind u scrollpage -0.3
 
 " search
-"bind / fillcmdline find
-"bind ? fillcmdline find -?
-"bind n findnext 1
-"bind N findnext -1
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext 1
+bind N findnext -1
 
 " tab
-"bind d tabclose
+bind x tabclose
 
 " emacs 스타일 text editing 이 편하다
 bind --mode=ex     <C-a> text.beginning_of_line
