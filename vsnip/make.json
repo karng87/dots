@@ -1,0 +1,120 @@
+{
+  "Make pdflatex": {
+    "prefix": ["Make_pdflatex"],
+    "body": [
+      "texs := \\$(notdir \\$(shell find -maxdepth 1 -name \"*.tex\"))",
+      "build/%.pdf: %.tex",
+      "\t\tpdflatex --jobname=\\$(patsubst %.tex, build/%, \\$<)) \\$<",
+      "pdf :\\$(patsubst %.tex, build/%.pdf, \\$(texs))",
+      "\t\t@nohup zathura \\$< &"
+    ],
+    "description": "pdflatex --jobname=_"
+  },
+
+  "Make ghc": {
+    "prefix": ["Make_ghc"],
+    "body": [
+      "hss = \\$(notdir \\$(shell find app -name \"*.hs\"))",
+      "build/%: app/%.hs",
+      "\t\tghc -isrc -o \\$@ \\$<",
+      "run: \\$(patsubst %.hs, build/%, \\$(hss))",
+      "\t\t./\\$<"
+    ],
+    "description": "Compiling haskell with ghc"
+  },
+
+  "Make recursive func": {
+    "prefix": ["Make_recursive_func"],
+    "body": [
+      "define func",
+      "  for i in \\$(shell find . -name \"makefile\" | sed -En '/\\.\\/makefile/!{s/makefile//p}') ; do \\$(MAKE) -C \\$\\$i \\$1;done",
+      "endef"
+    ],
+    "description": "recursive function in makefile"
+  },
+
+  "Make Root": {
+    "prefix": ["Make_Root"],
+    "body": [
+      "SHELL := /bin/bash",
+      "define func",
+      "  for i in \\$(shell find . -name \"makefile\" | sed -En '/\\.\\/makefile/!{s/makefile//p}') ; do \\$(MAKE) -C \\$\\$i \\$1;done",
+      "endef",
+      "",
+      "texs := \\$(notdir \\$(shell find -maxdepth 1 -name \"*.tex\"))",
+      "",
+      ".PHONEY: all clean recursive, run, echo",
+      "",
+      "all: \\$(patsubst %.tex, build/%.pdf, \\$(texs)) recursive",
+      "",
+      "build/%.pdf: %.tex",
+      "\t\t@pdflatex --jobname=\\$(patsubst %.tex,build/%, \\$<) \\$<",
+      "",
+      "pdf :\\$(patsubst %.tex, build/%.pdf, \\$(texs))",
+      "\t\t@nohup zathura \\$< &",
+      "",
+      "#hss = \\$(notdir \\$(shell find app -name \"*.hs\"))",
+      "#build/%: app/%.hs",
+      "#\t\tghc -isrc -o \\$@ \\$<",
+      "#run: \\$(patsubst %.hs, build/%, \\$(hss))",
+      "#\t\t./\\$<",
+      "",
+      "recursive:",
+      "\t\t@\\$(call func,all)",
+      "",
+      "clean:",
+      "\t\trm \\$(shell find -type f -regex '.*\\.\\(hi\\|o\\|out\\|aux\\|log\\|toc\\|nav\\|snm\\|lot\\|lof\\)\\$\\$')",
+      "\t\t@\\$(call func,\\$@)",
+      "",
+      "echo:",
+      "\t\t@echo \"This is root dir\"",
+      "\t\t@\\$(call func,\\$@)"
+    ],
+    "description": "Root directory Makefile"
+  },
+
+  "Make Cabal": {
+    "prefix": ["Make_Cabal"],
+    "body": [
+      "hss = \\$(patsubst %.hs,build/%,\\$(notdir \\$(shell find app -name \"*.hs\")))",
+      "excutable = demo",
+      ".PHONEY: all init build execute run haddock",
+      "",
+      "all: run \\$(hss)",
+      "",
+      "init:",
+      "\t\t@cabal update",
+      "\t\t@cabal init -l MIT",
+      "\t\t@# runhaskell Setup.lhs configure --prefix=\\$HOME --user",
+      "",
+      "build:",
+      "\t\t@cabal v2-build \\$(excutable)",
+      "\t\t@# runhaskell Setup.lhs build",
+      "",
+      "execute:",
+      "\t\t@cabal v2-exec \\$(excutable)",
+      "\t\t@# runhaskell Setup.lhs \\$(excutable)",
+      "",
+      "run:",
+      "\t\t@cabal v2-run \\$(excutable)",
+      "\t\t@# runhaskell Setup.lhs install",
+      "\t\t@# ./dist/build/\\$(excutable)/\\$(excutable)",
+      "",
+      "#hss = \\$(notdir \\$(shell find app -name \"*.hs\"))",
+      "#build/%: app/%.hs",
+      "#\t\tghc -isrc -o \\$@ \\$<",
+      "#run: \\$(patsubst %.hs, build/%, \\$(hss))",
+      "#\t\t./\\$<",
+      "",
+      "haddock:",
+      "\t\t@runhaskell Setup.hs haddock --excutables",
+      "\t\t@w3m dist/doc/html/\\$(excutable)/\\$(excutable)/Main.html",
+      "",
+      "clean:",
+      "\t\trm \\$(shell find -type f -regex '.*\\.\\(hi\\|o\\|out\\|aux\\|log\\|toc\\|nav\\|snm\\|lot\\|lof\\)\\$\\$')",
+      "echo:",
+      "\t\t@echo \"i am cabal makefile\""
+    ],
+    "description": ""
+  }
+}

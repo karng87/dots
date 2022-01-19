@@ -1,0 +1,880 @@
+{
+  "cv_Section": {
+    "prefix": ["\\cv_section"],
+    "body": ["\\section{$1}$0"],
+    "description": "section in moderncv."
+  },
+  "cv_Subsection": {
+    "prefix": ["\\cv_subsection"],
+    "body": ["\\subsection{<< $1 >>}$0"],
+    "description": "Insert a new moderncv."
+  },
+  "cv_item": {
+    "prefix": ["\\cv_item"],
+    "body": ["\\cvitem{$1}{$2}$0"],
+    "description": "cvitem in moderncv."
+  },
+  "cv_listitem": {
+    "prefix": ["\\cv_listitem"],
+    "body": ["\\cvlistitem{$1}$0"],
+    "description": "cvlistitem in moderncv."
+  },
+  "cv_entry": {
+    "prefix": ["\\cv_entry"],
+    "body": ["\\cventry{$1}{$2}{$3}{$4}{$5}{$6}$0"],
+    "description": "cventry in moderncv."
+  },
+  "tilde": {
+    "prefix": ["~"],
+    "body": ["\\$\\sim\\$"],
+    "description": "escape ~"
+  },
+  "backslash": {
+    "prefix": ["\\"],
+    "body": ["\\$\\backslash\\$"],
+    "description": "escape \\"
+  },
+  "open brace": {
+    "prefix": ["{"],
+    "body": ["\\{"],
+    "description": "escape {"
+  },
+  "close brace": {
+    "prefix": ["}"],
+    "body": ["\\\\}"],
+    "description": "escape }"
+  },
+  "caret": {
+    "prefix": ["^"],
+    "body": ["\\^"],
+    "description": "escape ^"
+  },
+  "ampersand": {
+    "prefix": ["&"],
+    "body": ["\\&"],
+    "description": "escape &"
+  },
+  "percent": {
+    "prefix": ["%"],
+    "body": ["\\%"],
+    "description": "escape %"
+  },
+  "hash": {
+    "prefix": ["#"],
+    "body": ["\\#"],
+    "description": "escape #"
+  },
+  "underbar": {
+    "prefix": ["_"],
+    "body": ["\\_"],
+    "description": "escape _"
+  },
+  "dollar": {
+    "prefix": ["$"],
+    "body": ["\\\\\\$"],
+    "description": "escape of $"
+  },
+  "Latex Moderncv": {
+    "prefix": ["\\usedocumentclass Moderncv"],
+    "body": [
+      "\\documentclass[a4paper]{moderncv}",
+      "\\usepackage[scale=0.9]{geometry}",
+      "\\usepackage{blindtext}",
+      "\\usepackage{amsmath, kotex}",
+      "\\usepackage[utf8]{inputenc}",
+      "\\usepackage[T1]{fontenc}",
+      "",
+      "\\moderncvtheme[blue]{classic}",
+      "",
+      "\\firstname{Latex}",
+      "\\familyname{Moderncv}",
+      "\\title{Title}",
+      "",
+      "\\address{Seoul, Korea}",
+      "\\mobile{010-3201-xxxx}",
+      "\\email{karng87@gmail.com}",
+      "%\\photo{logo.png}",
+      "",
+      "\\recipient{수령지}{Songpa ku\\\\Seoul\\\\Korea}",
+      "\\opening{Latex에게}",
+      "\\closing{안녕~}",
+      "",
+      "\\begin{document}",
+      "%makelettertitle",
+      "%\\blindtext",
+      "%makeletterclosing",
+      "%\\newpage",
+      "",
+      "\\maketitle",
+      "",
+      "\\section{item}",
+      "\\subsection{<< listitem >>}",
+      "\\cvlistitem{lsititem}",
+      "\\cvitem{cvitem}{$x \\gets xs $}",
+      "\\cventry{2002}{R1}{}{}{}{}",
+      "\\end{document}"
+    ],
+    "description": "Moderncv template Vsnip"
+  },
+  "Latex Template": {
+    "prefix": ["\\usedocumentclass Template"],
+    "body": [
+      "\\documentclass{article}",
+      "",
+      "\\usepackage{geometry}",
+      "\\usepackage{graphicx}",
+      "\\usepackage{amssymb}",
+      "\\usepackage{amsmath}",
+      "\\usepackage{amsthm}",
+      "\\usepackage{empheq}",
+      "\\usepackage{mdframed}",
+      "\\usepackage{booktabs}",
+      "\\usepackage{lipsum}",
+      "\\usepackage{graphicx}",
+      "\\usepackage{color}",
+      "\\usepackage{psfrag}",
+      "\\usepackage{pgfplots}",
+      "\\usepackage{bm}",
+      "",
+      "${3:% Other Settings}",
+      "",
+      "\\geometry{a4paper}",
+      "",
+      "%% Define some useful colors %%",
+      "\\definecolor{ocre}{RGB}{243,102,25}",
+      "\\definecolor{mygray}{RGB}{243,243,244}",
+      "\\definecolor{deepGreen}{RGB}{26,111,0}",
+      "\\definecolor{shallowGreen}{RGB}{235,255,255}",
+      "\\definecolor{deepBlue}{RGB}{61,124,222}",
+      "\\definecolor{shallowBlue}{RGB}{235,249,255}",
+      "",
+      "%% Define an orangebox command %%",
+      "\\newcommand\\orangebox[1]{\\fcolorbox{ocre}{mygray}{\\hspace{1em}#1\\hspace{1em}}}",
+      "",
+      "%% English Environments %%",
+      "\\newtheoremstyle{mytheoremstyle}{3pt}{3pt}{\\normalfont}{0cm}{\\rmfamily\\bfseries}{}{1em}{{\\color{black}\\thmname{#1}~\\thmnumber{#2}}\\thmnote{\\,--\\,#3}}",
+      "\\newtheoremstyle{myproblemstyle}{3pt}{3pt}{\\normalfont}{0cm}{\\rmfamily\\bfseries}{}{1em}{{\\color{black}\\thmname{#1}~\\thmnumber{#2}}\\thmnote{\\,--\\,#3}}",
+      "\\theoremstyle{mytheoremstyle}",
+      "\\newmdtheoremenv[linewidth=1pt,backgroundcolor=shallowGreen,linecolor=deepGreen,leftmargin=0pt,innerleftmargin=20pt,innerrightmargin=20pt,]{theorem}{Theorem}[section]",
+      "\\theoremstyle{mytheoremstyle}",
+      "\\newmdtheoremenv[linewidth=1pt,backgroundcolor=shallowBlue,linecolor=deepBlue,leftmargin=0pt,innerleftmargin=20pt,innerrightmargin=20pt,]{definition}{Definition}[section]",
+      "\\theoremstyle{myproblemstyle}",
+      "\\newmdtheoremenv[linecolor=black,leftmargin=0pt,innerleftmargin=10pt,innerrightmargin=10pt,]{problem}{Problem}[section]",
+      "",
+      "%% Plotting Settings %%",
+      "\\usepgfplotslibrary{colorbrewer}",
+      "\\pgfplotsset{width=8cm,compat=1.9}",
+      "-------------------------------------",
+      "",
+      "\\title{${1:Title}}",
+      "\\author{${2:Karng Lee}}",
+      "",
+      "\\begin{document}",
+      "    \\maketitle",
+      "    $0",
+      "\\end{document}"
+    ],
+    "description": "Use the default template which includes a variety of packages and declared-commands. The template will also automatically generate the title and author, as well as date, and will formate the document."
+  },
+  "Header": {
+    "prefix": ["\\header", "##"],
+    "body": "\\section*{$1}$0",
+    "description": "Insert a section without index."
+  },
+  "Header Small": {
+    "prefix": ["\\headersmall", "###"],
+    "body": "\\subsection*{$1}$0",
+    "description": "Insert a subsection without index."
+  },
+  "Theorem": {
+    "prefix": ["\\theorem"],
+    "body": [
+      "\\begin{theorem}[${1:name of the theorem}]",
+      "\t$0",
+      "\\end{theorem}"
+    ],
+    "description": "Insert a theorem, whose style is already defined in the template. The serial number is automatically generated according to the section."
+  },
+  "Problem": {
+    "prefix": ["\\problem"],
+    "body": [
+      "\\begin{problem}[${1:name of the problem}]",
+      "\t$0",
+      "\\end{problem}"
+    ],
+    "description": "Insert a problem, whose style is already defined in the template. The serial number is automatically generated according to the section."
+  },
+  "Indent": {
+    "prefix": ["\\indent"],
+    "body": ["\\indent "],
+    "description": "The equivalent of \"\\t\", also known as \"Tab\""
+  },
+  "Definition": {
+    "prefix": ["\\definition"],
+    "body": [
+      "\\begin{definition}[${1:name of the definition}]",
+      "\t$0",
+      "\\end{definition}"
+    ],
+    "description": "Insert a definition, whose style is already defined in the template. The serial number is automatically generated according to the section."
+  },
+  "Proof": {
+    "prefix": ["\\proof"],
+    "body": [
+      "\\begin{proof}[Proof ${1:Other Information}]",
+      "\t$0",
+      "\\end{proof}"
+    ],
+    "description": "Insert a proof, whose style is already defined in the template. The serial number is automatically generated according to the section."
+  },
+  "Create 2D Plot environment": {
+    "prefix": ["\\plotenvironment2d"],
+    "body": [
+      "\\begin{tikzpicture}",
+      "\\begin{axis}[",
+      "legend pos=outer north east,",
+      "title=${1:Example},",
+      "axis lines =${2| box, left, middle, center, right, none|},",
+      "xlabel = \\$x\\$,",
+      "ylabel = \\$y\\$,",
+      "variable = t,",
+      "trig format plots = rad,",
+      "]",
+      "$3",
+      "\\end{axis}",
+      "\\end{tikzpicture}$0"
+    ],
+    "description": "Create a 2DPlot Environment of pgfplots. The style declarations are already included in the snippet."
+  },
+  "Plot 2D Graph": {
+    "prefix": ["\\plotgraph2d"],
+    "body": [
+      "\\addplot [",
+      "\tdomain=${1:-10}:${2:10},",
+      "\tsamples=70,",
+      "\tcolor=${3:blue},",
+      "\t]",
+      "\t{${4:x^2 + 2*x + 1}};",
+      "\\addlegendentry{$${5:x^2 + 2x + 1}$}",
+      "$0"
+    ],
+    "description": "Plot a 2D Graph in the 2D graph environment, noted that this can also be used in the 3D environment."
+  },
+  "Plot Circle 2D": {
+    "prefix": ["\\plotcircle2d"],
+    "body": [
+      "\\addplot [",
+      "\tdomain=0:2*3.14159265,",
+      "\tsamples=70,",
+      "\tcolor=${4:blue},",
+      "\t]",
+      "\t({${1:r}*cos(t)+${2:a}},{${1:r}*sin(t)+${3:b}});",
+      "\\addlegendentry{$(x-${2:a})^2+(y-${3:b})^2=${1:r}^2$}$0"
+    ],
+    "description": "Plot a 2D Circle in the 2D graph environment, noted that this can also be used in the 3D environment."
+  },
+  "Plot Line 2D": {
+    "prefix": ["\\plotline2d"],
+    "body": [
+      "\\addplot [",
+      "\tdomain=${4:x1}:${5:x2},",
+      "\tsamples=70,",
+      "\tcolor=${3:blue},",
+      "\t]",
+      "\t{${1:a}*x+${2:b}};",
+      "\\addlegendentry{$ y=${1:a}x+${2:b}$}$0"
+    ],
+    "description": "Plot a 2D Line in the 2D graph environment, noted that this can also be used in the 3D environment."
+  },
+  "Plot Ellipse 2D": {
+    "prefix": ["\\plotellipse2d"],
+    "body": [
+      "\\addplot [",
+      "\tdomain=0:2*3.14159265,",
+      "\tsamples=70,",
+      "\tcolor=${5:blue},",
+      "\t]",
+      "\t({${1:a}*cos(t)+${3:x}},{${2:b}*sin(t)+${4:y}});",
+      "\\addlegendentry{$\\frac{(x-${3:x})^2}{${1:a}^2}+\\frac{(y-${4:y})^2}{${2:b}^2}=1$}$0"
+    ],
+    "description": "Plot a 2D Ellipse in the 2D graph environment, noted that this can also be used in the 3D environment."
+  },
+  "Plot Quadratic Function 2D by Point": {
+    "prefix": ["\\plotquadraticfunction2dbypoint"],
+    "body": [
+      "\\addplot [",
+      "\tdomain=${4:x1}:${5:x2},",
+      "\tsamples=70,",
+      "\tcolor=${6:blue},",
+      "\t]",
+      "\t{${1:a}*(x-${2:m})*(x-${2:m})+${3:b}};",
+      "\\addlegendentry{$ y=${1:a}(x-${2:m})^2+${3:b}$}$0"
+    ],
+    "description": "Plot a 2D graph of a quadratic function in the 2D graph environment by the given extrema, noted that this can also be used in the 3D environment."
+  },
+  "Plot Smooth Curve By Point Set": {
+    "prefix": ["\\plotsmoothcurvebypointset"],
+    "body": [
+      "\\addplot+[smooth]",
+      "coordinates",
+      "{",
+      "${1:seperate the coordinates with spaces}",
+      "};$0"
+    ],
+    "description": "Plot a Smooth Curve by point set (2D)."
+  },
+  "Create 3D Plot Environment": {
+    "prefix": ["\\plotenvironment3d"],
+    "body": [
+      "\\begin{tikzpicture}",
+      "\\begin{axis}[",
+      "legend pos=outer north east,",
+      "title=${1:Example},",
+      "axis lines =${2| box, left, middle, center, right, none|},",
+      "colormap/${3|hot,hot2,jet,blackwhite,bluered,cool,greenyellow,redyellow,violet|},",
+      "xlabel = \\$x\\$,",
+      "ylabel = \\$y\\$,",
+      "zlabel = \\$z\\$,",
+      "variable = t,",
+      "trig format plots = rad,",
+      "]",
+      "$4",
+      "\\end{axis}",
+      "\\end{tikzpicture}$0"
+    ],
+    "description": "Create a 3DPlot Environment of pgfplots. The style declarations are already included in the snippet."
+  },
+  "Plot 3D Graph": {
+    "prefix": ["\\plotgraph3d"],
+    "body": [
+      "\\addplot3[",
+      "\t${1|surf,mesh|},",
+      "\tsamples=50,",
+      "]",
+      "{${2:x^2+y^2}};",
+      "\\addlegendentry{\\$${3:x}\\$}$0"
+    ],
+    "description": "Plot a 3D Graph in the 3D graph environment created."
+  },
+	"item": {
+		"prefix": "\\item",
+		"body": "\n\\item ",
+		"description": "\\item on a newline"
+	},
+	"subscript": {
+		"prefix": "\\subscript",
+		"body": "_{${1:${TM_SELECTED_TEXT}}}",
+		"description": "subscript"
+	},
+	"superscript": {
+		"prefix": "^",
+		"body": "^{${1:${TM_SELECTED_TEXT}}}",
+		"description": "superscript"
+	},
+	"infinity": {
+		"prefix": "\\infty",
+		"body": "\\infty",
+		"description": "infinity symbol"
+	},
+	"partial": {
+		"prefix": "\\partial",
+		"body": "\\partial",
+		"description": "partial derivative symbol"
+	},
+	"fraction": {
+		"prefix": "\\frac",
+		"body": "\\frac{$1}{$2}$0",
+		"description": "fraction"
+	},
+	"dot": {
+		"prefix": "\\dot",
+		"body": "\\dot{${1:${TM_SELECTED_TEXT}}}$0",
+		"description": "dot"
+	},
+	"ddot": {
+		"prefix": "\\ddot",
+		"body": "\\ddot{${1:${TM_SELECTED_TEXT}}}$0",
+		"description": "ddot"
+	},
+
+	"equiv": {
+		"prefix": "\\equiv",
+		"body": "\\equiv",
+		"description": "equiv symbol"
+	},
+	"times": {
+		"prefix": "\\times",
+		"body": "\\times",
+		"description": "times symbol"
+	},
+	"leq": {
+		"prefix": "\\leq",
+		"body": "\\leq",
+		"description": "leq symbol"
+	},
+	"geq": {
+		"prefix": "\\geq",
+		"body": "\\geq",
+		"description": "geq symbol"
+	},
+	"sqrt": {
+		"prefix": "\\sqrt",
+		"body": "\\sqrt{${1:${TM_SELECTED_TEXT}}}$0",
+		"description": "sqrt command"
+	},
+	"int": {
+		"prefix": "\\int",
+		"body": "\\int_{$1}^{$2}$0",
+		"description": "integral"
+	},
+	"Big|": {
+		"prefix": "\\big|",
+		"body": "\\Big|",
+		"description": "Big |"
+	},
+	"bigcup": {
+		"prefix": "\\bigcup",
+		"body": "\\bigcup",
+		"description": "bigcup"
+	},
+	"bigcap": {
+		"prefix": "\\bigcap",
+		"body": "\\bigcap",
+		"description": "bigcap"
+	},
+	"nonumber": {
+		"prefix": "\\nonumber",
+		"body": "\\nonumber",
+		"description": "nonumber"
+	},
+	"equation": {
+		"prefix": "\begin{equation}",
+		"body": "\\begin{equation}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{equation}",
+		"description": "equation environment"
+	},
+	"equation*": {
+		"prefix": "\\begin{equation*}",
+		"body": "\\begin{equation*}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{equation*}",
+		"description": "equation* environment"
+	},
+	"align": {
+		"prefix": "\\begin{align}",
+		"body": "\\begin{align}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{align}",
+		"description": "align environment"
+	},
+	"align*": {
+		"prefix": "\begin{align*}",
+		"body": "\\begin{align*}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{align*}",
+		"description": "align* environment"
+	},
+	"gather": {
+		"prefix": "\\begin{gather}",
+		"body": "\\begin{gather}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{gather}",
+		"description": "gather environment"
+	},
+	"gather*": {
+		"prefix": "\\begin{gather*}",
+		"body": "\\begin{gather*}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{gather*}",
+		"description": "gather* environment"
+	},
+	"multline": {
+		"prefix": "\\begin{multline}",
+		"body": "\\begin{multline}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{multline}",
+		"description": "multline environment"
+	},
+	"multline*": {
+		"prefix": "\\begin{mulline*}",
+		"body": "\\begin{multline*}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{multline*}",
+		"description": "multline* environment"
+	},
+	"itemize": {
+		"prefix": "\\begin{itemize}",
+		"body": "\\begin{itemize}\n\t\\item ${0:${TM_SELECTED_TEXT}}\n\\end{itemize}",
+		"description": "itemize environment"
+	},
+	"enumerate": {
+		"prefix": "\\begin{enumerate}",
+		"body": "\\begin{enumerate}\n\t\\item ${0:${TM_SELECTED_TEXT}}\n\\end{enumerate}",
+		"description": "enumerate environment"
+	},
+	"split": {
+		"prefix": "\\begin{split}",
+		"body": "\\begin{split}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{split}",
+		"description": "split environment"
+	},
+	"cases": {
+		"prefix": "\\begin{cases}",
+		"body": "\\begin{cases}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{cases}",
+		"description": "cases environment"
+	},
+	"frame": {
+		"prefix": "\begin{frame}",
+		"body": "\\begin{frame}\n\t\\frametitle{${1:<title>}}\n\n\t${0:${TM_SELECTED_TEXT}}\n\n\\end{frame}",
+		"description": "frame"
+	},
+	"figure": {
+		"prefix": "\\begin{figure}",
+		"body": "\\begin{figure}[${1:htbp}]\n\t\\centering\n\t${0:${TM_SELECTED_TEXT}}\n\t\\caption{${2:<caption>}}\n\t\\label{${3:<label>}}\n\\end{figure}",
+		"description": "figure"
+	},
+	"table": {
+		"prefix": "\\begin{table}",
+		"body": "\\begin{table}[${1:htbp}]\n\t\\centering\\begin{tabular}{${4:<columns>}}\n\t\t${0:${TM_SELECTED_TEXT}}\n\t\\end{tabular}\n\t\\caption{${2:<caption>}}\n\t\\label{${3:<label>}}\n\\end{table}",
+		"description": "table"
+	},
+	"tikzpicture": {
+		"prefix": "\\begin{tikzpicture}",
+		"body": "\\begin{tikzpicture}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{tikzpicture}",
+		"description": "tikzpicture"
+	},
+	"set font size": {
+		"prefix": "\\fontsize",
+		"body": "${1|\\Huge,\\huge,\\LARGE,\\Large,\\large,\\normalsize,\\small,\\footnotesize,\\scriptsize,\\tiny|}",
+		"description": "Select a font size"
+	},
+	"textnormal": {
+		"prefix": "\\textnormal",
+		"body": "\\textnormal{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "normal font"
+	},
+	"textrm": {
+		"prefix": "\\textrm",
+		"body": "\\textrm{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "roman font"
+	},
+	"emph": {
+		"prefix": "\\emph",
+		"body": "\\emph{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "emphasis font"
+	},
+	"textsf": {
+		"prefix": "\\textsf",
+		"body": "\\textsf{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "sans serif font"
+	},
+	"texttt": {
+		"prefix": "\\texttt",
+		"body": "\\texttt{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "typewriter font"
+	},
+	"textit": {
+		"prefix": "\\textit",
+		"body": "\\textit{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "italic font"
+	},
+	"textsl": {
+		"prefix": "\\textsl",
+		"body": "\\textsl{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "slanted font"
+	},
+	"textsc": {
+		"prefix": "\\textsc",
+		"body": "\\textsc{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "smallcaps font"
+	},
+	"underline": {
+		"prefix": "\\underline{}",
+		"body": "\\underline{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "Underline text"
+	},
+	"uppercase": {
+		"prefix": "\\uppercase{}",
+		"body": "\\uppercase{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "Make text uppercase (all caps)"
+	},
+	"lowercase": {
+		"prefix": "\\lowercase{}",
+		"body": "\\lowercase{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "Make text lowercase (no caps)"
+	},
+	"textbf": {
+		"prefix": "\\textbf",
+		"body": "\\textbf{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "bold font"
+	},
+	"textsuperscript": {
+		"prefix": "\\textsuperscript{}",
+		"body": "\\textsuperscript{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "Make text a superscript"
+	},
+	"textsubscript": {
+		"prefix": "\\textsubscript{}",
+		"body": "\\textsubscript{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "Make text a superscript"
+	},
+	"mathrm": {
+		"prefix": "\\mathrm{}",
+		"body": "\\mathrm{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "math roman font"
+	},
+	"mathbf": {
+		"prefix": "\\mathbf{}",
+		"body": "\\mathbf{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "math bold font"
+	},
+	"mathbb": {
+		"prefix": "\\mathbb{}",
+		"body": "\\mathbb{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "math blackboard bold font"
+	},
+	"mathcal": {
+		"prefix": "\\mathcal{}",
+		"body": "\\mathcal{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "math caligraphic font"
+	},
+	"mathit": {
+		"prefix": "\\mathit{}",
+		"body": "\\mathit{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "math italic font"
+	},
+	"mathtt": {
+		"prefix": "\\mathtt{}",
+		"body": "\\mathtt{${1:${TM_SELECTED_TEXT:text}}}",
+		"description": "math typewriter font"
+	},
+	"alpha": {
+		"prefix": "\\alpha",
+		"body": "\\alpha",
+		"description": "alpha"
+	},
+	"beta": {
+		"prefix": "\\beta",
+		"body": "\\beta",
+		"description": "beta"
+	},
+	"chi": {
+		"prefix": "\\chi",
+		"body": "\\chi",
+		"description": "chi"
+	},
+	"delta": {
+		"prefix": "\\delta",
+		"body": "\\delta",
+		"description": "delta"
+	},
+	"epsilon": {
+		"prefix": "\\epsilon",
+		"body": "\\epsilon",
+		"description": "epsilon"
+	},
+	"varepsilon": {
+		"prefix": "\\varepsilon",
+		"body": "\\varepsilon",
+		"description": "varepsilon"
+	},
+	"phi": {
+		"prefix": "\\phi",
+		"body": "\\phi",
+		"description": "phi"
+	},
+	"varphi": {
+		"prefix": "\\varphi",
+		"body": "\\varphi",
+		"description": "varphi"
+	},
+	"gamma": {
+		"prefix": "\\gamma",
+		"body": "\\gamma",
+		"description": "gamma"
+	},
+	"eta": {
+		"prefix": "\\eta",
+		"body": "\\eta",
+		"description": "eta"
+	},
+	"iota": {
+		"prefix": "\\iota",
+		"body": "\\iota",
+		"description": "iota"
+	},
+	"kappa": {
+		"prefix": "\\kappa",
+		"body": "\\kappa",
+		"description": "kappa"
+	},
+	"lambda": {
+		"prefix": "\\lambda",
+		"body": "\\lambda",
+		"description": "lambda"
+	},
+	"mu": {
+		"prefix": "\\mu",
+		"body": "\\mu",
+		"description": "mu"
+	},
+	"nu": {
+		"prefix": "\\nu",
+		"body": "\\nu",
+		"description": "nu"
+	},
+	"pi": {
+		"prefix": "\\pi",
+		"body": "\\pi",
+		"description": "pi"
+	},
+	"theta": {
+		"prefix": "\\theta",
+		"body": "\\theta",
+		"description": "theta"
+	},
+	"vartheta": {
+		"prefix": "\\vartheta",
+		"body": "\\vartheta",
+		"description": "vartheta"
+	},
+	"rho": {
+		"prefix": "\\rho",
+		"body": "\\rho",
+		"description": "rho"
+	},
+	"sigma": {
+		"prefix": "\\sigma",
+		"body": "\\sigma",
+		"description": "sigma"
+	},
+	"varsigma": {
+		"prefix": "\\varsigma",
+		"body": "\\varsigma",
+		"description": "varsigma"
+	},
+	"tau": {
+		"prefix": "\\tau",
+		"body": "\\tau",
+		"description": "tau"
+	},
+	"upsilon": {
+		"prefix": "\\upsilon",
+		"body": "\\upsilon",
+		"description": "upsilon"
+	},
+	"omega": {
+		"prefix": "\\omega",
+		"body": "\\omega",
+		"description": "omega"
+	},
+	"wedge": {
+		"prefix": "\\wedge",
+		"body": "\\wedge",
+		"description": "wedge"
+	},
+	"xi": {
+		"prefix": "\\xi",
+		"body": "\\xi",
+		"description": "xi"
+	},
+	"psi": {
+		"prefix": "\\psi",
+		"body": "\\psi",
+		"description": "psi"
+	},
+	"zeta": {
+		"prefix": "\\zeta",
+		"body": "\\zeta",
+		"description": "zeta"
+	},
+	"Delta": {
+		"prefix": "\\Delta",
+		"body": "\\Delta",
+		"description": "Delta"
+	},
+	"Phi": {
+		"prefix": "\\Phi",
+		"body": "\\Phi",
+		"description": "Phi"
+	},
+	"Gamma": {
+		"prefix": "\\Gamma",
+		"body": "\\Gamma",
+		"description": "Gamma"
+	},
+	"Theta": {
+		"prefix": "\\Theta",
+		"body": "\\Theta",
+		"description": "Theta"
+	},
+	"Lambda": {
+		"prefix": "\\Lambda",
+		"body": "\\Lambda",
+		"description": "Lambda"
+	},
+	"Xi": {
+		"prefix": "\\Xi",
+		"body": "\\Xi",
+		"description": "Xi"
+	},
+	"Psi": {
+		"prefix": "\\Psi",
+		"body": "\\Psi",
+		"description": "Psi"
+	},
+	"Sigma": {
+		"prefix": "\\Sigma",
+		"body": "\\Sigma",
+		"description": "Sigma"
+	},
+	"Upsilon": {
+		"prefix": "\\Upsilon",
+		"body": "\\Upsilon",
+		"description": "Upsilon"
+	},
+	"Omega": {
+		"prefix": "\\Omega",
+		"body": "\\Omega",
+		"description": "Omega"
+	},
+	"(": {
+		"prefix": "\\left()",
+		"body": "\\left( ${1:${TM_SELECTED_TEXT}} \\right)",
+		"description": "left( ... right)"
+	},
+	"{": {
+		"prefix": "\\left{}",
+		"body": "\\left\\{ ${1:${TM_SELECTED_TEXT}} \\right\\\\\\\\}",
+		"description": "left{ ... right}"
+	},
+	"[": {
+		"prefix": "\\left[]",
+		"body": "\\left[ ${1:${TM_SELECTED_TEXT}} \\right]",
+		"description": "left[ ... right]"
+	},
+	"wrapEnv": {
+		"body": "\n\\begin{$1}\n\t${0:${TM_SELECTED_TEXT}}\n\\end{$1}",
+		"description": "Wrap selection into an environment"
+	},
+	"part": {
+		"prefix": "SPA",
+		"body": "\\part{${1:${TM_SELECTED_TEXT}}}",
+		"description": "part"
+		},
+	"chapter": {
+		"prefix": "\\chapter{}",
+		"body": "\\chapter{${1:${TM_SELECTED_TEXT}}}",
+		"description": "chapter"
+	},
+	"section": {
+		"prefix": "\\secstion{}",
+		"body": "\\section{${1:${TM_SELECTED_TEXT}}}",
+		"description": "section"
+
+	},
+	"subsection": {
+		"prefix": "\\subsection{}",
+		"body": "\\subsection{${1:${TM_SELECTED_TEXT}}}",
+		"description": "subsection"
+	},
+	"subsubsection": {
+		"prefix": "\\subsubsection{}",
+		"body": "\\subsubsection{${1:${TM_SELECTED_TEXT}}}",
+		"description": "subsubsection"
+	},
+	"paragraph": {
+		"prefix": "\\paragraph{}",
+		"body": "\\paragraph{${1:${TM_SELECTED_TEXT}}}",
+		"description": "paragraph"
+	},
+	"subparagraph": {
+		"prefix": "\\subparagraph{}",
+		"body": "\\subparagraph{${1:${TM_SELECTED_TEXT}}}",
+		"description": "subparagraph"
+	}
+}
