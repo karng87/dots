@@ -9,11 +9,11 @@
 \moderncvtheme[blue]{classic}
 \firstname{Arch}
 \familyname{Linux}
-\title{Arch Linux}
+\title{bluetoothctl}
 \address{Seoul, Korea}
 \mobile{010-3201-xxxx}
 \email{karng87@gmail.com}
-\photo{arch.png}
+\photo{logo.png}
 \recipient{수령지}{Garden Street 1\\432 Big-City\\German}
 \opening{ooo 에게}
 \closing{안녕~}
@@ -31,7 +31,7 @@
 \cvitem{}{power on}
 \cvitem{}{paired-devices}
 \cvitem{}{connect tab}
-\cvlistitem{if Erro}
+\cvlistitem{Error}
 \cvitem{}{power on}
 \cvitem{}{agent on}
 \cvitem{}{default-agent}
@@ -42,12 +42,13 @@
 \cvitem{pulseaudio -k}{}
 \cvitem{}{connect 00:1D..}
 \cvitem{}{trust 00:1D..}
+\cvlistitem{error: No default contrller}
+\cventry{}{systemctl disable bluetooth-mesh.service}{and then retry bluetoothctl}{}{}{}
+
 \section{auto connection}
 \cvitem{edit}{/etc/pulse/default.pa}
 \cvitem{$\to$}{load-module module-switch-on-connect}
 
-\section{git}
-\cvitem{git branch}{-vv}
 \cvitem{git branch}{-r}
 \cvitem{git branch}{-a}
 \cvitem{git pull}{$\iff$ git fetch; git merge}
@@ -55,6 +56,5 @@
 \cvitem{git push}{origin bname}
 \cvitem{git push}{--all origin}
 \cvitem{git push}{--delete bname}
-\cvitem{git checkout|{-b bname origin/bname}
+\cvitem{git checkout}{-b bname origin/bname}
 \end{document}
-

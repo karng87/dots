@@ -4,7 +4,8 @@
 " as an enforced single point of truth for Tridactyl's configuration.
 sanitize tridactyllocal tridactylsync
 
-set newtab https://www.youtube.com
+"set newtab https://www.youtube.com
+"set newtab https://www.google.com
 
 " :home 을 입력하면 지정한 웹 페이지를 새 탭에 열어줍니다.
 set homepages ["file:///home/jkarng/", "https://mail.google.com/mail/u/1/#inbox"]

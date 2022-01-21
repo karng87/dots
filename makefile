@@ -1,6 +1,6 @@
-SRCS = $(notdir $(shell find -name "*.tex"))
+SRCS = $(notdir $(shell find . -regextype posix-extended -regex ".*\.tex$$" -and -not -regex '.*(\.git|pack)/.*'))
 
-TARGETS = $(patsubst %.tex, build/%.pdf, $(SRCS))
+TARGETS = $(patsubst %.tex,build/%.pdf, $(SRCS))
 
 TEX =	pdflatex
 TEXJ =	pdflatex --jobname=
@@ -9,10 +9,12 @@ TEXJ =	pdflatex --jobname=
 
 all: $(TARGETS)
 
-
 build/%.pdf: %.tex
-	$(TEXJ)$(patsubst %.tex,build/%,$<) $<
-	
+		pdflatex --jobname=$(patsubst %.tex,build/%,$<) $<
+
+pdf :
+		@nohup zathura build/
+
 clean:
-	#rm $(DIR)/$(OBJ).aux $(DIR)/$(OBJ).out $(DIR)/$(OBJ).log $(DIR)/$(OBJ).pdf
-	rm build/*
+		rm $(shell find . -regextype posix-extended -regex '.*\.(hi|o|out|aux|log|toc|nav|snm|lot|lof)$$' -and -not -regex '.*(\.git|pack)/.*')
+

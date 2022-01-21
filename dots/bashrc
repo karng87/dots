@@ -35,6 +35,7 @@ TEXMFDIST=/usr/share/texmf-dist
 alias tlmgr='${TEXMFDIST}/scripts/texlive/tlmgr.pl --usermode'
 alias vi='nvim'
 alias vim='nvim'
+alias finde='find -regextype posix-extended -regex'
 
 # yarn config set prefix ~/.yarn-global
 #export PATH="$PATH:`yarn global bin`"
