@@ -25,7 +25,10 @@ alias cda="cd $ph/modern_x86_64_assembly"
 alias cdd="cd $ph/dots"
 alias cdt="cd $ph/terms"
 alias cdm="cd $ph/dic/mp3"
+
 alias cdn="cd $ph/nasm_game"
+alias cdh="cd $ph/nasm_game/haskell"
+
 alias cdv="cd $HOME/.config/nvim"
 
 alias cdp="cd $ph"
@@ -54,6 +57,7 @@ export PERL_MM_OPT
 
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 PATH="$HOME/.ghcup/bin:$PATH"
+PATH="$HOME/.cabal/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 
 PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
