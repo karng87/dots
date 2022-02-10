@@ -13,6 +13,8 @@ set homepages ["file:///home/jkarng/", "https://mail.google.com/mail/u/1/#inbox"
 set smoothscroll false
 
 " tridactyl의 ignore 모드는 기본 키가 복잡하다. vim처럼 i 가 편하다.
+bind --mode=normal i mode ignore
+bind --mode=ignore <Escape> mode normal
 
 bind j scrollline 2
 bind k scrollline -2
