@@ -62,9 +62,10 @@ PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
 PATH="$PATH:$HOME/.emacs.d/bin"
 PATH="$PATH:$HOME/Lsp/ltex/bin"
 PATH="$PATH:$HOME/Lsp/lua/bin"
-
 export PATH
 #pyenv
 #export PYENV_ROOT="$HOME/.pyenv"
 #export PATH="$PYENV_ROOT/bin:$PATH"
 #eval "$(pyenv init --path)"
+export NIX_REMOTE=daemon
+
